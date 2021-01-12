@@ -1,0 +1,326 @@
+﻿@{
+    ViewBag.Title = "Acknowledgement";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+@*<script src="https://code.jquery.com/jquery-1.10.1.js" crossorigin="anonymous"></script>*@
+<script src="https://code.jquery.com/jquery-2.1.3.js"
+        integrity="sha256-goy7ystDD5xbXSf+kwL4eV6zOPJCEBD1FBiCElIm+U8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$('table td:nth-child(4)').each(function() {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+</script>
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title1">Loan Restructuring</h4>
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+                
+                <div class="container" id="RefNumDIv">
+                   
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+    @using (Html.BeginForm("LoanRestructring2", "Admin", FormMethod.Post, new { id = "signup" }))
+    {
+        <form action="#" method="post">
+
+            @if (TempData["ErrMsg"] != "")
+            {
+                <div id="Msgs" class="alert alert-danger">
+                    @TempData["ErrMsg"]
+                </div>
+            }
+            @if (TempData["SucMsg"] != "")
+            {
+                <div id="Msgs" class="alert alert-success">
+                    @TempData["SucMsg"]
+                </div>
+            }
+@if (ViewBag.LoansLedger == null)
+{
+            <div class="tables">
+
+                <div class="row list-input">
+
+
+                    <div class="col-md-6 mr0">
+                        <div class="single-get-touch">
+                          
+                            @Html.TextBoxFor(model => model.IdentficationNumber, new { placeholder = "REFERENCE NUMBER" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="single-get-touch">
+
+                            <a href="#"> <button type="submit" name="submit" value="Yes" class="btn btn-default btn-sm2 btnAction">Proceed</button></a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+}
+        </form>
+    }
+
+
+    @if (ViewBag.LoansLedger != null && TempData["code"] != "2")
+    {
+        using (Html.BeginForm("Restructure2", "Admin", FormMethod.Post, new { id = "signup" }))
+        {
+        <div class="tables">
+
+            <div class="row list-input">
+
+                <div class="col-md-6 mr0">
+                    <div class="single-get-touch">
+                        <select name="LoanTenure" required>
+                            <option value="" default selected>Loan Tenure</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6" style="display:none">
+                    <div class="single-get-touch">
+                        
+                    </div>
+                </div>
+            </div>
+                <div class="col-md-4">
+                    <div class="single-get-touch">
+                    <a href="@Url.Action("Restructure2", "Admin")"> <button type="submit" name="submit" value="Yes" class="btn btn-default btn-sm2 btnAction">Back</button></a>
+                    </div></div>
+
+                <div class="col-md-4">
+                    <div class="single-get-touch">
+
+                        <a href=""> <button type="submit" value="Yes" class="btn btn-default btn-sm2 btnAction">Restructure</button></a>
+                    </div>
+                </div>
+          
+            </div>
+            }
+        }
+
+            </div>
+
+            @*<div id="ExistingLoan0">
+                  # testing the Divs #
+                </div>*@
+        </div>
+
+
+                    @*}*@
+                    </div>
+
+                <div class="tables">
+                    
+                    
+                    @*<h2 class="title1">Loan Restructuring</h2>*@
+                    
+                    <div class="">
+                        <div class="table-responsive bs-example widget-shadow">
+                           
+
+                            @*<h4>Users:</h4>*@
+                            @{int i = 0;}
+                            <table id="myTable" class="table table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Applicant ID</th>
+                                        <th>transaction Date</th>
+                                        <th>Debit</th>
+                                        <th>Credit</th>
+                                        <th>Reference Number</th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (ViewBag.LoansLedger == null)
+                                    {
+                                        <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+
+                                    foreach (var LoansLedger in ViewBag.LoansLedger)
+                                        {
+                                          <tr>
+                                          <td scope="row">@(++i)</td>
+                                          <td>@LoansLedger.ApplicantID</td>
+                                          <td>@LoansLedger.TransactionDate</td>
+                                          <td>@LoansLedger.Debit</td>
+                                          <td>@LoansLedger.Credit</td>
+                                          <td>@LoansLedger.ReferenceNumber</td>
+                                          </tr>
+                                        }
+                                    }
+                                    @*<tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total Debit  : @ViewBag.DebitSum</td>
+                                        <td>Total Credit : @ViewBag.CreditSum</td>
+                                        <td></td>
+                                    </tr>*@
+@if(TempData["flag"] == "1")
+{
+                                    <tr class="parent" id="2800">
+                         <td>@*<span class="btn btn-default">text</span>*@</td>
+                                      <td></td>
+                                      <td>Balance : @ViewBag.Balance</td>
+                                      <td>Balance Due : @ViewBag.BalanceDue</td>
+                                       
+                                          @using (Html.BeginForm("RepayLoan", "Admin", FormMethod.Post, new { id = "signup" }))
+                                          {
+                                            <td><button type="submit" class="btn btn-default">Pay Now</button></td>
+                                          }
+                                       
+
+                                      <td></td>
+                                    </tr>
+}
+                                    @*<tr class="child-2479">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+      <td><input type="text" name="BalanceTxt" value="Yes" placeholder="Enter Balance" /></td>
+      <td><input type="text" name="TenureTxt" placeholder="Enter Tenure" /></td>
+      <td><input type="button" name="Pay"/></td>
+                                        
+                                    </tr>*@
+                                    @if (TempData["Offer"] == "0")
+                                    {
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <a href="@Url.Action("OfferLetter", "Loans",  new { Refid = @Model.LoanRefNumber,target = "_blank" })" class="btn btn-success" target="_blank">View Offer Letter</a>
+                                            </div>
+                                        </div>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+        <!-- // Mega Form Ends-->
+
+    </div>
+</div>
+
+<script>
+
+        function showhide()
+        {
+            var div = document.getElementById("newpost");
+           
+            if (div.style.display !== "none" )
+            {
+               // alert('test');
+                div.style.display = "none";
+                //alert('test1');
+             //   hide();
+            }
+            else
+            {
+                div.style.display = "block";
+             
+
+            }
+        }
+
+        function hide()
+        {
+            alert('test1');
+            
+            var table = document.getElementById("myTable");
+            var div = document.getElementById("RefNumDIv");
+            var y;
+
+            for (var i = 1; i < table.rows.length; i++) {
+                var row = "";
+                if (table.rows.length > 1) {
+                    div.style.display = "none";
+                }
+}
+            //else
+            //{
+            //    RefDiv.style.display = "block";
+            //    alert('testd12');
+
+            //}
+           
+           
+        }
+
+</script>  
+<script>
+    $('#btnAdd').on('click', function (e) {
+        e.preventDefault();
+        var elem = $(this).next('.td1')
+        elem.toggle('slow');
+    });
+    $(function () {
+        $('tr.parent td span.btn')
+          .on("click", function () {
+              var idOfParent = $(this).parents('tr').attr('id');
+              $('tr.child-' + idOfParent).toggle('slow');
+          });
+        $('tr[class^=child-]').hide().children('td');
+    });
+</script>
+<script>
+function CallChangefunc()
+{
+    window.location.href = "/Admin/Restructure2/";
+}
+</script>
+

@@ -1,0 +1,224 @@
+﻿
+@{
+    ViewBag.Title = "Disburse Loan";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@*DataAccessLayerT.DataManager.AppLoan*@
+@*List<DataAccessLayerT.DataManager.AppLoan>*@
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('table td:nth-child(1),table td:nth-child(2)').each(function () {
+
+                let $this = $(this);
+
+                // make sure it's a number
+                if (!isNaN($this.text())) {
+
+
+                    var nums = ConvertAmount($this.text())
+                    //  alert(nums);
+                    $this.text(nums);
+
+
+                }
+
+            });
+            $('table td:nth-child(3),table td:nth-child(4)').each(function () {
+
+                let $this = $(this);
+
+                // make sure it's a number
+                if (!isNaN($this.text())) {
+
+
+                    var nums = ConvertAmount($this.text())
+                    // alert(nums);
+                    $this.text(nums);
+
+
+                }
+
+            });
+        });
+    </script>
+    <style type="text/css">
+        #toast-container > div {
+            opacity: 1;
+        }
+
+        span.TotTimes {
+            text-align: center;
+        }
+    </style>
+
+    <div class="charts">
+        <div class="mid-content-top charts-grids">
+            <div class="middle-content">
+                <!--<h4 class="title">Create User</h4>-->
+                <!-- Mega Form Starts -->
+                @*@using (Html.BeginForm("DisburseList", "Admin", FormMethod.Post, new { id = "signup" }))
+                    {*@
+                @*@if (TempData["Error"] != "")
+                                {
+                                    <div id="Msgs" class="">
+                                        @TempData["Error"]
+                                        <script>
+                                     var msg = "@(TempData["Error"] as string)";
+                                     toastr.error(msg);
+                                        </script>
+                                    </div>
+                                }
+                    @if (TempData["SucMsg"] != "")
+                    {
+                                <div id="Msgs" style="color:blue;">
+
+                                    <script>
+                                     var msg = "@(TempData["SucMsg"] as string)";
+                                     toastr.success(msg);
+                                    </script>
+                                </div>
+                    }*@
+                <section class="section-padding contact-us-padding form-padding">
+
+                    <div class="tables">
+                        <h2 class="title1">Kpi Details</h2>
+                        <div class="table-responsive bs-example widget-shadow">
+                            @*<h4>Users:</h4>*@
+                            @*@{int i = 0;}*@
+
+                            <table id="myTable" class="table table-bordered">
+
+
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>Kpi One(Application - HR Recommend)</th>
+                                        <th>Kpi Two(Recommend - 1st Approval)</th>
+                                        <th>Kpi Three(1st Approval - 2nd Approval)</th>
+                                        <th>Kpi Four(2nd Approval - Disbursement)</th>
+
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @{
+                                        string name = "";
+                                    }
+                                    @if (ViewBag.Data == null)
+                                    {
+                                        <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+
+                                        <tr>
+                                            @for (int i = 0; i < ViewBag.Data.Count; i++)
+                                            {
+                                                // for (int j = 0; ViewBag.KpiComment.Count; j++)
+                                                for (int j = 0; j < ViewBag.KpiComment.Count; j++)
+                                                {
+                                                    if (i == 0 || j == 0)
+                                                    {
+                                                        <td>@ViewBag.Data[i] &nbsp; &nbsp; @ViewBag.KpiComment[j].LoanComment</td>
+                                                    }
+                                                    if (i == 1 || j == 1)
+                                                    {
+                                                        <td>@ViewBag.Data[i]</td>
+                                                    }
+                                                    if (i == 2)
+                                                    {
+                                                        <td>@ViewBag.Data[i]</td>
+                                                    }
+                                                    if (i == 3)
+                                                    {
+                                                        <td>@ViewBag.Data[i]</td>
+                                                    }
+
+                                                }
+
+                                            }
+                                        </tr>
+
+                                    }
+
+                                </tbody>
+                            </table>
+                            <div>
+                                <span class="TotTimes" id="TotTimes" style="color:orange; font-weight:bolder;  font-size: 130%;">Kpi From Loan Application to Disbursement : @TempData["TotalTime"] </span>
+                                <br />
+                                <br />
+                                <p style="color:orange; font-weight: bolder;  font-size: 130%;">Loan Application To Remita Generation : @TempData["KpiLoanAppToRemitaGen"] </p>
+                                <br />
+                                <p style="color:orange; font-weight: bolder;  font-size: 130%;">Average Loan Processing Time : @TempData["AvgLoanProcessTime"] </p>
+                                <br />
+                                <p style="color:orange; font-weight: bolder;  font-size: 130%;">Remita Isueance To Activation : @TempData["RemitaIssuanceToActivation"] </p>
+                                <br />
+                                <p style="color:orange; font-weight: bolder;  font-size: 130%;">Remita Activation To Disbursement : @TempData["RemitaActivationToDisbursement"] </p>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="single-get-touch">
+
+                                    <a href="@Url.Action("KpiReports", "Admin" )" @*class="btn btn-info btn-sm2 btnAction"*@ class="fa fa-arrow-circle-o-left fa-lg text-success" title="GO BACK"></a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </section>
+
+                <!-- // Mega Form Ends-->
+                @*}*@
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function ConvertAmount(first) {
+
+            x1 = first;
+
+            var num = x1;
+
+            var hours = (parseFloat(num) / 60);
+
+            var rhours = Math.floor(hours);
+
+            var minutes = parseFloat(hours - rhours) * 60;
+
+            var rminutes = Math.round(minutes);
+
+            var nums = rhours + " hour(s) and " + rminutes + " minute(s).";
+
+            return nums;
+
+        }
+        window.onload = function () {
+            var x1 = document.getElementById('TotTime').innerHTML;
+
+            var num = x1;
+
+            var hours = (parseFloat(num) / 60);
+
+            var rhours = Math.floor(hours);
+
+            var minutes = parseFloat(hours - rhours) * 60;
+
+            var rminutes = Math.round(minutes);
+
+            var nums = rhours + " hour(s) and " + rminutes + " minute(s).";
+
+            document.getElementById('TotTime').innerHTML = nums;
+
+        }
+
+
+    </script>
+
+
+

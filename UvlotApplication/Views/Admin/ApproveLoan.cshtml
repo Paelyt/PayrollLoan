@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "CreateUser";
+    //Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+<link href=@Url.Content("/DashboardStyles/css/MyTable.css") rel="stylesheet">
+<script type="text/javascript">
+$(document).ready(function() {
+    $('table td:nth-child(7),table td:nth-child(8)').each(function () {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+     
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+</script>
+<style>
+    #toast-container > div {
+        opacity: 1;
+    }
+</style>
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <!--<h4 class="title">Create User</h4>-->
+            <!-- Mega Form Starts -->
+            @*@if (TempData["Error"] != "")
+            {
+                <div id="Msgs" class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+            @if (TempData["SucMsg"] != "")
+            {
+                <div id="Msgs" class="alert alert-success">
+                    @TempData["SucMsg"]
+                </div>
+            }*@
+
+            @if (TempData["ErrMsg"] != "")
+            {
+                <div id="Msgs" class="" style="color:red;">
+                    @*@TempData["ErrMsg"]*@
+                    <script>
+                        var msg = "@(TempData["ErrMsg"] as string)";
+                        toastr.error(msg);
+                    </script>
+                </div>
+            }
+
+            @if (TempData["Error"] != "")
+            {
+                <div id="Msgs" class="" style="color:red;">
+                    @*@TempData["Error"]*@
+                    <script>
+                        var msg = "@(TempData["Error"] as string)";
+                        toastr.error(msg);
+                    </script>
+                </div>
+            }
+
+            @if (TempData["SucMsg"] != "")
+            {
+                <div id="Msgs" class="" style="color:blue;">
+                    @*@TempData["SucMsg"]*@
+                    <script>
+                        var msg = "@(TempData["SucMsg"] as string)";
+                        toastr.success(msg);
+                    </script>
+                </div>
+            }
+
+            <section class="section-padding contact-us-padding form-padding">
+            <div class="tables">
+                    <h2 class="title1">Approve Loan</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @{int i = 0;}
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+                                    <th>Company</th>
+                                    <th>Application Date</th>
+                                    <th>Date Recommended</th>
+                                    <th>(&#8358;)Net Salary</th>
+                                    <th>(&#8358;)Loan Amount</th>
+                                    <th>Existing Loan</th>
+                                    @*<th>Date</th>*@
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @if (ViewBag.Data == null)
+                                {
+                                <h2>No Record Found</h2>
+                                 }
+                                 else
+                                 {
+                                 foreach (var Loan in ViewBag.Data)
+                                 {
+                            <tr>
+                                <td scope="row">@(++i)</td>
+                                <td>@Loan.Surname  @Loan.Firstname</td>
+                                <td>@Loan.PhoneNumber</td>
+                                @*<td>@Loan.EmailAddress</td>
+                                <td>@Loan.ApplicationDate</td>*@
+                                <td>@Loan.Organization</td>
+                                <td>@Loan.ApplicationDate</td>
+                                <td>@Loan.DateRecommended</td>
+                                <td>@Loan.Salary</td>
+                                <td>@Loan.LoanAmount</td>
+                                <td>
+                                @if (@Loan.ExistingLoan == false)
+                                {
+                                    <p>None</p>
+                                }
+                                </td>
+                                @*<td>@Loan.ValueDate</td>*@
+                                <td>
+
+                                   
+                                    <a class="fa fa-eye fa-lg text-success" title="View Application" href="@Url.Action("Approve", "Admin", new { Refid = @Loan.LoanRefNumber })"></a>
+                                </td>
+                            </tr>
+                            }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+           </div>
+
+    </div>
+</div>
+

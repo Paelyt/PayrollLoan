@@ -1,0 +1,160 @@
+﻿
+@{
+    ViewBag.Title = "PagenRoles";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+@model DataAccessLayer.DataManager.LoanViewModel
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Page Role</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            <div class="col-md-12 col-lg-10">
+
+                                @using (Html.BeginForm("PagenRoles", "Admin", FormMethod.Post, new { id = "signup" }))
+                                {
+                                    <form action="#" method="post">
+
+                                        @if (TempData["ErrMsg"] != null)
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                                @TempData["ErrMsg"]
+                                            </div>
+                                        }
+
+                                        <div class="row list-input">
+                                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                                <h3 class="formHeader">Create PagenRole</h3>
+                                            </div>
+
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    @Html.DropDownList("PageID", new SelectList(ViewBag.listPage, "PageID", "pageName"), new { @onchange = "CallChangefunc(this.value)" })
+
+
+                                                   @*@Html.DropDownList("Value", new SelectList(ViewBag.listPage, "Value", "Text"), new { onchange = "this.form.submit();" })*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="">
+                                                    @foreach (var Assigned in Model.GetAssignPagess)
+                                                    {
+
+
+                                                        <input id="@Assigned.pageid" type="checkbox" name="skill" value="@Assigned.pageid" checked="checked" disabled="disabled" />
+                                                            <label for="@Assigned.pageid">
+                                                                @Assigned.Rolename
+                                                            </label>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="">
+                                                    @foreach (var unAssigned in Model.UnGetAssignRoless)
+                                                    {
+                                                        <input id="@unAssigned.Roleid" type="checkbox" name="RoleId" value="@unAssigned.Roleid" />
+                                                            <label for="@unAssigned.Roleid">
+                                                                @unAssigned.Rolename
+                                                            </label>
+                                                    }
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+                                                    <a href="#">
+                                                        <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Create PagenRole</button>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+
+
+
+                                        </div>
+                                    </form>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="tables">
+                    <h2 class="title1">All Pages n Role</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Roles:</h4>*@
+                        @{int i = 0;}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Page Name</th>
+                                    <th>Role Name</th>
+                                    @*<th> Role ID</th>
+                                      <th>Edit</th>*@
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Data == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var UserRole in ViewBag.Data)
+                                    {
+                                        
+                                         
+                                        <tr>
+                                            <td scope="row">@(++i)</td>
+                                            <td>@UserRole.pageName</td>
+                                            <td>@UserRole.rolename</td>
+                                            @*<td>@UserRole.roleid</td>
+                            <td>@UserRole.email</td>
+    <td>@UserRole.id</td>*@
+                                            @* <td>
+                    <a onclick="return confirm('Are You Sure ?')" href="@Url.Action("Delete","Loan", new { id = UserRole.userid  })">Delete</a>
+
+                                                <a onclick="return confirm('Are You Want To Edit ?')" href="@Url.Action("Edit","Loan", new { id = UserRole.userid  })"> Edit</a>
+                                            </td>*@
+
+
+                                        </tr>
+                                       
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+
+@using (Html.BeginForm("PagenRoles", "Admin"))
+{
+    @*@Html.Hidden("Value", item.Id)*@
+    @*@Html.DropDownList("Value", new SelectList(ViewBag.listPage, "Value", "Text"), new { id = "Services", name = "Services", onchange = "this.form.submit();" })*@
+}
+<script>
+    function CallChangefunc(val) {
+        window.location.href = "/Admin/PagenRoles?value=" + val;
+    }
+</script>

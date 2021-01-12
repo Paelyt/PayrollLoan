@@ -1,0 +1,542 @@
+﻿@{
+    ViewBag.Title = "Index";
+     //Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+
+<style>
+
+    .highcharts-figure, .highcharts-data-table table {
+    min-width: 360px; 
+    max-width: 800px;
+    margin: 1em auto;
+}
+
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
+}
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
+}
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
+}
+.colors{
+  color:burlywood;
+}
+
+
+</style>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+@*<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="//code.highcharts.com/highcharts.js" type="text/javascript"></script>
+<script src="//code.highcharts.com/modules/exporting.js" type="text/javascript"></script>*@
+@*<script src=@Url.Content("/asset/chat/exporting.js")></script>
+<script src=@Url.Content("/asset/chat/highcharts.js")></script>
+<script src=@Url.Content("/asset/chat/jquery-1.11.2-jquery.min.js")></script>*@
+@*<div class="jumbotron">
+    <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+</div>*@
+
+
+
+
+
+
+<div class="charts">
+    <!--Top Icons-->
+
+    <div id="page-wrapper" style="margin-left:0px">
+        <div class="main-page" style="margin-top:-80px;">
+
+            <div class="col_3">
+                <div class="col-md-3 widget widget1">
+                    <div class="r3_counter_box">
+                        <i class="pull-left fa fa-laptop icon-rounded"></i>
+                        <div class="stats">
+                            
+                            <h7 class="colors"><strong>Disbursed Loan : @TempData["AppDisbursed"]</strong></h7><br />
+                            <h7 class="colors"><strong>Submitted App : @TempData["AppSubmitted"]</strong></h7>
+                           
+                            <p><h6><strong>Total Acceptance Rate : @TempData["TotalAcceptanceRate"]</strong></h6></p>
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+
+                <div class="col-md-3 widget widget1">
+                    <div class="r3_counter_box">
+                        <i class="pull-left fa fa-laptop user1 icon-rounded"></i>
+                        <div class="stats">
+                            <h7 class="colors"><strong>Default Loans : @TempData["NODefaultLoans"]</strong></h7>
+                           
+                            <p><span></span><h6><strong>Repayment Efficiency : @TempData["RepaymentEfficiency"]</strong></h6></p>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3 widget widget1">
+                    <div class="r3_counter_box">
+                        <i class="pull-left fa fa-laptop user2 icon-rounded"></i>
+                        <div class="stats">
+                            <h7 class="colors"><strong>Total App : @TempData["TotalApplication"]</strong></h7><br />
+                            <h7 class="colors"><strong>Abandon App : @TempData["GetAbandonApp"]</strong></h7>
+                           
+                            <p>
+                                <span></span>
+                                <h6><strong>Application Abandon Rate : @TempData["GetAbandonrate"]</strong></h6>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div class="col-md-3 widget widget1">
+                    <div class="r3_counter_box">
+                        <i class="pull-left fa fa-pie-chart dollar1 icon-rounded"></i>
+                        <div class="stats">
+                            <h5><strong>N450</strong></h5>
+                            <span>Expenditure</span>
+                        </div>
+                    </div>
+                </div>*@
+
+
+
+                <div class="clearfix"> </div>
+            </div>
+
+            <br>
+
+        </div>
+    </div>
+
+    <!--Top Icons-->
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title"></h4>
+           
+
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class=''>
+
+                    <div class='row'>
+                        <div class='col-md-6'>
+                            <div id="container" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        </div>
+                        <figure class="highcharts-figure">
+                            <div class='col-md-6'>
+                                <div id="containers" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                            </div>
+                            </figure>
+                    </div>
+                    <div class='row'>
+                        @*<div class='col-md-6'>
+                            <div id="containerss" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        </div>*@
+                        @*<div class='col-md-6'>
+                            <div id="containersss" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        </div>*@
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+
+
+
+    $(document).ready(function () {
+        $.getJSON("/Admin/GetData", function (data) {
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Loans Application Recommendation,Approval,Disbursement'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: [{
+                        name: data.Recname,
+                        y: data.RecCount,
+                        sliced: true,
+                        selected: true
+
+                    }, {
+                        name: data.Approvename,
+                        y: data.ApproveCount
+                    }, {
+                        name: data.Pendingname,
+                        y: data.PendingCount
+                    }, {
+                        name: data.Disbursename,
+                        y: data.DisursedCount
+                    } 
+                    //, {
+                    //    name: data.Recname,
+                    //    y:data.RecCount
+                    //}
+                    ]
+
+                }]
+            });
+        });
+
+
+        $.getJSON("/Admin/GetLoanOwnedAndCount", function (data) {
+            //alert('Entered');
+            //alert(JSON.stringify(data));
+            alert(JSON.stringify(data[0].TotalAmount));
+            alert(data[0].TotalAmounts);
+            Highcharts.setOptions({
+                lang: {
+                    thousandsSep: ','
+                }
+            });
+            
+            Highcharts.chart('containers', {
+                chart:
+                {
+                    type: 'spline'
+                },
+                title:
+                {
+                    text: 'Monthly Loan Amount Owed'
+                },
+                subtitle:
+                {
+                    text: 'Loans '
+                },
+                xAxis:
+                {
+                    categories: [ JSON.stringify(data[0].Months),JSON.stringify(data[1].Months), JSON.stringify(data[2].Months), JSON.stringify(data[3].Months), JSON.stringify(data[4].Months), JSON.stringify(data[5].Months), JSON.stringify(data[6].Months), JSON.stringify(data[7].Months), JSON.stringify(data[8].Months), JSON.stringify(data[9].Months), JSON.stringify(data[10].Months), JSON.stringify(data[11].Months)]
+                },
+                yAxis: {
+                    title: {
+                        // text: 'Count'
+                        name: 'Amount'
+                    }
+                },
+                plotOptions: {
+                    line:
+                    {
+                        dataLabels:
+                        {
+                            enabled: true,
+                            format: '{y} % <br/> {JSON.stringify(data[0].TotalAmount)}',
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    //name: 'Count',
+                    name: 'Month',
+                    data: [data[0].TotalAmount,data[1].TotalAmount, data[2].TotalAmount, data[3].TotalAmount, data[4].TotalAmount, data[5].TotalAmount, data[6].TotalAmount, data[7].TotalAmount, data[8].TotalAmount, data[9].TotalAmount, data[10].TotalAmount, data[11].TotalAmount],
+                  //  data: [data[1].CountOrders + data[1].TotalAmount, data[2].CountOrders + data[2].TotalAmount, data[3].CountOrders + data[3].TotalAmount, data[4].CountOrders + data[4].TotalAmount, data[5].CountOrders + data[5].TotalAmount, data[6].CountOrders + data[6].TotalAmount, data[7].CountOrders + data[7].TotalAmount, data[8].CountOrders + data[8].TotalAmount, data[9].CountOrders + data[9].TotalAmount, data[10].CountOrders + data[10].TotalAmount, data[11].CountOrders + data[11].TotalAmount, data[0].CountOrders + data[0].TotalAmount],
+                    //data: [JSON.stringify(data[1].TotalAmounts), JSON.stringify(data[2].TotalAmounts),  JSON.stringify(data[3].TotalAmounts), JSON.stringify(data[4].TotalAmounts),  JSON.stringify(data[5].TotalAmounts),  JSON.stringify(data[6].TotalAmounts),  JSON.stringify(data[7].TotalAmounts), JSON.stringify(data[8].TotalAmounts),  JSON.stringify(data[9].TotalAmounts),  JSON.stringify(data[10].TotalAmounts),  JSON.stringify(data[11].TotalAmounts),  JSON.stringify(data[0].TotalAmounts)],
+              
+        dataLabels: {
+                   enabled: true,
+                  
+                }
+                }
+                ,
+                //{
+                //    name: 'Approved',
+                //    data: [JSON.stringify(data[1].TotalAmount), JSON.stringify(data[2].TotalAmount), JSON.stringify(data[3].TotalAmount), JSON.stringify(data[4].TotalAmount), JSON.stringify(data[5].TotalAmount), JSON.stringify(data[6].TotalAmount), JSON.stringify(data[7].TotalAmount), JSON.stringify(data[8].TotalAmount), JSON.stringify(data[9].TotalAmount), JSON.stringify(data[10].TotalAmount), JSON.stringify(data[11].TotalAmount), JSON.stringify(data[0].TotalAmount)],
+                //     dataLabels: {
+                //        enabled: true,
+                //        format: '{Approved}'
+                //    }
+                //},
+                //{
+                //    name: 'Disbursed',
+                //    data: [5.9, 6.2, 6.7, 8.5, 11.9, 15.2, 17.0, 16.6, 17.2, 17.3, 18.6, 18.8]
+                //}
+                ]
+            });
+        });
+
+
+          $.getJSON("/Admin/GetDataAmount", function (data) {
+      
+          Highcharts.chart('containers', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'value of Loans Application'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Brands',
+                    colorByPoint: true,
+                    data: [{
+                        name: data.Approvename,
+                        y: data.ApproveTotalAmount,
+                        sliced: true,
+                        selected: true
+                    },  {
+                        name: data.Disbursename,
+                        y: data.DisbursedTotalAmount
+                    }, {
+                        name: 'Safari',
+                        y: 4.18
+                    },  {
+                        name: 'Opera',
+                        y: 1.6
+                    }]
+                }]
+            });
+        });
+
+
+        Highcharts.chart('containerss', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Browser market shares in January, 2018'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Chrome',
+                    y: 61.41,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Internet Explorer',
+                    y: 11.84
+                }, {
+                    name: 'Firefox',
+                    y: 10.85
+                }, {
+                    name: 'Edge',
+                    y: 4.67
+                }, {
+                    name: 'Safari',
+                    y: 4.18
+                }, {
+                    name: 'Sogou Explorer',
+                    y: 1.64
+                }, {
+                    name: 'Opera',
+                    y: 1.6
+                }, {
+                    name: 'QQ',
+                    y: 1.2
+                }, {
+                    name: 'Other',
+                    y: 2.61
+                }]
+            }]
+        });
+
+
+        Highcharts.chart('containersss', {
+            chart: {
+                plotBackgroundColor: null,
+                plotBorderWidth: null,
+                plotShadow: false,
+                type: 'pie'
+            },
+            title: {
+                text: 'Browser market shares in January, 2018'
+            },
+            tooltip: {
+                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            },
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                }
+            },
+            series: [{
+                name: 'Brands',
+                colorByPoint: true,
+                data: [{
+                    name: 'Chrome',
+                    y: 61.41,
+                    sliced: true,
+                    selected: true
+                }, {
+                    name: 'Internet Explorer',
+                    y: 11.84
+                }, {
+                    name: 'Firefox',
+                    y: 10.85
+                }, {
+                    name: 'Edge',
+                    y: 4.67
+                }, {
+                    name: 'Safari',
+                    y: 4.18
+                }, {
+                    name: 'Sogou Explorer',
+                    y: 1.64
+                }, {
+                    name: 'Opera',
+                    y: 1.6
+                }, {
+                    name: 'QQ',
+                    y: 1.2
+                }, {
+                    name: 'Other',
+                    y: 2.61
+                }]
+            }]
+        });
+
+       
+    });
+   
+    //    $.getJSON("/Admin/GetData", function (data) {
+    //              Highcharts.chart('container', {
+    //            chart: {
+    //                plotBackgroundColor: null,
+    //                plotBorderWidth: null,
+    //                plotShadow: false,
+    //                type: 'pie'
+    //            },
+    //            title: {
+    //                text: 'Gender Ratio'
+    //            },
+    //            tooltip: {
+    //                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    //            },
+    //            plotOptions: {
+    //                pie: {
+    //                    allowPointSelect: true,
+    //                    cursor: 'pointer',
+    //                    dataLabels: {
+    //                        enabled: true,
+    //                        format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+    //                        style: {
+    //                            color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+
+    //                        }
+    //                    }
+    //                }
+    //            },
+    //            series: [{
+    //                name: 'Brands',
+    //                colorByPoint: true,
+    //                data: [{
+    //                    name: 'Male',
+    //                    y: data.Male
+    //                }, {
+    //                    name: 'Female',
+    //                    y: data.Female
+    //                }, {
+    //                    name: 'Other',
+    //                    y: data.Other
+    //                }]
+    //            }]
+    //        });
+    //    });
+    //});
+
+
+</script>
+
+<script>
+    function ConvertLoanAmount(valu) {
+
+        // var x = document.getElementById("val").value;
+        alert(value);
+        x = parseFloat(x).toFixed(2).split('')
+
+        let ii = x.length - 3
+        while ((ii -= 3) > 0) {
+            x.splice(ii, 0, ',')
+        }
+
+        x.value = x.join('');
+
+        document.getElementById("LoansAmount").value = x.value;
+    }
+</script>

@@ -1,0 +1,469 @@
+﻿@{
+    Layout = null;
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+ }
+
+@*@model UvlotApplication.Classes.TableObjects.LoanApplication*@
+@model DataAccessLayerT.Classes.LoanApplication
+<style type="text/css">
+    body
+    {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+
+</style>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#DOB").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-80:+0",
+            onSelect: function () {
+                console.log('s');
+            },
+            onChangeMonthYear: function () {
+                console.log('o');
+            }
+        });
+    });
+  //$(document).ready(function() {
+  //    $("#DOB").datepicker();
+  //    changeMonth: true,
+  //    //dateFormat: "dd-mm-yy"
+
+  //});
+</script>
+
+<!-- end of page header -->
+<section class="section-padding contact-us-padding form-padding">
+    @*<div class="container">*@
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                @using (Html.BeginForm("UpdateApplication", "Admin", FormMethod.Post))
+                {
+                    <form action="#" method="post">
+
+                        @if (TempData["Error"] != "")
+                        {
+                        <div id="Msgs" class="alert alert-danger">
+                                @TempData["Error"]
+                        </div>
+                        }
+                        @if (TempData["SucMsg"] != "")
+                        {
+                            <div id="Msgs" class="alert alert-success">
+                                @TempData["SucMsg"]
+                            </div>
+                        }
+                        @if(TempData["ErrMsg"] != ""){
+                              @TempData["ErrMsg"];
+                        }
+
+                        <div class="row list-input">
+                            @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Employee Information </h3>
+                            </div>
+
+
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                   
+                                    @Html.DropDownListFor(model => model.Title_FK, (SelectList)ViewData["nTitles"], "Select Title", new { @id = "Titles", @required = "required", name = "Titles" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 right">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.MaritalStatus_FK, (SelectList)ViewData["nMarital"], "Select Marital Status", new { @id = "Marital", @required = "required", @name = "Marital" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.Surname, new { placeholder = "LAST NAME*", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.Firstname, new { placeholder = "FIRST NAME*", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.DateOfBirth, new { placeholder = "DATE OF BIRTH*", id = "DOB", required = "required", @readonly = "true" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.Gender_FK, (SelectList)ViewData["nGender"], "Select Gender", new { @id = "selectGender", @name = "selectGender" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.MeansOfID_FK, (SelectList)ViewData["nMeansOfIDs"], "Select Mean Of Id", new { @id = "meansOfID", @required = "required", @name = "meansOfID" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.TextBoxFor(model => model.IdentficationNumber, new { placeholder = "IDENTIFICATION NUMBER" })
+                                </div>
+                            </div>*@
+
+
+                            @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Contact Information </h3>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+
+                                    @Html.TextBoxFor(model => model.EmailAddress, new { placeholder = "PERSONAL EMAIL", required = "required", @type = "email" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.PhoneNumber, new { placeholder = "PHONE NUMBER", required = "required", maxlength = 11, onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.ContactAddress, new { placeholder = "HOME ADDRESS", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.Landmark, new { placeholder = "LANDMARK*", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                   
+                                    @Html.DropDownListFor(model => model.StateofResidence_FK, (SelectList)ViewData["nStates"], "Select Residence Type", new { @id = "States", @name = "States" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+
+                                    <select id="lgaList" name="lgaList" class="sikSelect" data-live-search="true" required="required" onchange="getText();">
+                                        <option data-tokens="SELECT LGA"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+
+                                    @Html.TextBoxFor(model => model.ClosestBusStop, new { placeholder = "CLOSEST BUS STOP*", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.AccomodationType_FK, (SelectList)ViewData["nAccomodationTypes"], "Select Accomodation Type", new { @id = "AccomodationTypes", @required = "required", @name = "AccomodationTypes" })
+                                </div>
+                            </div>*@
+
+                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader" >Update Employment Information </h3>
+                            </div>
+                            @*<div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.Organization, new { placeholder = "EMPLOYER", onkeyup = "ValidateEmpCode()", id = "txtEmpCode" })
+                                </div>
+                                <span id="message"></span>
+                            </div>*@
+                            @*<input id="btnCheck" type="button" value="Show Availability" onclick="CheckAvailability()" />*@
+                            <div class="col-md-6">
+                                
+                                   
+                                    <div class="single-get-touch" style="display:none">
+                                        @Html.TextBoxFor(model => model.LoanAmount, new { placeholder = "EMPLOYEE ID" })
+                                    </div>
+                               
+                                    <div class="single-get-touch">
+                                        Organisation Code :
+                                        @Html.TextBoxFor(model => model.Organization, new { placeholder = "Company Code", @readonly = true })
+                                    </div>
+                                    <div class="single-get-touch" style="display:none">
+                                       @Html.TextBoxFor(model => model.LoanTenure, new { placeholder = "EMPLOYEE ID" })
+                                    </div>
+                                    <div class="single-get-touch">
+                                        Employee ID :
+                                        @Html.TextBoxFor(model => model.ApplicantID, new { placeholder = "EMPLOYEE ID" })
+                                    </div>
+</div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    Occupation :
+                                    @Html.TextBoxFor(model => model.Occupation, new { placeholder = "OCCUPATION", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    Designation :
+                                    @Html.TextBoxFor(model => model.Designation, new { placeholder = "DESIGNATION", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    Department :
+                                    @Html.TextBoxFor(model => model.Department, new { placeholder = "DEPARTMENT", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    Contract Type :
+                                   @Html.DropDownListFor(model => model.Contract, (SelectList)ViewData["nemploymentStatus"], "Select Employment Type", new { @id = "employment_status", @name = "employment_status" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    Salary Amount :
+                                    @Html.TextBoxFor(model => model.SalaryAmount, new { placeholder = "NET MONTHLY INCOME*", id = "MonthlyIcome", required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off", onfocusout = "convertAmount()" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                   Length Of Service :
+                                    @Html.TextBoxFor(model => model.LOS, new { placeholder = "LENGTH OF SERVICE (X YEARS)", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    Official Email :
+                                    @Html.TextBoxFor(model => model.OfficialEmail, new { placeholder = "OFFICIAL EMAIL*", required = "required" })
+                                </div>
+                            </div>
+
+                            @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Next Of Kin Information </h3>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.NOK_FullName, new { placeholder = "FULL NAME*", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.NOK_Relationship, new { placeholder = "RELATIONSHIP*", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.NOK_HomeAddress, new { placeholder = "HOME ADDRESS*", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.NOK_EmailAddress, new { placeholder = "EMAIL ADDRESS*", required = "required", @type = "email" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.NOK_PhoneNumber, new { placeholder = "PHONE NUMBER*", required = "required", maxlength = 11, onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    
+                                </div>
+                            </div>*@
+                            
+                            @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Credit Facility Request</h3>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.LoanAmount, new { placeholder = "LOAN AMOUNT*", id = "LoansAmount", required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off", onfocusout = "ConvertLoanAmount()", onkeyup = "CheckIfQualifyForLoan()" })
+
+
+
+                                </div>
+                                <span id="Qualify"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.LoanTenure, (SelectList)ViewData["nLoanTenure"], "Select Loan Tenure", new { @id = "LoanTenure", @required = "required", @name = "LoanTenure" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.RepaymentMethod_FK, (SelectList)ViewData["nRepmtMethods"], "Select Repayment Method ", new { @id = "RepmtMethod", @required = "required", @name = "RepmtMethod" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="single-get-check">
+                                    Any Existing Loan
+                                    <label class="radiobox">
+                                        Yes
+                                        <input type="radio" name="ExtLoan" value="Yes" required>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="radiobox">
+                                        No
+                                        <input type="radio" name="ExtLoan" value="No" required>
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0" id="ExistingLoan0">
+                                
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.ExistingLoan_OutstandingAmount, new { @Value = "0", placeholder = "OUTSTANDING AMOUNT*", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="ExistingLoan1">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.ExistingLoan_NoOfMonthsLeft, new { placeholder = "HOW MANY MONTH(S) LEFT*", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                </div>
+                            </div>*@
+
+                            @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Bank Information </h3>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.BankCode, (SelectList)ViewData["nBanks"], "Select Bank", new { @id = "Bank", @required = "required", @name = "Bank" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.AccountNumber, new { placeholder = "ACCOUNT NUMBER*", maxlength = 10, required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.AccountName, new { placeholder = "ACCOUNT NAME*", required = "required" })
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.BVN, new { placeholder = "BANK VERIFICATION NUMBER (BVN)*", required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="single-get-check">
+
+                                    <label class="checkbox">
+
+                                        <input type="checkbox" checked="checked" name="Terms" required>
+
+                                        Accept Terms & Condition
+                                    </label>
+
+                                </div>
+                            </div>*@
+                            <div class="col-md-12">
+           <div class="single-get-touch">
+           <a href="#"> <button type="submit" name="submit" id="btnSubmits" class="btn btn-default btn-sm2 btnAction">Update</button>
+             </a>
+
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    @*</div>*@
+</section>
+<!-- start footer area -->
+<!-- end of footer area -->
+<script src=@Url.Content("/asset/js/jquery-3.3.1.min.js")></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src=@Url.Content("/asset/js/jquery-ui.js")></script>
+<script src=@Url.Content("/asset/js/popper.min.js")></script>
+<script src=@Url.Content("/asset/js/bootstrap.min.js")></script>
+<script src=@Url.Content("/asset/js/jquery.nice-select.js")></script>
+<script src=@Url.Content("/asset/js/menumaker.js")></script>
+<script src=@Url.Content("/asset/js/owl.carousel.min.js")></script>
+<script src=@Url.Content("/asset/js/slider.js")></script>
+<script src=@Url.Content("/asset/js/active.js")></script>
+<script src=@Url.Content("/asset/js/jquery-2.2.3.min.js")></script>
+<script type='text/javascript' src=@Url.Content("/asset/js/jquery-2.2.3.min.js")></script>
+<script src=@Url.Content("/Scripts/jquery-1.10.2.min.js")></script>
+
+
+
+
+
+<script type="text/javascript">
+       
+     function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+</script>
+
+<script type="text/javascript">
+
+        function convertAmount() {
+            //alert(num);
+            var x = document.getElementById("MonthlyIcome").value;
+            
+             x = parseFloat(x).toFixed(2).split('')
+            //alert(x);
+            let ii = x.length - 3
+            while ((ii -= 3) > 0) {
+                x.splice(ii, 0, ',')
+            }
+
+            x.value = x.join('');
+
+            document.getElementById("MonthlyIcome").value = x.value;
+
+        }
+
+        function ConvertLoanAmount() {
+
+            var x = document.getElementById("LoansAmount").value;
+            
+            x = parseFloat(x).toFixed(2).split('')
+
+            let ii = x.length - 3
+            while ((ii -= 3) > 0) {
+                x.splice(ii, 0, ',')
+            }
+
+            x.value = x.join('');
+
+            document.getElementById("LoansAmount").value = x.value;
+
+        }
+
+</script>
+
+

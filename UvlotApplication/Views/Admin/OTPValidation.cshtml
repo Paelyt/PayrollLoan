@@ -1,0 +1,119 @@
+﻿l@{
+    ViewBag.Title = "OTP Validation";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<html>
+<body>
+    <div class="charts">
+        <div class="mid-content-top charts-grids">
+            <div class="middle-content">
+               
+                <section class="section-padding contact-us-padding form-padding">
+
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-lg-10">
+                                @using (Html.BeginForm("OTPValidation", "Admin", FormMethod.Post, new { id = "signup" }))
+                                {
+                                    <form action="#" method="post">
+
+                                        @if (TempData["ErrMsg"] != null)
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                   <span>@TempData["ErrMsg"] </span>
+                        <span>Mandate ID : @TempData["mandateID"]</span>
+</div>
+                                        }
+                                        @if (TempData["SucMsg"] != null)
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                               <span> @TempData["SucMsg"] <p>Kindly Copy Below Information.</p></span>
+                <span>Mandate ID : @TempData["mandateID"]</span>
+                                            </div>
+                                        }
+                                        
+                                        <div class="tables">
+                                            <h2 class="title1">OTP Validation</h2>
+                                            <div class="row list-input">
+
+
+                                               
+
+
+                                                
+                                                <div class="">
+                                                    <div class="single-get-touch">
+
+                                                        @*<input type="text" class="form-control" name="RefNum" value="@TempData["RefNum"]" style="display:none">*@
+
+                                                        <div class="col-sm-6">
+                                                            <div class="single-get-touch">
+                <label class="control-label">Remita TransRef<span class="color-red">*</span></label>
+
+                    <input type="text" class="form-control" name="RefNum" value="" >
+                                                            </div>
+                                                        </div>
+                                                         </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Input OTP<span class="color-red">*</span></label>
+
+                                                        <input type="text" class="form-control" name="otp" required="required" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Input CardNumber<span class="color-red">*</span></label>
+
+                                                        <input type="text" class="form-control" name="cardNo" required="required" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-12">
+                     <div class="single-get-touch">
+     @if (TempData["Msg"] != null){
+         <p>Please Copy Details:</p>
+       <span>Remita TransRef:@TempData["RefNum"]</span>
+       <span>Request ID : @TempData["requestID"]</span>
+       <span>Mandate ID : @TempData["mandateID"]</span>
+       <span>Message : @TempData["Msg"]</span>
+                                   }
+                                                    </div>
+                                                </div>
+
+
+
+                                                        <div class="col-md-12">
+                                                            <div class="single-get-touch">
+
+                                                                <a href="#"><button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Submit</button></a>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                        
+                                       
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>
+
+
+

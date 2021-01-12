@@ -1,0 +1,835 @@
+﻿
+@{
+    ViewBag.Title = "Recommend";
+    //Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+
+@model DataAccessLayerT.DataManager.AppLoan
+<style>
+      #dialog img 
+      {
+            height: 550px;
+            width: 575px;
+            cursor: pointer;
+      }
+      .MyClass
+      {
+      color :white;
+
+      }
+</style>
+<script src=@Url.Content("/DashboardStyles/jquery-3.3.0-jquery.min.js")></script>
+
+@*<body class="cbp-spmenu-push">*@
+       @*<div class="main-content">*@
+@using (Html.BeginForm("Recommends", "Admin", FormMethod.Post, new { id = "signup" }))
+{
+    <form action="#" method="post">
+
+      
+@if (TempData["Error"] != "")
+{
+    <div id="Msgs" class="">
+        @TempData["Error"]
+        <script>
+                 var msg = "@(TempData["Error"] as string)";
+                 toastr.error(msg);
+        </script>
+    </div>
+}
+@if (TempData["ErrMsg"] != "")
+{
+    <div id="Msgs" class="">
+        @TempData["ErrMsg"]
+        <script>
+                 var msg = "@(TempData["ErrMsg"] as string)";
+                 toastr.error(msg);
+        </script>
+    </div>
+}
+
+@if (TempData["SucMsg"] != "")
+{
+    <div id="Msgs">
+
+        <script>
+                 var msg = "@(TempData["SucMsg"] as string)";
+                 toastr.success(msg);
+        </script>
+    </div>
+}
+
+        @*<div id="page-wrapper">
+            <div class="main-page">*@
+
+
+                <br>
+
+
+                <script src="js/index1.js"></script>
+
+
+
+                <div class="charts">
+                    <div class="mid-content-top charts-grids">
+                        <div class="middle-content">
+
+
+                            <!-- start content -->
+                            <div class="row MainRow">
+                                <h3 class="formHeader">Personal Information </h3>
+                                <br>
+                                <div class="col-md-6 ">
+
+
+                                    <div class="complete-line">
+                                    <div class="col-md-4">
+                              <p class="sikLabelTitle">First Name:</p>
+                                    </div>
+                                    <div class="col-md-8">
+                       <p class="sikLabelResult" style="display:none">@Model.institutionFk</p><p class="sikLabelResult">@Model.Firstname</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Last name:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Surname</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Title</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Title</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">ID Num:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.IdentficationNumber</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">DOD:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.DateOfBirth</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Gender:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Gender</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">MeansOFID:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.MeansOfIdentifications</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">MeansOFID Image:</p>
+                                        </div>
+                                        <div id="imgv" class="col-md-8">
+                                            <p class="sikLabelResult">
+                                                <img src="@Url.Content(@Model.IdentficationNumberImage)" height="50" width="50" /> </p>
+                                            @*@Html.DisplayFor(@Model => @Model.IdentficationNumberImage)*@
+
+                                        </div>
+                                    </div>
+                                    <div id="dialog" style="display: none"></div>
+                                    
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Marital Status:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult"> @Model.MaritalStatus</p>
+                                        </div>
+                                    </div>
+                                
+                                
+                                 </div>
+
+                                
+                                
+
+                                <!--Comment Box Ends-->
+                                <!--Radio button srarts-->
+                                
+
+                               
+                               
+                            </div>
+                            
+                            <div class="row MainRow">
+                                <h3 class="formHeader">Contact Information </h3>
+                                <br>
+                                <div class="col-md-6 ">
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Personal Email:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.EmailAddress</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Phone Number:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.PhoneNumber</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Home Address:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.ContactAddress</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Accomodation Type:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.ClosestBusStop</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                               <p class="sikLabelTitle">Landmark:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                           <p class="sikLabelResult">@Model.Landmark</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">State:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.NigerianStates</p>
+                                        </div>
+                                    </div>
+                                    @*<div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">LGA:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@ViewBag.StateofResidence</p>
+                                        </div>
+                                    </div>*@
+                               </div>
+
+
+                                <!--Comment Box Ends-->
+                                <!--Radio button srarts-->
+
+
+
+
+                            </div>
+                            
+                            <div class="row MainRow">
+                                <h3 class="formHeader">Employment Information 
+                                
+                                    <p class="sikLabelResult" style="display:none">@Model.ID</p>
+                                    @Html.ActionLink("Edit", "UpdateApplication", "Admin", new { id = @Model.ID }, new { @style="color:#fff;" })
+                                </h3>
+                                
+                                <br>
+                 <div class="col-md-6">
+                @*<p class="sikLabelResult" style="display:none">@Model.ID</p>
+                    @Html.ActionLink("Edit Employment Info", "UpdateApplication", "Admin", new { id = @Model.ID }, null)*@
+                                   
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Employer:</p>
+                                        </div>
+                                        <div class="col-md-8">
+        <p class="sikLabelResult">@Model.Organization (@Model.InstitutionCode)</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Employement ID:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.IdentficationNumber</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Occupation</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Occupation</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Department</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Department</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Designation:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Designation</p>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Net Month Salary:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                          @*@Model.Salary*@  <p class="sikLabelResult">&#8358;@Model.ConvertedSalary</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Employment Status:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.EmployeeStatus</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                             <p class="sikLabelTitle">Length Of Service:</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p class="sikLabelResult">@Model.LengthOfServices</p>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <p class="sikLabelResult">@Model.LengthOfServiceMonths</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!--Comment Box Ends-->
+                                <!--Radio button srarts-->
+
+
+
+
+                            </div>
+
+                            <div class="row MainRow">
+                         <h3 class="formHeader">Next Of Kin Information </h3>
+                                <br>
+                                <div class="col-md-6 ">
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">First Name:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.NOK_FullName</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Relationship:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.NOK_Relationship</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Home Address:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.NOK_HomeAddress</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Email Address:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.NOK_EmailAddress</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Phone number:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.NOK_PhoneNumber</p>
+                                        </div>
+                                    </div>
+                                  
+                                </div>
+
+
+                                <!--Comment Box Ends-->
+                                <!--Radio button srarts-->
+
+
+
+
+                            </div>
+
+                            <div class="row MainRow">
+                                <h3 class="formHeader">Credit Facility Request </h3>
+                                <br>
+                                <div class="col-md-6 ">
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Loan Amount:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            @*@Model.LoanAmount*@
+                                            <p class="sikLabelResult">&#8358;@Model.ConvertedAmount</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Loan Tenure:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.LoanTenure</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Repayment Method:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.Repayment</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Any Existing Loan:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">
+                                                @if (@Model.ExistingLoan == false)
+                                                {
+                                                <p>None</p>
+                                                }
+                                            @if (@Model.ExistingLoan == true)
+                                            {
+                                                <p>YES</p>
+                                            }
+                                            
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+
+                                    @*<div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Any Existing Loan:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult"></p>
+                                        </div>
+                                    </div>*@
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                 <p class="sikLabelTitle">Outstanding Amount:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                     <p class="sikLabelResult">&#8358;@Model.ConvertedExistingAmount @*@Model.ExistingLoan_OutstandingAmount*@</p>
+                                            <p class="sikLabelResult" style="display:none;">@Model.ExistingLoan_OutstandingAmount</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Month Left:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.ExistingLoan_NoOfMonthsLeft</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <!--Comment Box Ends-->
+                                <!--Radio button srarts-->
+
+
+
+
+                            </div>
+
+                            <div class="row MainRow">
+                                <h3 class="formHeader">Bank Information </h3>
+                                <br>
+                                <div class="col-md-6 ">
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Bank:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.BankCode</p>
+                                            <p style="display:none">@Model.flutterwaveBanCode</p> 
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Account Number:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.AccountNumber</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Account Name:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.AccountName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">BVN:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.BVN
+                  <p class="sikLabelResult" style="display:none">@Model.BVN</p>
+                 @*@Html.ActionLink("Verify", "BVNValidation", "Admin", new { code = @Model.BVN }, null)*@</p>
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                </div>
+                                <!--Comment Box Starts-->
+                                <br />
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8" style="display:none">
+                                        <div class="form-group div-padder">
+                                            <label for="inputComments">Comments</label>
+                                            <textarea class="form-control" id="inputComments" name="comment"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="row MainRow">
+                                <h3 class="formHeader">Guarantor Information </h3>
+                                <br>
+                                <div class="col-md-6 ">
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Surname:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.GuarSurname</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Other Names:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.GuarOthernames</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Contact:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.GuarContact</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 ">
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Phone:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.GuarPhone</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Email:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.GuarEmail</p>
+                                        </div>
+                                    </div>
+                                    <div class="complete-line">
+                                        <div class="col-md-4">
+                                            <p class="sikLabelTitle">Relationship:</p>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <p class="sikLabelResult">@Model.GuarRelationship</p>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                                <!--Comment Box Starts-->
+                                <br />
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8" style="display:none">
+                                        <div class="form-group div-padder">
+                                            <label for="inputComments">Comments</label>
+                                            <textarea class="form-control" id="inputComments" name="comment"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                            </div>
+
+                            <div class="row MainRow">
+                                <h3 class="formHeader">
+                                <p>Please review all information on this application against the company's own records. Check if answer are verified to be accurate and match the company's own records.<br></p></h3>
+                                
+                                <div class="col-md-6 ">
+ </div>
+                               
+                                <!--Comment Box Starts-->
+                               
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8" style="display:none">
+                                        <div class="form-group div-padder">
+                                            <label for="inputComments">Comments</label>
+                                            <textarea class="form-control" id="inputComments" name="comment"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        @*<form>*@
+
+                                        @*<a>
+                                        <input type="checkbox" onclick="toggle(this);" /> Check All<br />
+                                        </a>*@
+                                         <div class="form-group">
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="items" required>
+                                                @*Home Address(Street &nbsp; Number &nbsp; city &nbsp; state)*@
+                                            HOME ADDRESS(@Model.ContactAddress)
+                                            </label>
+                                            <br />
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="items" required>
+                                                Salary(&#8358;@Model.ConvertedSalary)
+                                            </label>
+                                            <br />
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="items" required>
+                                                DESIGNATION(@Model.Designation)
+                                            </label>
+                                            <br />
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="items" required>
+                                             EMPLOYEE ID(@Model.IdentficationNumber)
+                                            </label>
+                                            <br />
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="items" required>
+                                               LENGTH OF SERVICE(@Model.LengthOfServices:@Model.LengthOfServiceMonths)
+                                            </label>
+                                            <br />
+                                            <label class="checkbox-inline">
+                                             <input type="checkbox" name="items" required>
+                                                 BVN(@Model.BVN)
+                                             </label>
+                                             <br />
+                                            <label class="checkbox-inline">
+                                                <input type="checkbox" name="items" required>
+                                                BANK ACCOUNT DETAILS(@Model.BankCode,@Model.AccountName,@Model.AccountNumber)
+                                            </label>
+                                            <br />
+                                        </div>
+
+
+                                        @*</form>*@
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        <div class="form-group div-padder">
+                                            <label for="inputComments">Comments</label>
+                                        <textarea class="form-control" id="inputComments" name="comment" required></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                                <!--Comment Box Ends-->
+                                <!--Radio button srarts-->
+                                <div class="row">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8">
+                                        @*<form>*@
+                                        <div class="form-group">
+                                            <label class="radio-inline">
+                                                <input name="Accept" value="2" type="radio" required>
+                                                Recommend
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input name="Accept" value="8" type="radio" required>
+                                                Reject
+                                            </label>
+                                        </div>
+                                        @*</form>*@
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+
+                                <!--Radio button Ends-->
+                                <!--check box starts-->
+                                <!--check box ends-->
+                                <!--Single Button Starts-->
+                                <div class="row">
+                                    <div class="complete-button">
+                                        <div class="col-md-2"></div>
+                                   @if (@Model.ApplicationStatus == "2")
+                                        {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["Msg"]
+                                        </div>
+                                        }
+                                        else
+                                        {
+                                        <div class="col-md-2" style="">
+                                            <button onclick="return confirm('Are You Sure?')" class="button-two button-proceed"><span>Proceed</span></button>
+                                        </div>
+                                        }
+                                        <div class="col-md-8"></div>
+                                    </div>
+                                </div>
+                                <!--// Single Button Ends-->
+                            </div>
+                            <!--// start content -->
+
+                        </div>
+
+                    </div>
+                </div>
+
+            @*</div>
+        </div>*@
+        </form>
+        }
+@*</div>*@
+
+@*</body>*@
+
+@*<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/start/jquery-ui.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>*@
+
+<script type="text/javascript" src="@Url.Content("/DashboardStyles/jQueryv1.8.3.js")"></script>
+<link rel="stylesheet" href="@Url.Content("/DashboardStyles/jqueryui.1.8.24.css")" />
+<script type="text/javascript" src="@Url.Content("/DashboardStyles/jqueryui-1.8.24-jquery-ui.min.js")">
+
+</script>
+<script type="text/javascript">
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                width: 600,
+                title: "Zoomed Image"
+            });
+            $("#imgv img").click(function () {
+                $('#dialog').html('');
+                $('#dialog').append($(this).clone());
+                $('#dialog').dialog('open');
+            });
+        });
+</script>
+
+<script>
+    function toggle(source) {
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+                checkboxes[i].checked = source.checked;
+        }
+    }
+
+    // Disable checkbox
+    $("input[value='8']").change(function () {
+        $("input[name='items']").prop('disabled', true);
+        $("input[name='items']").prop('checked', false);
+    });
+    // Enable checkbox
+    $("input[value='2']").change(function () {
+        $("input[name='items']").prop('disabled', false);
+    });
+</script>

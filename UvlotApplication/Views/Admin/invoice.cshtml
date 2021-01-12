@@ -1,0 +1,601 @@
+﻿@{
+    ViewBag.Title = "Acknowledgement";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#DOB").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-80:+0",
+            onSelect: function () {
+                console.log('s');
+            },
+            onChangeMonthYear: function () {
+                console.log('o');
+            }
+        });
+    });
+    </script>*@
+
+
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+
+<!-- Bootstrap Date-Picker Plugin -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />*@
+
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+$('table td:nth-child(8)').each(function() {
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    // convert to number and check value
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+
+</script>
+
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title1">Pay Off</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("invoice", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                  <div id="Msgs" class="alert alert-success">
+                                            @TempData["SucMsg"]
+                                  </div>
+                                    }
+                                    <div class="tables">
+
+                                        <div class="row list-input">
+                                        <div class="col-md-6">
+                                        <div class="single-get-touch">
+             @*@Html.TextBoxFor(model => model.DateCreated, new { placeholder = "START DATE", @id= "date", @name= "date", autocomplete = "off", })*@
+
+              <input type="text" name="date" id="date" placeholder="DATE" autocomplete="off" readonly required ="true"/>
+                                                </div>
+                                            </div>
+
+                                            @*<div class="col-md-6">
+                                                <div class="single-get-touch">
+@Html.TextBoxFor(model => model.DateModified, new { placeholder = "END DATE", id = "EndDate", name = "endDate" })
+             <input type="text" value="" id="EndDate" autocomplete = "off" />
+                                                </div>
+                                            </div>*@
+
+                                            <div class="col-md-6">
+                                                <div class="single-get-touch">
+                                                    @Html.DropDownListFor(model => model.institutionFk, (SelectList)ViewData["Institution"], "Institution*", new { @id = "Institition", @required = "required", @name = "Institition" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+                                                    <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Proceed</button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="tables">
+                    <h2 class="title1">Invoice</h2>
+                    <div class="">
+
+                        <div class="table-responsive bs-example widget-shadow">
+                                @*<h4>Users:</h4>*@
+                                @{int i = 0;}
+                                <table id="myTable" class="table table-bordered">
+
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Company</th>
+                                            <th>Location</th>
+                                            <th>EmployeeID</th>
+                                            <th>Reference Number</th>
+                                            <th>Fullname</th>
+                                            <th>Disburse Date</th>
+                                            @*<th>Interest Rate</th>
+    <th>Tenure</th>*@
+                                            <th>&#8358;Interest/Principal due/month</th>
+                                            @*<th>&#8358;Amount Owed</th>*@
+                                            <th>Select <a>
+    <input type="checkbox" onclick="toggle(this);" /> Check All<br />
+</a></th>
+                                        </tr>
+                                    </thea
+                                    <tbody>
+
+                                        @if (ViewBag.Invoice == null)
+                                    {
+                                    <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+
+                                    foreach (var Invoice in ViewBag.Invoice)
+                                        {
+                                    <tr>
+                                        <td scope="row">@(++i)</td>
+                                        <td>@Invoice.Company</td>
+                                        <td>@Invoice.Location</td>
+                                        <td>@Invoice.EmployeeID</td>
+                                        <td>@Invoice.ReferenceNum</td>
+                                        <td>@Invoice.Fullname</td>
+                                        <td>@Invoice.DisburseDate</td>
+                                        @*<td>@Invoice.Interestrate</td>
+    <td>@Invoice.Tenure</td>*@
+                                        @*<td>@Invoice.InterestPricipalDue</td>*@
+                                        <td>@Invoice.Credit</td>
+                                        <td><input type="checkbox" id="invoice" name="chkRow" value="@Invoice.LID" class="checkMe" /></td>
+                                    </tr>
+                                        }
+                                    }
+@if (ViewBag.Invoice != null)
+{
+                      <tr style="position: sticky;">
+                          <td>@*<button type="submit" name="submit" onclick="alert(getCheckedCheckboxesFor('chkRow'));" id="btnSubmit" class="btn btn-default btn-sm2 btnAction">Confirm Payment</button>*@</td>
+                                         <td>
+                      @*@if (ViewBag.Invoice != null)
+                      {*@
+                      <div class="col-md-2">
+                      @*<a href=@Url.Action("Exportoexcel", "Admin")>*@
+                      <button type="submit" style="display:none" class="btn btn-default" @*onclick="ExportToExcel('chkRow')"*@ onchange="CallChangefunc()">Export To Excel</button>
+                      @*</a>*@
+                      </div>
+                          @*}*@
+                      </td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td>
+
+                              @*<a href=@Url.Action("Exportoexcel", "Admin")>*@
+                                  <button type="submit" style="" class="btn btn-default" onclick="alert(ExportToExcel('chkRow'));" @*onchange="CallChangefunc()"*@>Export To Excel</button>
+                                 @*</a>*@
+
+                                      </td>
+                                  <td>
+                                  <button type="submit" name="submit" onclick="alert(GenerateInvoice('chkRow'));" id="btnSubmit" class="btn btn-default btn-sm2 btnAction">Generate Invoice</button>
+                                  </td>
+                                 </tr>
+            }
+                                 @if(TempData["flag"] == "1")
+                                 {
+                                 <tr class="parent" id="2800">
+                                 <td>@*<span class="btn btn-default">text</span>*@
+</td>
+                     <td></td>
+                     <td>Balance : &#8358;@ViewBag.Balance</td>
+                     <td>Balance Due : &#8358;@ViewBag.BalanceDue</td>
+                     <td></td>
+                     <td></td>
+                     </tr>
+                     }
+                     </tbody>
+                     </table>
+                        </div>
+                        <div id="here" value="1"></div>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function ExportToExcel(checkboxName) {
+
+        var comaseperatedIds = "";
+        //alert('tests');
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        if (values.length == 0) {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+            //alert('Value Passed' + values);
+            //  alert('Passed');
+        }
+     
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/GenerateExcel",
+                data: { ItemList: comaseperatedIds },
+                dataType: 'json',
+                success: function (data)
+                {
+                  
+                   // alert(JSON.stringify(data));
+                  
+                    if (data != null) 
+                    {
+                       // alert('Am there');
+                        // var impotantStuff = window.open("http://localhost:9087/Admin/Message");
+                        var impotantStuff = window.open("https://cashnownow.net/Admin/Message");
+                        impotantStuff.document.write('Loading Invoice ......')
+                        // impotantStuff.location.href = "http://localhost:9087/Admin/ExportToExcel";
+                        impotantStuff.location.href = "https://cashnownow.net/Admin/ExportToExcel";
+                    }
+                    else 
+                    {
+                        window.location.href = "url";
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) 
+                {
+                    alert(errorThrown);
+                }
+               
+            });
+           
+        }
+
+            }
+           
+    function GenerateInvoice(checkboxName) {
+        var comaseperatedIds = "";
+        //alert('tests');
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        if (values.length == 0) {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+            //alert('Value Passed' + values);
+          //  alert('Passed');
+        }
+        // return values;
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+           // alert('comaseperatedIds' + comaseperatedIds);
+            //alert('Passed2');
+           // alert('Value Passed2' + values);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/GenerateInvoice",
+                data: { ItemList: comaseperatedIds },
+                dataType: 'json',
+                success: function (data)
+                {
+                    //alert(data.data);
+                   // alert(JSON.stringify(data.data));
+                   // alert(data.InstiD);
+                    if (data != null)
+                    {
+                        alert("Are You Sure");
+                       // alert(data.data.InstiD);
+                        // window.location.href = "http://localhost:9087/Admin/Invoices?instid=" + JSON.stringify(data.data.InstiD) + "&TA=" + JSON.stringify(data.data.TotalAmounyt);
+
+                      /*   var impotantStuff = window.open("http://localhost:9087/Admin/Message");
+                        impotantStuff.document.write('Loading Invoice ......')
+                        impotantStuff.location.href = "http://localhost:9087/Admin/Invoices?instid=" + JSON.stringify(data.data.InstiD) + "&TA=" + JSON.stringify(data.data.TotalAmounyt);*/
+
+                        // window.open ("http://localhost:28957/Admin/Invoices?instid=" + JSON.stringify(data.data.InstiD) + "&TA=" + JSON.stringify(data.data.TotalAmounyt));
+
+                        var impotantStuff = window.open("https://cashnownow.net/Admin/Message");
+                        impotantStuff.document.write('Loading Invoice ......')
+                        impotantStuff.location.href = "https://cashnownow.net/Admin/Invoices?instid=" + JSON.stringify(data.data.InstiD) + "&TA=" + JSON.stringify(data.data.TotalAmounyt);
+                        
+                    }
+                    else
+                    {
+                        window.location.href = "url";
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    alert(errorThrown);
+                }
+                //success: function (response)
+                //{
+                //    //alert('test');
+                //    if (response == "success")
+                //    {
+
+                //    }
+                //    if (response == "false")
+                //    {
+
+                //    }
+
+
+                //}
+                  });
+        }
+    }
+
+    function getCheckedCheckboxesFor(checkboxName) {
+        var comaseperatedIds = "";
+        var Month = document.getElementById('date').value;
+        var institution = document.getElementById('Institition').value;
+
+       // alert('Month' + Month);
+        //alert('institution' + institution);
+        //alert('tests');
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        if (values.length == 0) {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+            
+        }
+      
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+            
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/ConfirmPay",
+                data: { ItemList: comaseperatedIds },
+
+                success: function (response) {
+                   // alert('test');
+                    //alert(response);
+                    //alert(JSON.stringify(response.data.respMSg));
+                    if (JSON.stringify(response.data.respMSg == true))
+                    {
+
+                        Month = JSON.stringify(response.data.DateTimes);
+                        institution = JSON.stringify(response.data.InstiD);
+                        //alert("reload = true");
+                        //alert('Month' + Month);
+                        //alert('INST' + institution);
+                        ReloadGrid(Month,institution);
+                       
+                      //  window.location.href = "http://localhost:28957/Admin/invoice";
+
+                    }
+                    if (JSON.stringify(resp.response.respMSg) == false)
+                    {
+                        // alert(resp);
+                    }
+
+
+                }
+            });
+        }
+        //return values;
+    }
+
+    var SaveList = function () {
+       // alert("test");
+        var table = document.getElementById("myTable");
+        var foo = document.getElementById('invoice').value;
+        var y;
+        var arrItem = [];
+
+
+
+        if (arrItem.length != 0) {
+            comaseperatedIds = arrItem.toString();
+            //alert(comaseperatedIds);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/ConfirmPay",
+                data: { ItemList: comaseperatedIds },
+
+                success: function (response) {
+                    //alert('test');
+                    if (response == "success") {
+                        //  ReloadGrid();
+
+                    }
+                    if (JSON.stringify(resp.response) == "false") {
+                        // alert(resp);
+                    }
+
+
+                }
+            });
+        }
+
+    }
+
+
+
+    function ExportInvoiceToExcel(checkboxName) {
+        var comaseperatedIds = "";
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        if (values.length == 0)
+        {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        if (values.length != 0)
+        {
+            comaseperatedIds = values.toString();
+            //alert('Value Passed' + values);
+            // alert('Passed');
+        }
+        // return values;
+        if (values.length != 0)
+        {
+            comaseperatedIds = values.toString();
+            //alert('comaseperatedIds' + comaseperatedIds);
+            //alert('Passed2');
+            //alert('Value Passed2' + values);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/ExportInvoiceToExcel",
+                data: { ItemList: comaseperatedIds },
+
+                success: function (response) {
+                    // alert('test');
+                    if (response == "success") {
+                        //  ReloadGrid();
+
+                    }
+                    if (JSON.stringify(resp.response) == "false") {
+                        // alert(resp);
+                    }
+
+
+                }
+            });
+        }
+        //return values;
+    }
+
+
+    function ReloadGrid(Month, InstCode)
+    {
+        //alert('Reload');
+        Flag = 0;
+        //Month = "12/10/2019"; InstCode = 3;
+       // alert(Flag); alert('Month' + Month); alert('IntCode' + InstCode);
+        if (Month == null)
+        {
+         alert("Please Select Month");
+         return;
+        }
+        if (InstCode == 0)
+        {
+         alert('Please Select Institution');
+         return;
+        }
+      //  alert('12');
+        $.ajax({
+                type: "POST",
+                url: "/Admin/invoice",
+                data: "{Month:'" + Flag + '&' + Month + '?' + InstCode + "'}",
+                //data: "{LoanAmount:'" + LoanAmount + '&' + InstCode + '?' + Tenure + '^' + SalaryAmt + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+
+                success: function (response)
+                {
+                    // alert('test');
+                    // if (response == "success")
+                   // alert(response);
+                   // alert(Flag); alert('Month' + Month); alert('IntCode' + InstCode);
+                    if (JSON.stringify(response.data.respMSg == true))
+                    {
+                        //ReloadGrid();
+                      //  alert('mnmm');
+                        window.location.href = "http://localhost:28957/Admin/invoice";
+
+                    }
+                    if (JSON.stringify(resp.response) == "false")
+                    {
+                        // alert(resp);
+                    }
+
+
+                }
+            });
+        
+       
+    }
+
+
+   
+
+</script>  
+

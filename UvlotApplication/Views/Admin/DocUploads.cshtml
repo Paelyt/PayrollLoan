@@ -1,0 +1,342 @@
+﻿@{
+    ViewBag.Title = "Document Upload";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+<style>
+    .c 
+    {
+        color: #ffffff;
+    }
+
+    .v 
+    {
+        float: right;
+        color: #ffffff;
+    }
+</style>
+<style>
+    #dialog img {
+        height: 950px;
+        width: 975px;
+        cursor: pointer;
+    }
+</style>
+
+   @*// For Auto Complete*@
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.10.0.min.js" type="text/javascript"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.min.js" type="text/javascript"></script>
+<link href="http://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css"
+      rel="Stylesheet" type="text/css" /> 
+
+@*/// For Auto complete*@
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function ShowProgress()
+    {
+        setTimeout(function ()
+        {
+             var modal = $('<div />');
+             modal.addClass("modal");
+             $('body').append(modal);
+
+             var loading = $(".loading");
+
+             loading.show();
+             var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+             var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+             loading.css({ top: top, left: left });
+         }, 200);
+     }
+     $('form').live("FileUploadContainer", function () {
+         ShowProgress();
+     });
+
+function myFunction() {
+ 
+  if (confirm("Are You Sure!"))
+  {
+  
+  }
+  else
+  {
+      return false;
+  }
+ 
+}
+
+</script>
+<script type="text/javascript">
+
+        var counter = 0;
+        function AddFileUpload()
+        {
+            document.getElementById('Button1').style.display = 'block';
+            var div = document.createElement('DIV');
+            div.innerHTML = '<input id = "File' + counter + '" name = "file' + counter + '" type = "file" onClick="Func1Delay()"/>' + '<input id = "FileName' + counter + '" name = "FileName' + counter + '" type = "Text" onClick="Func1Delay()"/>' +
+                '<input id = "Button' + counter + ' " type="button" ' + ' value ="Remove" onClick ="RemoveFileUpload(this)"/>';
+            document.getElementById("FileUploadContainer").appendChild(div);
+           
+            counter++;
+           
+        }
+
+        function RemoveFileUpload(div)
+        {
+            document.getElementById("FileUploadContainer").removeChild(div.parentNode);
+
+        }
+
+
+        function Func1Delay() {
+          // var img="App_Themes/images/loader.gif";
+          //document.getElementById("Div1").appendChild(img);
+            setTimeout("AddFileUpload()", 3000);
+        }
+</script>
+<style type="text/css">
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: black;
+        z-index: 99;
+        opacity: 0.8;
+        filter: alpha(opacity=80);
+        -moz-opacity: 0.8;
+        min-height: 50px;
+        width: 50px;
+        margin-left: 520px;
+        margin-top: 250px;
+    }
+
+    .loading {
+        font-family: Arial;
+        font-size: 10pt;
+        border: 5px solid #67CFF5;
+        width: 200px;
+        height: 100px;
+        display: none;
+        position: fixed;
+        background-color: White;
+        z-index: 999;
+    }
+</style>
+
+    <div class="charts">
+        <div class="mid-content-top charts-grids">
+            <div class="middle-content">
+                <h4 class="title">Document</h4>
+                <!-- Mega Form Starts -->
+                <section class="section-padding contact-us-padding form-padding">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-lg-10">
+                                @using (Html.BeginForm("DocUploads", "Admin", FormMethod.Post, new { id = "signup", enctype = "multipart/form-data" }))
+                                {
+                                    <form action="#" method="post">
+                                        @if (TempData["ErrMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                                @TempData["ErrMsg"]
+                                            </div>
+                                        }
+                                        @if (TempData["SucMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-success">
+                                                @TempData["SucMsg"]
+                                            </div>
+                                        }
+                                        <div class="row list-input">
+                                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                                <h3 class="formHeader">Upload Document</h3>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                              <input type="text" name="refNum" id="refNum" value="@ViewBag.RefID" placeholder="Ref Number" required />
+                                                    @*<input type="hidden" id="hfCustomer" name="CustomerId" />*@
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    <fieldset width="400">
+                                                        @*<legend class="c">File Upload</legend>*@<input id="Button2" type="button" value="Click Here To Upload Document" onclick="AddFileUpload()" /><br /><br />
+
+                                                        @*<div id="FileUploadContainer"></div>*@
+                                                        <div id="Div1"></div>
+                                                    </fieldset>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mr0" >
+                                                <div class="single-get-touch" >
+                                                   
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch" id="FileUploadContainer">
+
+                                                </div>
+                                            </div>
+     <div class="col-md-12">
+     <div class="single-get-touch">
+     <a href="#"> <button onclick="return myFunction();" type="submit" id="Button1" style="display:none" name="submit" class="btn btn-default btn-sm2 btnAction">Upload Document</button>
+     </a>
+     </div>
+     </div>
+                                    </div>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tables">
+                        <h2 class="title1">All Uploaded Document</h2>
+                        <div class="table-responsive bs-example widget-shadow">
+                        
+                            @{int i = 0;}
+                            <table id="myTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Names</th>
+                                        <th>Doc Name</th>
+                                        <th>Image</th>
+                                        <th>Date</th>
+                                        @*<th>Edit Role</th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (ViewBag.Data == null)
+                                    {
+                                        <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+                                        if (ViewBag.SignedOffer != null)
+                                        {
+
+
+
+                                            foreach (var signOffer in ViewBag.SignedOffer)
+                                            {
+
+                                                if (@signOffer.signature == "Guarantor Letter Signed")
+                                                {
+                                                    <tr>
+                                                        @*http://localhost:28957/Loans/GuarantorLetter?Refid=@signOffer.LoanRefNumber*@
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td>Guarantor offer letter</td>
+                                                        <td><a href="http://cashnownow.net/Loans/GuarantorLetter?Refid=@signOffer.LoanRefNumber" target="_blank">view Guarantor Letter </a></td>
+                                                        <td></td>
+                                                    </tr>
+                                                }
+
+                                           
+                                            if (@signOffer.signature == "Offer Letter Signed")
+                                              {
+                                                <tr>
+                                                    @*http://localhost:28957/Loans/GuarantorLetter?Refid=@signOffer.LoanRefNumber*@
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>Guarantor offer letter</td>
+                                                    <td><a href="http://cashnownow.net/Loans/OfferLetter?Refid=@signOffer.LoanRefNumber" target="_blank">view Offer Letter </a></td>
+                                                    <td></td>
+                                                </tr>
+                                                }
+                                            }
+                                        }
+                                    @*}*@
+                                        foreach (var Docs in ViewBag.Data)
+                                        {
+                                            <tr>
+                                                <td scope="row">@(++i)</td>
+                                                <td>@Docs.Firstname</td>
+                                                <td>@Docs.imageName</td>
+                                                <td id="imgv"><img src="@Url.Content(@Docs.IdentficationNumberImage)" height="50" width="50" /></td>
+                                                <td>@Docs.ApplicationDatevalue</td>
+                                                
+                                                @*<td>
+                                                    <a onclick="return confirm('Are You Sure?')" href="@Url.Action("EditRole", "Admin", new { id = @role.RoleId })">Edit Role</a>
+                                                </td>*@
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            <div id="dialog" style="display: none"></div>
+                        </div>
+                    </div>
+                </section>
+                <!-- // Mega Form Ends-->
+
+            </div>
+
+        </div>
+    </div>
+<script type="text/javascript" src="@Url.Content("/DashboardStyles/jQueryv1.8.3.js")"></script>
+<link rel="stylesheet" href="@Url.Content("/DashboardStyles/jqueryui.1.8.24.css")" />
+<script type="text/javascript" src="@Url.Content("/DashboardStyles/jqueryui-1.8.24-jquery-ui.min.js")">
+
+</script>
+<script type="text/javascript">
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 600,
+                width: 600,
+                title: "Zoomed Image"
+            });
+            $("#imgv img").click(function () {
+                $('#dialog').html('');
+                $('#dialog').append($(this).clone());
+                $('#dialog').dialog('open');
+            });
+        });
+</script>
+
+
+<script type="text/javascript">
+     /*   $(function () {
+            $("#refNum").autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/Admin/GetApplicantName/',
+                        data: "{ 'prefix': '" + request.term + "'}",
+                        dataType: "json",
+                        type: "POST",
+                        contentType: "application/json; charset=utf-8",
+                        success: function (data) {
+                            response($.map(data, function (item) {
+                                alert('test');
+                                alert(item.Surname);
+                                alert(item.Firstname);
+                                alert(item.Organization);
+                                alert(item.LoanRefNumber)
+                               
+                                return item;
+                            }))
+                        },
+                        error: function (response) {
+                            alert(response.responseText);
+                        },
+                        failure: function (response) {
+                            alert(response.responseText);
+                        }
+                    });
+                },
+                select: function (e, i) {
+                   
+                    $("#hfCustomer").val(i.item.val);
+                },
+                minLength: 1
+            });
+        });*/
+</script>
+
+
+
+

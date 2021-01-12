@@ -1,0 +1,10 @@
+--------------------------
+2019-12-27 @ 22:05:27
+--------------------------
+Message: Cannot implicitly convert type 'Newtonsoft.Json.Linq.JObject' to 'System.Web.Http.IHttpActionResult'. An explicit conversion exists (are you missing a cast?)
+
+--------------------------
+2019-12-27 @ 22:08:07
+--------------------------
+Message: Cannot implicitly convert type 'Newtonsoft.Json.Linq.JObject' to 'System.Web.Http.IHttpActionResult'. An explicit conversion exists (are you missing a cast?)
+

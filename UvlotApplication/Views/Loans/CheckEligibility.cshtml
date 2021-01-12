@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Sigin";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+@model DataAccessLayerT.Classes.LoanViewModel
+
+<div class="page-header01">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center ">
+                <h2>Check Eligibility</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Check Eligibility</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">*@
+            @*<h4 class="title">AllApprovedLoans</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("CheckEligibility", "Loans", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != null)
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    <div class="tables">
+                                        <h2 class="title1">Check Eligibility</h2>
+                                        <div class="row list-input">
+
+
+                                            <div class="col-md-12 mr0">
+                                                <div class="single-get-touch">
+                                                    <select id="CheckEligibility" name="CheckEligibility" data-live-search="true" required="required">
+                                                        <option data-tokens="Select State">Check Eligibility</option>
+                                                        @foreach (var StdRec in ViewBag.Institution)
+                                                        {
+                                                            <option id="CheckEligibility" value="@StdRec.ID" data-tokens="@StdRec.Name">@StdRec.Name</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-6">
+                                                <div class="single-get-touch">
+                                                    <label class="control-label">Matriculation Number<span class="color-red">*</span></label>
+                                                    @Html.TextBoxFor(model => model.StudentRecord.MatriculationNumber, new { placeholder = "", type = "text", required = "required", @class = "form-control margin-bottom-20" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="single-get-touch">
+                                                    <label class="control-label">Phone Number<span class="color-red">*</span></label>
+                                                    @Html.TextBoxFor(model => model.StudentRecord.PhoneNumber, new { placeholder = " ", type = "text", required = "required", @class = "form-control margin-bottom-20" })
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+
+                                                    <a href="#"><button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Check</button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <td></td>
+                                </form>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        @*</div>
+    </div>
+
+</div>*@

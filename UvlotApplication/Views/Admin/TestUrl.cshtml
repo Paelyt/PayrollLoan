@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = "CreateUser";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <!--<h4 class="title">Create User</h4>-->
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="tables">
+                    <h2 class="title1">Recommend Loan</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @{int i = 0;}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Phone</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Data == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    @*foreach (var Loan in ViewBag.Data)
+                                        {
+                                         <tr>
+                                            <td scope="row">@(++i)</td>
+                                            <td>@Loan.AccountName</td>
+                                            <td>@Loan.LoanRefNum</td>
+                                        </tr>
+                                        }*@
+
+                                for (i = 0; i < ViewBag.Data.Count; i++)
+                                {
+                                    <tr>
+                                        <td>@ViewBag.Data[i].AccountName</td>
+                                        <td>@ViewBag.Data[i].LoanRefNumber</td>
+                                    </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "Signup";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<div class="page-header01">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center ">
+                <h2>Sign-up</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Sign-up</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="section-padding contact-us-padding form-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+@using (Html.BeginForm("Signup", "User", FormMethod.Post, new { id = "signup" }))
+{
+                <form action="#" method="post">
+
+                    @if (TempData["ErrMsg"] != null)
+                    {
+                        <div id="Msgs" class="alert alert-danger">
+                          
+                            @TempData["ErrMsg"]
+                        </div>
+                    }
+                    
+                    <div class="row list-input">
+                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                            <h3 class="formHeader">Sign-Up</h3>
+                        </div>
+
+
+
+                        
+
+                        <div class="col-md-6 mr0">
+                            <div class="single-get-touch">
+                                <input type="text" name="fname" placeholder="First Name" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="single-get-touch">
+                                <input type="text" name="lname" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mr0">
+                            <div class="single-get-touch">
+                                <input type="email" name="email" placeholder="Email" required>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="single-get-touch">
+                                <input type="text" name="phone" placeholder="Phone" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mr0">
+                            <div class="single-get-touch">
+                                <input type="password" name="password" placeholder="Password *" required>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 right">
+                            <div class="single-get-touch">
+                                <input type="password" name="cpassword" placeholder="Confrim Password *" required>
+                            </div>
+                        </div>
+                       
+                        <div class="col-md-12">
+                            <div class="single-get-touch">
+                                <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Signup</button></a>
+
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                </form>
+}
+            </div>
+        </div>
+    </div>
+</section>
+

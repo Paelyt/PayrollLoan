@@ -1,0 +1,164 @@
+﻿
+@{
+    ViewBag.Title = "Disburse Loan";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+<script type="text/javascript">
+$(document).ready(function() {
+$('table td:nth-child(6)').each(function() {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+</script>
+<style type="text/css">
+    
+    #toast-container > div {
+        opacity: 1;
+    }
+</style>
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <!--<h4 class="title">Create User</h4>-->
+            <!-- Mega Form Starts -->
+            @*@using (Html.BeginForm("DisburseList", "Admin", FormMethod.Post, new { id = "signup" }))
+                {*@
+            @if (TempData["Error"] != "")
+            {
+                <div id="Msgs" class="">
+                    @TempData["Error"]
+                    <script>
+                 var msg = "@(TempData["Error"] as string)";
+                 toastr.error(msg);
+                    </script>
+                </div>
+            }
+@if (TempData["SucMsg"] != "")
+{
+            <div id="Msgs" style="color:blue;">
+             
+                <script>
+                 var msg = "@(TempData["SucMsg"] as string)";
+                 toastr.success(msg);
+                </script>
+            </div>
+}
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="tables">
+                    <h2 class="title1">My Applications</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @{int i = 0;}
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                   <th>RefNumber</th> 
+                                    <th>Name</th>
+                                    <th>Organisation</th>                                        <th>Phone Num</th>
+                                    <th>Loan Amount</th>
+                                    <th>Tenure</th>
+                                    <th>Email Address</th>
+                                    <th>Address</th>
+                                    <th>Date</th>
+                                    <th>Stage</th>
+                                    <th>Comment</th>
+                                    <th style="text-align:center;">View</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (ViewBag.Data == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var Loan in ViewBag.Data)
+                                    {
+                                        <tr>
+                                         <td scope="row">@(++i)</td>
+                                         <td>@Loan.LoanRefNumber</td>
+                                         <td>@Loan.Surname  @Loan.Firstname</td>
+                                         <td>@Loan.Organization</td>
+                                         <td>@Loan.PhoneNumber</td>
+                                         <td>@Loan.LoanAmount</td>
+                                         <td>@Loan.LoanTenure</td>
+                                         <td>@Loan.EmailAddress</td>
+                                         <td>@Loan.ContactAddress</td>
+                                         @*<td>@Loan.DateCreated</td>*@
+                                         <td>@Loan.ApplicationDate</td>
+                                         <td>@Loan.DisburseLoanComment</td>
+                                         <td>@Loan.LoanComment</td>
+                                         <td style="text-align:center;">
+                                          <a @*onclick="return confirm('Are You Sure?')"*@  class="fa fa-edit fa-lg text-info" href="@Url.Action("GetApplication", "Admin", new { Refid = @Loan.LoanRefNumber })">@*View*@</a>
+                                          @* @if (@Loan.ApplicationStatus_FK == 9)
+    {
+        <p>Operations Reject | <a onclick="return confirm('Are You Sure?')" href="@Url.Action("GetApplication", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a></p>
+    }
+     @if (@Loan.ApplicationStatus_FK== 8)
+     {
+         <p>HR Reject | <a onclick="return confirm('Are You Sure?')" href="@Url.Action("GetApplication", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a></p>
+     }
+
+     @if (@Loan.ApplicationStatus_FK == 10)
+     {
+         <p>Document Reject | <a onclick="return confirm('Are You Sure?')" href="@Url.Action("GetApplication", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a></p>
+     }
+     @if (@Loan.ApplicationStatus_FK == 11)
+     {
+         <p>Disburse Reject | <a onclick="return confirm('Are You Sure?')" href="@Url.Action("GetApplication", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a></p>
+     }*@
+                                            
+                                         </td>
+               @*<td id="Loanref" style="display:none">@Loan.LoanRefNumber</td>*@
+               @*<td id="RefNum">
+      <a onclick="return confirm('Are You Sure?')" href="@Url.Action("GetApplication", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a>
+                                            </td>*@
+                                            
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+               
+
+            </section>
+
+            <!-- // Mega Form Ends-->
+            @*}*@
+        </div>
+
+    </div>
+</div>
+
+
+ 

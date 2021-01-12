@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Recommend";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('table td:nth-child(3)').each(function () {
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    // convert to number and check value
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+
+</script>
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title">AllApprovedLoans</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding"></section>
+            <h2 class="title1">Borrowed Loans</h2>
+            <div class="table-responsive bs-example widget-shadow">
+                @*<h4>Users:</h4>*@
+                @{int i = 0;}
+                <table id="myTable" class="table table-bordered">
+
+                    <thead>
+                        <tr>
+                            <th>No</th>
+
+                            <th>No OF Borrowers</th>
+                            <th>(&#8358;)Borrowed Amount</th>
+                            <th>Channel Of Borrow</th>
+                            <th>Channel Of Payback</th>
+                          
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @if (ViewBag.Data == null)
+                        {
+                            <h2>No Record Found</h2>
+                        }
+                        else
+                        {
+
+                            foreach (var LoanApp in ViewBag.Data)
+                            {
+                                <tr>
+
+
+                                    <td scope="row">@(++i)</td>
+                                    <td>@LoanApp.NumOFBorrowers</td>
+                                    <td>@LoanApp.BorrowedAmount</td>
+                                    <td>@LoanApp.ChannelOfBorrow</td>
+                                    <td>@LoanApp.ChannelOfPayback</td>
+
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                @if (ViewBag.Data != null)
+                {
+                    <div class="col-md-2">
+                        <a href=@Url.Action("Exportoexcel", "Admin")>
+                            <button type="submit" class="btn btn-default" onchange="CallChangefunc()">Export To Excel</button>
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+
+       
+        <!-- // Mega Form Ends-->
+
+    </div>
+
+</div>
+
+
+

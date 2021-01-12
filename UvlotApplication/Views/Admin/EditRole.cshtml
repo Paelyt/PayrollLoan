@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "EditRole";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+ }
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Edit Role</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("UpdateRole", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != null)
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+
+                                    <div class="row list-input">
+                     <div class="col-md-12 col-lg-12 formHeaderBg">
+                     <h3 class="formHeader">Edit Page</h3>
+                                    </div>
+                    <input type="text" style="display:none;" name="id" class="form-control1" value="@ViewBag.id" id="exampleInputEmail1" placeholder="ID">
+                    <div class="col-md-6 mr0">
+                    <div class="single-get-touch">
+             <input type="text" style="" name="Rolename" class="form-control1" value="@ViewBag.Rolename" id="exampleInputEmail1" placeholder="Rolename">
+                                            </div>
+                     </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                               
+                                                <textarea rows="4" cols="50" name="Roledescription" class="form-control1" value="@ViewBag.RoleDescription" id="exampleInputEmail2" placeholder="Role Description"></textarea> 
+</div>
+                                        </div>
+                                       
+                                        <div class="col-md-12">
+                                            <div class="single-get-touch">
+                                                <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Update Role</button></a>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+

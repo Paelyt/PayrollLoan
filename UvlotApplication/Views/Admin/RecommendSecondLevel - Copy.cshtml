@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewBag.Title = "Recommend";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Loan Application</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("RecommendSecondLevel", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                  
+
+                                    @if (TempData["Error"] != null)
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["Error"]
+                                        </div>
+                                    }
+
+                                    <div class="row list-input">
+                                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">Personal Information</h3>
+                                        </div>
+                                <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <span>@Model.Surname @Model.Firstname</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                <span>@Model.ValueDate</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <span>@Model.ContactAddress</span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                <span>@Model.EmailAddress</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <span>@Model.PhoneNumber</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 right">
+                                            <div class="single-get-touch">
+                                                <span>@Model.LoanAmount</span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <span>@Model.LoanRefNumber</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 right">
+                                            <div class="single-get-touch">
+                                                <span>@Model.LoanRefNumber</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">Comment</h3>
+                                        </div>
+                                        <div class="col-md-12 mr0">
+                                            <div class="single-get-touch">
+                                                <span required name="" rows="4" cols="50">@Model.LoanComment</span>
+                                            </div>
+                                        </div>
+
+                    <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">FOR USE BY COMPANY HR DEPARTMENT ONLY</h3>
+                        <p>Please review all information on this application against the company's own records. Select YES if answer are verified to be accurate and match the company's own records. Select NO if Inaccurate <br></p>
+                                        </div>
+                                        <br>
+                                        @*<div class="col-md-6 mr0">*@
+                                        <div class="col-md-12">
+                                            <div class="">
+                                                <input type="checkbox" name="Fname" value="1" required> Names(Firstname &nbsp; Lastname)<br>
+                                            </div>
+                                            @*</div>*@
+                                            @*<div class="col-md-6 mr0">*@
+                                            <div class="">
+                                                <input type="checkbox" name="Home" value="2" required> Home Address(Street &nbsp; Number &nbsp; city &nbsp; state)<br>
+                                            </div>
+                                            <div class="">
+                                                <input type="checkbox" name="Occu" value="2" required> OCCUPATION<br>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="">
+                                                <input type="checkbox" name="Desg" value="1" required> Designation<br>
+                                            </div>
+                                            @*</div>*@
+                                            @*<div class="col-md-6 mr0">*@
+                                            <div class="">
+                                                <input type="checkbox" name="Emp" value="2">EMPLOYEE ID<br>
+                                            </div>
+
+                                            <div class="">
+                                                <input type="checkbox" name="Len" value="2" required>LENGTH OF SERVICE<br>
+                                            </div>
+                                            <div class="">
+                                                <input type="checkbox" name="BankAcct" value="2" required>BANK ACCOUNT DETAILS<br>
+                                            </div>
+                                        </div>
+                                        @*</div>*@
+
+
+
+
+
+
+                                        <div class="col-md-12 mr0">
+                                      <div class="single-get-touch">
+                                      <textarea required name="comment" rows="4" cols="50">
+
+                                      </textarea>
+</div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="">
+                    <input type="radio" name="Accept" value="1" required> Accept<br>
+                                            </div>
+                                            </div>
+                                        <div class="col-md-6 mr0">
+                                            <div class="">
+                   <input type="radio" name="Accept" value="5" required> Reject<br>
+                                                </div>
+                                            </div>
+
+                                        <div class="col-md-12">
+                                            <div class="single-get-touch">
+                                                <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Approve</button></a>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+               
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+

@@ -1,0 +1,215 @@
+﻿
+@{
+    ViewBag.Title = "CreateUser";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model DataAccessLayerT.DataManager.Institution
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Create Institution</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("CreateInstitution", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+
+                                    <div class="row list-input">
+                                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">Create Institution</h3>
+                                        </div>
+
+
+
+
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @Html.DropDownListFor(model => model.InstitutionType_FK, new SelectList(ViewBag.listInstitution, "ID", "Name"), "SELECT ONE", new { @onchange = "selectedtext(this); this.form.submit();", @required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                @*<input type="text" name="InstName" placeholder="Institution Name" required>*@
+                                                @Html.TextBoxFor(model => model.Name, new { placeholder = "Institution Name*", required = "required" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @*<input type="email" name="InstCode" placeholder="Institution Code" required>*@
+                                                @Html.TextBoxFor(model => model.InstitutionCode, new { placeholder = "Institution Code*", required = "required" })
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                @*<input type="text" name="InstAddress" placeholder="Institution Address" required>*@
+                                                @Html.TextBoxFor(model => model.InstitutionAddress, new { placeholder = "Institution Address*", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @*<input type="password" name="InstEmail" placeholder="Institution Email *" required>*@
+                                                @Html.TextBoxFor(model => model.InstitutionEmailAddress, new { placeholder = "Institution Email*", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 right">
+                                            <div class="single-get-touch">
+                                                @*<input type="text" name="InstPhone" placeholder="Institution Phone *" required>*@
+                                                @Html.TextBoxFor(model => model.InstitutionPhoneNo, new { placeholder = "Institution Phone*", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @*<input type="text" name="ContactPhone" placeholder="Contact Phone *" required>*@
+                                                @Html.TextBoxFor(model => model.ContactPhoneNo, new { placeholder = "Contact Phone*", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 right">
+                                            <div class="single-get-touch">
+                                                @*<input type="text" name="ContactEmail" placeholder="Contact Email *" required>*@
+                                                @Html.TextBoxFor(model => model.ContactEmailAddress, new { placeholder = "Contact Email*", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @*<input type="text" name="HeadOfInst" placeholder="Head Of Institution *" required>*@
+                                                @Html.TextBoxFor(model => model.HeadOfInstition, new { placeholder = "Head Of Institution *", required = "required" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="single-get-touch">
+                                                <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Create</button></a>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tables">
+                    <h2 class="title1">All Users</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @{int i = 0;}
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>InstitutionCode</th>
+                                    <th>InstitutionAddress</th>
+                                    <th>InstitutionEmailAddress</th>
+                                    <th>InstitutionPhoneNo</th>
+                                    <th>ContactPhoneNo</th>
+                                    <th>ContactEmailAddress</th>
+                                    <th>Date</th>
+                                    <th>Edit User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @if (ViewBag.Data == null)
+                                {
+                                <h2>No Record Found</h2>
+                                 }
+                                 else
+                                 {
+                                 foreach (var user in ViewBag.Data)
+                                 {
+                            <tr>
+                           
+
+                                <td scope="row">@(++i)</td>
+                                <td>@user.Name</td>
+                                <td>@user.InstitutionCode</td>
+                                <td>@user.InstitutionAddress</td>
+                                <td>@user.InstitutionEmailAddress</td>
+
+                                <td>@user.InstitutionPhoneNo</td>
+                                <td>@user.ContactPhoneNo</td>
+                                <td>@user.ContactEmailAddress</td>
+                                <td>@user.ValueDate</td>
+
+                                <td id="services">
+                                    <a onclick="return confirm('Are You Sure?')" href="@Url.Action("EditInstitution", "Admin", new { id = @user.ID })">Edit Institution</a>
+                                   
+                                    
+                                </td>
+                            </tr>
+                            }
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+<script>
+$(function(){
+
+     $("#services").click(function () {
+         alert('enter');
+         var t = $(this).val();
+         var m = 3;
+            var userid = this.getAttribute("userid");
+            $.ajax({
+            type:"POST",
+            url:"@Url.Action("EditUser", "Admin")?id=" + m,
+            dataType:"json",
+            data:JSON.stringify(userid),
+            success:function(data){
+                    console.log(data);
+                },
+            error:function(data) {
+                alert('error');
+                console.log(data);
+            }
+
+
+            });
+          
+        
+
+        })
+        
+</script>

@@ -1,0 +1,447 @@
+﻿
+@{
+    ViewBag.Title = "Sigin";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+    #loading {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.8);
+        z-index: 1000;
+    }
+
+    #loadingcontent {
+        display: table;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #loadingspinner {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        text-align: center;
+        font-size: larger;
+        padding-top: 80px;
+    }
+</style>
+
+
+
+
+<style type="text/css">
+    body 
+    {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+    .textalign{
+          text-align:center;
+    }
+</style>
+
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">*@
+@*<script src="//code.jquery.com/jquery-1.10.2.js"></script>*@
+@*<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>*@
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+<div class="page-header01">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center ">
+                <h2>Apply Now</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Apply Now</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of page header -->
+
+<section class="section-padding contact-us-padding form-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                @using (Html.BeginForm("CreatePayrollLoan", "Loans", FormMethod.Post,
+                new { enctype = "multipart/form-data"}))
+                {
+                    @*<form action="#" method="post">*@
+
+                        if (TempData["Error"] != null)
+                        {
+                            <div id="Msgs" class="alert alert-danger">
+                                @TempData["Error"]
+                            </div>
+                        }
+
+                        <div class="row list-input">
+                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Personal Information </h3>
+                            </div>
+
+
+
+
+
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+
+                                        @*@Html.TextBoxFor(model => model.IdentficationNumber, new { placeholder = "IDENTIFICATION NUMBER" })*@
+                                    </div>
+                                </div>
+
+
+                            <div class="col-md-3 mr0">
+
+                                <div class="single-get-touch">
+
+                                   @*<label>Upload Means Of Identification Image</label>*@
+                                </div>
+
+                            </div>
+
+
+                                <div class="col-md-3 mr0">
+
+                                    <div class="single-get-touch">
+
+                                        @*@Html.TextBoxFor(model => model.IdentficationNumberImage, new { placeholder = "upload image", type = "file" , @name="PostedFile" })*@
+                                        @*<input type="file" name="PostedFile" required />*@
+                                    </div>
+
+                                </div>
+                            @*</fieldset>*@
+                                @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Contact Information </h3>
+                                </div>*@
+                                <div class="col-md-6 mr0">
+                                   
+                                    <span id="messge"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.DropDownListFor(model => model.StateofResidence_FK, (SelectList)ViewData["nStates"], "RESIDENCE STATE*", new { @id = "States", @name = "States" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+
+                                        <select id="lgaList" name="lgaList" class="sikSelect" data-live-search="true" required="required" onchange="getText();">
+                                            <option data-tokens="SELECT LGA"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                   
+                                </div>
+                                <div class="col-md-6">
+                                   
+                                </div>
+
+                                @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Employment Information </h3>
+                                </div>*@
+                                <div class="col-md-6 mr0">
+                                    
+                                    <span id="message"></span>
+                                </div>
+                                @*<input id="btnCheck" type="button" value="Show Availability" onclick="CheckAvailability()" />*@
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-6 mr0">
+                                   
+                                </div>
+                               
+                                <div class="col-md-6 mr0">
+                                    
+                                    <span id="Qualifys"></span>
+                                </div>
+                                <div class="row col-md-6 mr0">
+                                    <div class="col-md-4 mr0">
+                                        @*<div class="single-get-touch">
+
+                                          <label>LENGTH OF SERVICE</label>
+                                        </div>*@
+                                    </div>
+                                    <div class="col-md-4 mr0">
+                                        
+                                    </div>
+                                    <div class="col-md-4 mr0">
+                                        <div class="single-get-touch">
+                                           
+                                           
+                                            <div class="single-get-touch">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                       
+                                    </div>
+                                </div>
+
+                                @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Emergency Contact</h3>
+                                </div>*@
+                                <div class="col-md-6 mr0">
+                                   
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                   
+                                </div>
+                                <div class="col-md-6 mr0">
+                                   
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        
+                                    </div>
+                                </div>
+
+                                @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Loan Details</h3>
+                                </div>*@
+                                <div class="col-md-6 mr0">
+                                  
+                                    <span id="Qualify"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                       
+                                    
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                               
+                                    </div>
+                                </div>
+                                @*<div id="TBS" style="display:none">*@
+                                <table id="TB" style="display:none" class="table table-bordered table-condensed table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Loan Amount</th>
+                                            <th>Loan Tenure</th>
+                                            <th>Loan Repayment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                @*</div>*@
+                                <div class="col-md-12">
+                                    @*<div class="single-get-check">
+                                        Any Existing Loan
+                                        <label class="radiobox">
+                                            Yes
+                                            <input type="radio" name="ExtLoan" value="Yes" required>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radiobox">
+                                            No
+                                            <input type="radio" name="ExtLoan" value="No" required>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>*@
+                                </div>
+
+                                <div class="col-md-6 mr0" id="ExistingLoan0">
+
+                                   
+                                    <span id="QualifyAfterExist"></span>
+                                </div>
+                                <div class="col-md-6" id="ExistingLoan1">
+                                    
+                                </div>
+
+                                @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Bank Information(Salary Account) </h3>
+                                </div>*@
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                    <span id="Qualifys"></span>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                   
+                                </div>
+
+
+
+                                @*<div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Guarantor Information </h3>
+                                </div>*@
+                                <div class="col-md-6 mr0">
+                                   
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-3">
+                                   
+                                </div>
+                            <div class="col-md-3">
+                                
+                            </div>
+                                <div class="col-md-6 mr0">
+                                    
+                                </div>
+                                <div class="col-md-6">
+                                    
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-get-check">
+                                   
+                                        <label class="checkbox">
+                                            <input type="checkbox" required="required" name="Terms">
+                                            <a href="@Url.Action("termcondition","Home")" target="_blank">Accept Terms & Condition</a>
+                                        </label>
+                                </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-get-touch">
+                                        <a href="#"> <button type="submit" name="submit" id="btnSubmit" disabled class="btn btn-default btn-sm2 btnAction">Apply Now</button></a>
+
+                                    </div>
+                                </div>
+
+
+
+</div>
+                    @*</form>*@
+
+
+                    
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- start footer area -->
+<!-- end of footer area -->
+@*<script src=@Url.Content("/asset/js/jquery-3.3.1.min.js")></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src=@Url.Content("/asset/js/jquery-ui.js")></script>
+<script src=@Url.Content("/asset/js/popper.min.js")></script>
+<script src=@Url.Content("/asset/js/bootstrap.min.js")></script>
+<script src=@Url.Content("/asset/js/jquery.nice-select.js")></script>
+<script src=@Url.Content("/asset/js/menumaker.js")></script>
+<script src=@Url.Content("/asset/js/owl.carousel.min.js")></script>
+<script src=@Url.Content("/asset/js/slider.js")></script>
+<script src=@Url.Content("/asset/js/active.js")></script>
+<script src=@Url.Content("/asset/js/jquery-2.2.3.min.js")></script>
+<script type='text/javascript' src=@Url.Content("/asset/js/jquery-2.2.3.min.js")></script>
+<script src=@Url.Content("/Scripts/jquery-1.10.2.min.js")></script>*@
+
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+        $("#States").change(function () {
+            $("#lgaList").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getLGAsByStateID","Loans")',
+                dataType: 'json',
+                data: { id: $("#States").val() },
+                success: function (lga) {
+
+                    $.each(lga, function (i, lga) {
+                        $("#lgaList").append('<option value="'
+                                                   + lga.Value + '">'
+                                             + lga.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

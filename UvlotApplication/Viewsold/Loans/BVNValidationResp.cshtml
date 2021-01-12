@@ -1,0 +1,115 @@
+﻿@{
+    ViewBag.Title = "BVNValidationResp";
+}
+@model DataAccessLayer.MyTableObjects.BVNC
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="log-reg">
+        <div class="container content">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+                    @using (Html.BeginForm("BVNValidationResp", "Loans", FormMethod.Post, new { @class = "reg-page log-reg-page" }))
+                    {
+                        <form class="reg-page log-reg-page" action="" method="post">
+                            <div class="reg-header">
+                                <h2>BVNValidationResp </h2>
+                            </div>
+
+                            <p>
+                                <span style="font-weight: 800; color: #555;">First Name:</span>
+                                <span>@Model.FirstNAme</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Middle Name:</span>
+                                <span>@Model.MiddleName</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Last Name:</span>
+                                <span>@Model.LastName</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Date Of Birth:</span>
+                                <span>@Model.Dateofbirth</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Phone Number:</span>
+                                <span>@Model.Phone</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Registration Date:</span>
+                                <span>@Model.RegistrationDate</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Enrollment Bank:</span>
+                                <span>@Model.EnrollmentBank</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Enrollment Branch:</span>
+                                <span>@Model.EnrollmentBranch</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Gender:</span>
+                                <span>@Model.gender</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Nationality:</span>
+                                <span>@Model.Nationality</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Address:</span>
+                                <span>@Model.address</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Email Address:</span>
+                                <span>@Model.email</span>
+                            </p>
+                            <br />
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Watch Listed:</span>
+                                <span>@Model.watch_listed</span>
+                            </p>
+                            <br />
+
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Marital Status:</span>
+                                <span>@Model.marital_status</span>
+                            </p>
+                            <br />
+
+                            <p>
+                                <span style="font-weight: 800; color: #555;">State Of Residence:</span>
+                                <span>@Model.state_of_residence</span>
+                            </p>
+                            <br />
+
+                            <p>
+                                <span style="font-weight: 800; color: #555;">Lga Of Residence:</span>
+                                <span>@Model.lga_of_residence</span>
+                            </p>
+                            <br />
+                            @*<input type="submit" name="submit" class="btn-u btn-block" value="Submit" /*@>
+                            <input type="button" value="Go back!" onclick="history.back()">
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+        <!-- Log - Reg -->
+    </div>
+
+</body>
+</html>
+
+

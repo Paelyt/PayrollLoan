@@ -1,0 +1,495 @@
+﻿@{
+    ViewBag.Title = "Acknowledgement";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+@*<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#DOB").datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "-80:+0",
+                onSelect: function () {
+                    console.log('s');
+                },
+                onChangeMonthYear: function () {
+                    console.log('o');
+                }
+            });
+        });
+        </script>*@
+
+<script type="text/javascript">
+$(document).ready(function() {
+$('table td:nth-child(7)').each(function() {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+     // alert('test');
+    // convert to number and check value
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+
+
+
+</script>
+
+
+
+<script>
+    $(document).ready(function(){
+      var date_input=$('input[name="date"]'); //our date input has the name "date"
+      var container=$('.bootstrap-iso form').length>0 ? $('.bootstrap-iso form').parent() : "body";
+      var options={
+        format: 'mm/dd/yyyy',
+        container: container,
+        todayHighlight: true,
+        autoclose: true,
+      };
+      date_input.datepicker(options);
+    })
+
+    $(document).ready(function () {
+        var date_input = $('input[name="EndDate"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var options = {
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        };
+        date_input.datepicker(options);
+    })
+    
+</script>
+
+
+
+
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title1">Pay Off</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("PaymentLog", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-success">
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+                                   
+
+                                        <div class="row list-input">
+                                            <div class="col-md-6">
+                                                <div class="single-get-touch">
+                                                  
+                                                    <input type="text" name="date" id="date" placeholder="START DATE" autocomplete="off" readonly required="true" />
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                             <div class="single-get-touch">
+                                                  <input type="text" name="EndDate" id="EndDate" placeholder="End Date" autocomplete="off" readonly required="true" />
+                                             </div>
+                                             </div>
+
+                                            <div class="col-md-6">
+                                                <div class="single-get-touch">
+                                                    @Html.DropDownListFor(model => model.institutionFk, (SelectList)ViewData["Institution"], "Institution*", new { @id = "Institition", @required = "required", @name = "Institition" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+                                                    <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Proceed</button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    
+                                </form>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="tables">
+                    <h2 class="title1">Payment History</h2>
+                    <div>
+
+
+                        <div class="table-responsive bs-example widget-shadow">
+                            @*<h4>Users:</h4>*@
+                            @{int i = 0;}
+                            <table id="myTable" class="table table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Company</th>
+                                        <th>Location</th>
+                                        <th>EmployeeID</th>
+                                        <th>Reference Number</th>
+                                        <th>Fullname</th>
+                                        <th>Amount Paid</th>
+                                        <th>Due Date</th>
+                                        <th>Date Paid</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (ViewBag.PayLog == null)
+                                    {
+                                        <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+
+                                        foreach (var Invoice in ViewBag.PayLog)
+                                        {
+                                            <tr>
+                                                <td scope="row">@(++i)</td>
+                                                <td>@Invoice.Company</td>
+                                                <td>@Invoice.Location</td>
+                                                <td>@Invoice.EmployeeID</td>
+                                                <td>@Invoice.ReferenceNum</td>
+                                                <td>@Invoice.Fullname</td>
+                                                <td>@Invoice.Credit</td>
+                                                <td>@Invoice.RepaymentDate</td>
+                                                <td>@Invoice.DisburseDate</td>
+                                            </tr>
+                                        }
+                                    }
+
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+    function isNumber(evt)
+    {
+                evt = (evt) ? evt : window.event;
+                var charCode = (evt.which) ? evt.which : evt.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                    return false;
+                }
+                return true;
+            }
+
+    function ExportToExcel(checkboxName) {
+        var check = document.getElementsByClassName('checkMe');
+        alert('1');
+        var table = document.getElementById('myTable');
+
+        var element = document.getElementById('here');
+        var node;
+
+            var comaseperatedIds = "";
+            //alert('tests');
+            var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+            Array.prototype.forEach.call(checkboxes, function (el) {
+                values.push(el.value);
+            });
+
+            for (var i = 0; i <= values.length; i++)
+            {
+                if (checkboxes[i].checked)
+                {
+
+                    //while (element.firstChild) {
+                    //    element.removeChild(element.firstChild);
+                    //}
+                    for (var i = 0; i <= table.rows.length; i++) {
+
+                        //if (check.item(i).checked == true) {
+                       if (checkboxes[i].checked){
+                            var comp = table.rows[i].cells[1].innerHTML;
+                            //alert(comp);
+                            var loc = table.rows[i].cells[2].innerHTML;
+                            //alert(loc);
+                            var empid = table.rows[i].cells[3].innerHTML;
+                            //alert(empid);
+                            var ref = table.rows[i].cells[4].innerHTML;
+                            //alert(ref);
+                            var fulln = table.rows[i].cells[5].innerHTML;
+                            //alert(fulln);
+                            var dd = table.rows[i].cells[6].innerHTML;
+                            //alert(dd);
+                            var ir = table.rows[i].cells[7].innerHTML;
+                            //alert(ir);
+                            var para = document.createElement("p");
+                            //alert(para);
+                            //node = document.createTextNode(comp + "" + loc + "" + empid + "" + ref + "" + fulln +"" + dd +"" + ir);
+                           // alert(node)
+                            node = document.createTextNode(ref + "" + dd );
+                            para.append(node);
+
+                            element.appendChild(para);
+
+                            var vs = document.getElementById('here');//.getAttribute('value');
+                            vs = vs.textContent;
+                            alert(vs);
+                           // alert(element.appendChild(para));
+                            alert('testd');
+                        }
+                       alert('testd');
+                       $.ajax({
+
+                           type: "POST",
+                           url: "/Admin/GenerateExcel",
+                           data: { ItemList: vs },
+                           dataType: 'json',
+                           success: function (data) {
+                               //alert(data.data);
+                               alert(JSON.stringify(data.data));
+                               // alert(data.InstiD);
+                               if (data != null) {
+                                   alert(data.data.InstiD);
+                                   // window.location.href = "http://localhost:28957/Admin/Invoices?instid=" + JSON.stringify(data.data.InstiD) + "&TA=" + JSON.stringify(data.data.TotalAmounyt);
+                                   window.location.href = " https://cashnownow.net/Admin/Invoices?instid=" + JSON.stringify(data.data.InstiD) + "&TA=" + JSON.stringify(data.data.TotalAmounyt);
+
+                               }
+                               else {
+                                   window.location.href = "url";
+                               }
+                           },
+                           error: function (xhr, textStatus, errorThrown) {
+                               alert(errorThrown);
+                           }
+                           //success: function (response)
+                           //{
+                           //    //alert('test');
+                           //    if (response == "success")
+                           //    {
+
+                           //    }
+                           //    if (response == "false")
+                           //    {
+
+                           //    }
+
+
+                           //}
+                       });
+                    }
+                    alert('testdv');
+
+
+
+
+
+
+
+                }
+
+                alert('testd');
+            }
+            alert('test');
+            var vs = document.getElementById('here').value;
+            alert('vs'+vs);
+
+
+    }
+
+  
+
+    function getTextBoxVals() {
+        var myTable = document.getElementById('').tBodies[0];
+
+    }
+
+    function getCheckedCheckboxesFor(checkboxName) {
+        var comaseperatedIds = "";
+        var Month = document.getElementById('date').value;
+        var institution = document.getElementById('Institition').value;
+
+       // alert('Month' + Month);
+        //alert('institution' + institution);
+        //alert('tests');
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+
+        var inpuVals = document.querySelectorAll('input[name="' + AmtPaid + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+
+        if (values.length == 0)
+        {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        if (values.length != 0)
+        {
+            comaseperatedIds = values.toString();
+
+        }
+
+        if (values.length != 0) {
+            comaseperatedIds = values.toString();
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/ConfirmPays",
+                data: { ItemList: comaseperatedIds },
+
+                success: function (response) {
+                   // alert('test');
+                    //alert(response);
+                    //alert(JSON.stringify(response.data.respMSg));
+                    if (JSON.stringify(response.data.respMSg == true))
+                    {
+
+                        Month = JSON.stringify(response.data.DateTimes);
+                        institution = JSON.stringify(response.data.InstiD);
+                        //alert("reload = true");
+                        //alert('Month' + Month);
+                        //alert('INST' + institution);
+                        ReloadGrid(Month,institution);
+
+                      //  window.location.href = "http://localhost:28957/Admin/invoice";
+
+                    }
+                    if (JSON.stringify(resp.response.respMSg) == false)
+                    {
+                        // alert(resp);
+                    }
+
+
+                }
+            });
+        }
+        //return values;
+    }
+
+   
+
+
+
+    function ExportInvoiceToExcel(checkboxName) {
+        var comaseperatedIds = "";
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        if (values.length == 0)
+        {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        if (values.length != 0)
+        {
+            comaseperatedIds = values.toString();
+            //alert('Value Passed' + values);
+            // alert('Passed');
+        }
+        // return values;
+        if (values.length != 0)
+        {
+            comaseperatedIds = values.toString();
+            //alert('comaseperatedIds' + comaseperatedIds);
+            //alert('Passed2');
+            //alert('Value Passed2' + values);
+
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/ExportInvoiceToExcel",
+                data: { ItemList: comaseperatedIds },
+
+                success: function (response) {
+                    // alert('test');
+                    if (response == "success") {
+                        //  ReloadGrid();
+
+                    }
+                    if (JSON.stringify(resp.response) == "false") {
+                        // alert(resp);
+                    }
+
+
+                }
+            });
+        }
+        //return values;
+    }
+
+
+ 
+    window.onload = function () {
+
+        var x = document.getElementById('TotAmt').innerHTML;
+        x = parseFloat(x).toFixed(2).split('')
+
+        let ii = x.length - 3
+        while ((ii -= 3) > 0) {
+            x.splice(ii, 0, ',')
+        }
+
+        x.value = x.join('');
+
+        document.getElementById('TotAmt').innerHTML = x.value;
+
+    };
+</script>
+

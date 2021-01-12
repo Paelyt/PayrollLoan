@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Acknowledgement";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+
+@*This is For Date Time On this Page*@
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+<script>
+    $(function () {
+
+        $("#StartDate").datepicker();
+});
+</script>
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title1">Pay Off</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        
+
+                    </div>
+
+                </div>
+                <div class="tables">
+                    <h2 class="title1">Transaction Log</h2>
+                    <div class="">
+
+                        <div class="table-responsive bs-example widget-shadow">
+                            @*<h4>Users:</h4>*@
+                            @{int i = 0;}
+                            <table id="myTable" class="table table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Reference Number</th>
+                                        <th>Fullname </th>
+                                        <th>Mandate ID</th>
+                                        <th>RequestID</th>
+                                        <th>Email</th>
+                                        <th>Phone Number</th>
+                                        <th>Start Date</th>
+                                        <th>ActivationDate</th>
+                                        <th>View Status</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                <tbody>
+
+                                    @if (ViewBag.RemitaLog == null)
+                                    {
+                                        <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+                                        foreach (var RemitaLog in ViewBag.RemitaLog)
+                                        {
+                                            <tr>
+                                                <td scope="row">@(++i)</td>
+                                                <td>@RemitaLog.RemitaTransRef</td>
+                                                <td>@RemitaLog.FirstName</td>
+                                                <td>@RemitaLog.MandateID</td>
+                                                <td>@RemitaLog.RequestID</td>
+                                                <td>@RemitaLog.Email</td>
+                                                <td>@RemitaLog.Phone</td>
+                                                <td>@RemitaLog.startDate</td>
+                                            <td>@RemitaLog.ActivationDate</td>
+
+                                                <td id="RefNum">
+                                                    <a onclick="return confirm('Are You Sure?')" href="@Url.Action("MS", "Admin", new { Refid = @RemitaLog.MandateID + "}" + @RemitaLog.RequestID  })">View Status</a>
+                                                </td>
+                                              
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+    

@@ -1,0 +1,139 @@
+﻿
+@{
+    ViewBag.Title = "Disburse Loan";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+<script type="text/javascript">
+$(document).ready(function() {
+$('table td:nth-child(5)').each(function() {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+</script>
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <!--<h4 class="title">Create User</h4>-->
+            <!-- Mega Form Starts -->
+            @*@using (Html.BeginForm("DisburseList", "Admin", FormMethod.Post, new { id = "signup" }))
+                {*@
+            @if (TempData["Error"] != null)
+            {
+                <div id="Msgs" class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="tables">
+                    <h2 class="title1">My Applications Status</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @{int i = 0;}
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Organisation</th>                                        <th>Phone Num</th>
+                                    <th>Loan Amount</th>
+                                    <th>Email Address</th>
+                                    <th>Address</th>
+                                    <th>Date</th>
+                                    <th>Loan Tenure</th>
+                                    <th>Status</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @if (ViewBag.Data == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var Loan in ViewBag.Data)
+                                    {
+                                        <tr>
+                                          <td scope="row">@(++i)</td>
+                                          <td>@Loan.Surname  @Loan.Firstname</td>
+                                          <td>@Loan.Organization</td>
+                                          <td>@Loan.PhoneNumber</td>
+                                          <td>@Loan.LoanAmount</td>
+                                          <td>@Loan.EmailAddress</td>
+                                          <td>@Loan.ContactAddress</td>
+                                          <td>@Loan.ApplicationDate</td>
+                                          <td>@Loan.LoanTenure</td>
+                                          
+                                          <td id="RefNum"> 
+                                             @Loan.ApplicationStatus
+                    @*@if (@Loan.ApplicationStatus_FK == 3)
+                                              {
+                                              <p>Pending</p>
+                                               }
+                                                  @if (@Loan.ApplicationStatus_FK == 6)
+                                                  {
+                                              <p>Disbursed</p>
+                                                  }
+                                                  @if (@Loan.ApplicationStatus_FK == 5)
+                                                  {
+                                              <p>Declined</p>
+    }
+    @if (@Loan.ApplicationStatus_FK == 4)
+    {
+                                              <p>Cancelled</p>
+                                                  }
+                                              
+                                                 @if (@Loan.ApplicationStatus_FK == 2)
+                                                  {
+                                              <p> Recommended </p>
+    }
+    @if (@Loan.ApplicationStatus_FK == 1)
+    {
+                                              <p>Approved</p>
+                                                  }*@
+</td>
+                                         </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+               
+
+            </section>
+
+            <!-- // Mega Form Ends-->
+            @*}*@
+        </div>
+
+    </div>
+</div>
+
+
+ 

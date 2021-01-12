@@ -1,0 +1,499 @@
+﻿
+@{
+    ViewBag.Title = "Disburse Loan";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+<style>
+.clean 
+{
+        width: 400px;
+        height: 49px;
+        margin-top: -3px;
+        border-top: 0px;
+        border-right: 0px;
+        border-left: 0px;
+    }
+</style>
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>*@
+<script type="text/javascript">
+$(document).ready(function() {
+    $('table td:nth-child(6),table td:nth-child(5),input').each(function () {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+    });
+
+
+
+    $("#chkall").change(function () {
+        $(".setA").prop('checked', $(this).prop("checked"));
+        changeval();
+    });
+
+    $(".sum").change(function () {
+        changeval();
+    });
+    var changeval = function () {
+        var totalPrice = 0;
+        var count = 0;
+        $(".sum").each(function (index) {
+
+            if (this.checked) {
+
+                var ddl = parseFloat(this.value.split("+").pop());
+                totalPrice += parseFloat(ddl);
+              //  totalWeight += parseFloat(this.getAttribute('Bweight'));
+                count++;
+            }
+        });
+        if (count <= 0) {
+            totalPrice = 0;
+        }
+        var tot = document.getElementById("total");
+        tot.value = totalPrice;
+      
+       // $("#payment-total").html(totalPrice);
+    }
+
+
+});
+
+$(document).ready(function(){
+
+    
+  });
+</script>
+
+<link href=@Url.Content("/DashboardStyles/css/MyTable.css") rel="stylesheet">
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <!--<h4 class="title">Create User</h4>-->
+            <!-- Mega Form Starts -->
+@*@using (Html.BeginForm("DisburseList", "Admin", FormMethod.Post, new { id = "signup" }))
+{*@
+            @if (TempData["ErrMsg"] != "")
+            {
+                <div id="Msgs" class="alert alert-danger">
+                    @TempData["ErrMsg"]
+                </div>
+            }
+            @if (TempData["SucMsg"] != "")
+            {
+                <div id="Msgs" class="alert alert-danger">
+                    @TempData["SucMsg"]
+                </div>
+            }
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="tables">
+                    <h2 class="title1">Disburse Loan</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @{int i = 0;}
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Name</th>
+                                    <th>Company</th>
+                                    <th>Bank Name</th>
+                                    <th>(&#8358;)Loan Amount</th>
+                                    <th>(&#8358;)Salary</th>
+                                    <th>Loan Tenure</th>
+                                    <th>Date</th>
+                                    @*<th>Status</th>*@
+                                    <th style="display:none">Ref Num</th>
+                                    <th>View</th>
+               <th>Disburse <a style="display:none;">
+                   <input type="checkbox"   data-toggle="checkbox" id="chkall" /> Check All<br /></a>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                            @if (ViewBag.Data == null)
+                            {
+                                <h2>No Record Found</h2>
+                            }
+                            else
+                            {
+                                
+                                foreach (var Loan in ViewBag.Data)
+                                {
+                            <tr>
+                        <td scope="row">@(++i)</td>
+                        <td>@Loan.Surname  @Loan.Firstname</td>
+                        <td>@Loan.Organization</td>
+                        <td>@Loan.BankCode</td>
+                        <td>@Loan.LoanAmount</td>
+                        <td>@Loan.Salary</td>
+                        <td>@Loan.LoanTenure</td>
+                      @*<td>@Loan.LoanAmount</td>*@
+                        <td>@Loan.ValueDate</td>
+             <td id="Loanref" style="display:none">@Loan.LoanRefNumber</td>
+             <td id="RefNum"  style="text-align:center;">
+       <a @*onclick="return confirm('Are You Sure?')"*@ class="fa fa-eye fa-lg text-success" title="view Application" href="@Url.Action("Disburse", "Admin", new { Refid = @Loan.LoanRefNumber })">@*View*@</a>
+                     </td>
+                     <td style="text-align:center;" name="Accepts">
+                     @*<select  id="disbursetype" name="Accept" required>
+                     <option value="0" default selected>Select</option>
+                     <option value="6">Disburse</option>
+                     <option value="5">Reject</option>
+                     </select>*@
+                         @*<input type="checkbox" id="invoice" onclick="getCheckedCheckboxesFor('chkRow')" name="chkRow" value="@Loan.LoanRefNumber" />*@
+                    <input type="checkbox" id="invoice" onclick="totalIt('chkRow')" name="chkRow" value="@Loan.LoanRefNumber+@Loan.LoanAmount" class="sum setA" />
+                     </td>
+                                
+                            </tr>
+                            }
+                                @*<tr><td><input id="total" value="$0.00" readonly="readonly" type="text" name="total" /></td></tr>*@
+                               
+                            }
+                                @*<tr class="col-md-6" style="position: fixed; background-color: grey;">
+                                    <td width="1000">
+                                        Total
+                                    </td>
+                                    <td width="1000">
+                                        <input id="total" value="$0.00" readonly="readonly" type="text" name="total" />
+                                    </td>
+                                </tr>*@   
+@if (ViewBag.Data != null)
+{
+    
+        <div class="col-md-8">
+            @*<span style="margin-left:-10px">
+                Total:
+            </span>*@
+            <span>
+                @*Total Amount:*@  <input id="total" value="" placeholder="TOTAL AMOUNT(N0.00)" readonly="readonly" type="text" name="total" class="clean" />
+                @*<input id="count" value="0" readonly="readonly" type="text" name="total" />*@
+            </span>
+            <span>
+                <button type="submit" name="submit" onclick="alert(getCheckedCheckboxesFor('chkRow'));" id="btnSubmit" class="btn btn-default btn-sm2 btnAction">Confirm</button>
+            </span>
+            @*<div class="col-md-3">
+                    <a href="#">
+
+                        <button type="submit" name="submit" onclick="alert(getCheckedCheckboxesFor('chkRow'));" id="btnSubmit" class="btn btn-default btn-sm2 btnAction">Confirm</button>
+                    </a>
+                </div>*@
+        </div>
+
+    
+                                @*<div class="col-md-2">
+
+                                  
+                                </div>*@
+}
+</tbody>
+                            
+                        </table>
+
+                        @*<fieldset>
+                            <legend>Total Amount</legend>
+                            <div class="card-charge-info">
+                                Weight <span id="payment-weight">0</span>
+                            </div>
+                            <div class="card-charge-info">
+                                Price <span id="payment-total">0</span>
+                            </div>
+                        </fieldset>*@
+
+                       
+                       
+
+
+                          </div>
+@*@if (ViewBag.Data != null)
+{
+                    <div>
+                        <a href="#">
+                            Not Using this<button  type="submit" name="submit" onclick="SaveList()" id="btnSubmit" class="btn btn-default btn-sm2 btnAction">Disburse</button>
+
+                            <button type="submit" name="submit" onclick="alert(getCheckedCheckboxesFor('chkRow'));" id="btnSubmit" class="btn btn-default btn-sm2 btnAction">Confirm</button>
+                        </a>
+                    </div>
+}*@
+                </div>
+                
+
+</section>
+
+            <!-- // Mega Form Ends-->
+                            @*}*@
+        </div>
+
+    </div>
+</div>
+<script>
+    
+    function totalIt(checkboxName)
+    {
+        var comaseperatedIds = "";
+        //alert('tests');
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        var counts = 0;
+        var total = 0;
+        for (var i = 0; i < values.length; i++)
+        {
+            if (checkboxes[i].checked)
+            {
+           
+            var input = values;//document.getElementsByName("chkRow");
+            comaseperatedIds = values.toString();
+            var ddl = parseFloat(comaseperatedIds.split("+").pop());
+           
+            var valuess = parseFloat(values[i].split("+").pop());
+           
+            total += parseFloat(valuess);
+          
+           }
+        }
+      
+        var tot = document.getElementById("total");
+       
+        tot.value = total;
+      
+    }
+
+    function getCheckedCheckboxesFor(checkboxName) {
+        var comaseperatedIds = "";
+        //alert('tests');
+        var checkboxes = document.querySelectorAll('input[name="' + checkboxName + '"]:checked'), values = [];
+        Array.prototype.forEach.call(checkboxes, function (el) {
+            values.push(el.value);
+        });
+        if (values.length == 0)
+        {
+            alert("Please Select A Checkbox");
+            return;
+        }
+        
+        
+        if (values.length != 0)
+        {
+            var TotalSum = 0;
+          
+            var invoice = document.getElementById("total");
+            comaseperatedIds = values.toString();
+         
+            invoice.value = "N" + TotalSum;
+           
+            $.ajax({
+
+                type: "POST",
+                url: "/Admin/DisburseList",
+                data: { ItemList: comaseperatedIds },
+
+                success: function (response) {
+                  
+                     if (JSON.stringify(response.response  == "true"))
+                    {
+                       
+                         // window.location.href = "http://localhost:28957/Admin/index";
+                         // alert("Transaction Succesful");
+                       alert(JSON.stringify(response.Data));
+                       var impotantStuff = window.open("http://localhost:28957/Admin/Message");
+                       impotantStuff.document.write('Loading Invoice ......')
+                       impotantStuff.location.href = "http://localhost:28957/Admin/DisburseLoan";
+                    }
+                     if (JSON.stringify(response.response == "false"))
+                     {
+                      // alert("Error Please Try Again");
+                      alert(JSON.stringify(response.Data));
+                      window.location.href = "http://localhost:28957/Admin/DisburseLoan";
+                    }
+
+
+                }
+            });
+        }
+        //return values;
+    }
+
+    var SaveList = function ()
+    {
+        var arrItem = [];  
+        var comaseperatedIds = "";
+        var table = document.getElementById("myTable");
+        var foo = document.getElementById('disbursetype');
+        var y;
+       
+        for (var i = 1; i < table.rows.length; i++)
+        {
+               var row = "";
+              
+
+               if (foo[i].value == '6')
+               {
+                          alert(foo);
+                          row = table.rows[i].cells[8].innerHTML;
+                          arrItem.push(row);
+                          alert('Test 6');
+               }
+               if (foo[i].value == '0')
+               {
+                   alert(foo);
+                   alert(row);
+                   alert('Test 0');
+                   return;
+               }
+               if (foo[i].value == '5')
+               {
+                   alert(foo);
+                   alert(row);
+                   alert('Test 5');
+                   return;
+               }
+                alert('row' + row)
+                alert(arrItem);
+
+            }
+        
+        if (arrItem.length != 0)
+        {
+            comaseperatedIds = arrItem.toString();
+            alert(comaseperatedIds);
+
+              $.ajax({
+                  //async: false,
+                  type: "POST",
+                  url: "/Admin/DisburseList",
+                  data: { ItemList: comaseperatedIds },
+                 // contentType: "application/json; charset=utf-8",
+                 // dataType: "html",
+                  // dataType: 'json',
+                  // contentType: "application/json; charset=utf-8",
+                  success: function (response)
+                  {
+                      alert('test');
+                  if (response == "success")
+                  {
+                    //  ReloadGrid();
+                    
+                  }
+                  if (JSON.stringify(resp.response) == "false")
+                  {
+                     // alert(resp);
+                  }
+
+
+                  }
+              });
+        }
+
+      //  $.ajax({
+      //      async: false,
+      //      type: "POST",
+      //      url: "/Admin/DisburseList",
+      //      data: { ItemList: arrItem },
+      //      contentType: "application/json; charset=utf-8",
+      //      dataType: "html",
+      //      // dataType: 'json',
+      //      // contentType: "application/json; charset=utf-8",
+      //      success: function (resp)
+      //      {
+      //          //var message = $("#Qualify");
+      //      if (JSON.stringify(resp.response) == "true")
+      //      {
+      //              //  alert(JSON.stringify(resp.Loanrec));
+      //              /*   message.css("color", "green");
+      //               //message.html(JSON.stringify(resp.Data));
+      //               var tr; var th
+      //               foo = document.getElementById('TB');
+      //               tr = $('<tr/>');
+      //               tr.append("<th>" + "Loan Amount" + "</th>");
+      //               tr.append("<th>" + "Loan Tenure" + "</th>");
+      //               tr.append("<th>" + "Loan Repayment" + "</th>");
+      //               $('table').append(tr);
+      //               //Append each row to html table  
+      //               for (var i = 0; i < JSON.stringify(resp.Loanrec.length) ; i++) {
+      //                   // alert(JSON.stringify(resp.Loanrec))
+      //                   tr = $('<tr/>');
+      //                   tr.append("<td>" + resp.Loanrec[i].LoanAmount + "</td>");
+      //                   tr.append("<td>" + resp.Loanrec[i].LoanTenure + "</td>");
+      //                   tr.append("<td>" + resp.Loanrec[i].LoanRepayment + "</td>");
+      //                   $('table').append(tr);
+      //               }
+      //               foo.style.display = 'block';
+      //               foo.setAttribute("class", "table table-bordered table-condensed table-hover table-striped");
+      //               message.html();
+      //               document.getElementById("btnSubmit").disabled = false;*/
+      //          }
+      //      if (JSON.stringify(resp.response) == "false")
+      //          {
+      //              /* foo.html("");
+      //               message.css("color", "red");
+      //               message.html(JSON.stringify(resp.Data));
+      //               document.getElementById("btnSubmit").disabled = true;
+      //               */
+      //          }
+
+
+      //      }
+      //  });
+    }
+    function ReloadGrid()
+    {
+                $.ajax({
+                //async: false,
+                type: "GET",
+                url: "/Admin/DisburseLoan",
+                data: { ItemList: comaseperatedIds },
+                // contentType: "application/json; charset=utf-8",
+                // dataType: "html",
+                // dataType: 'json',
+                // contentType: "application/json; charset=utf-8",
+                success: function (resp) {
+                    //var message = $("#Qualify");
+                    if (JSON.stringify(resp.response) == "true") {
+                        alert(resp);
+                    }
+                    if (JSON.stringify(resp.response) == "false") {
+                        alert(resp);
+                    }
+
+
+                }
+            });
+        
+    }
+</script>
+
+<script>
+    function toggle(source) {
+        alert('en1');
+        var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (checkboxes[i] != source)
+               checkboxes[i].checked = source.checked;
+}
+        
+    }
+</script>
+

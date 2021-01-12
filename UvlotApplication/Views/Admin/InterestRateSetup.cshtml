@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Reports";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+
+@model DataAccessLayerT.DataManager.LoanInterestRate
+@*<h2>Report</h2>*@
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Interest Rate</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            <div class="col-md-12 col-lg-10">
+                                @using (Html.BeginForm("InterestRateSetup", "Admin"))
+                                {
+
+                                    @*<input type="text" id="txt" name="txt" readonly="readonly" />*@
+                                    <form action="#" method="post">
+
+                                        @if (TempData["ErrMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+
+                                                @TempData["ErrMsg"]
+                                            </div>
+                                        }
+                                        @if (TempData["SucMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+
+                                                @TempData["SucMsg"]
+                                            </div>
+                                        }
+
+                                        <div class="row list-input">
+                                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                                <h3 class="formHeader">Create Interest Rate</h3>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    @Html.DropDownListFor(model => model.Institution_FK, new SelectList(ViewBag.listInstitution, "ID", "Name"))
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                   @Html.DropDownListFor(model => model.LoanTenure, new SelectList(ViewBag.listInterestRate, "ID", "LoanTenure"))
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    @Html.TextBoxFor(model => model.InterestRate, new { placeholder = "Interest Rate*", required = "required" })
+                                                </div>
+                                            </div>
+                                           
+                                           
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    <input type="submit" name="InterestRate" value="Create Rate" />
+                                                    </div>
+                                                </div>
+
+</div>
+</form>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tables">
+                    <h2 class="title1">Interest Rate Setup</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Roles:</h4>*@
+                        @{int i = 0;}
+                        <table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Loan Tenure</th>
+                                    <th>Interest Rate</th>
+                                    <th>Institution</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Data == null)
+                                {
+                                <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var UserRole in ViewBag.Data)
+                                    {
+
+
+                                <tr>
+                                    <td scope="row">@(++i)</td>
+                                    <td>@UserRole.LoanTenure</td>
+                                    <td>@UserRole.interestRate</td>
+                                    <td>@UserRole.Organization</td>
+                                </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                
+                      </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+                    function selectedtext(ddlitem) {
+                        var selvalue = ddlitem.value;
+                        var seltext = ddlitem.options[ddlitem.selectedIndex].innerHTML;
+                        $('#txt').val(seltext)
+                    }
+</script>
+

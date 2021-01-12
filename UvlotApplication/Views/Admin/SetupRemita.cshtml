@@ -1,0 +1,201 @@
+﻿@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model DataAccessLayerT.Classes.LoanApplication
+
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Create Remita</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("SetupRemita", "Admin", FormMethod.Post))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-success">
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+
+                                    <div class="row list-input">
+                                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">Setup Remita</h3>
+                                        </div>
+
+
+                                      
+
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="amount" placeholder="Amount" /> 
+                                            </div>
+                                        </div>
+
+                                       
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="refNumber" placeholder="Reference Number" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="payerName" placeholder="Payer Name" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="payerPhone" placeholder="Phone Number" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="payerEmail" placeholder="Payer Email" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                @Html.DropDownListFor(model => model.BankCode, (SelectList)ViewData["nBanks"], "Bank*", new { @id = "Bank", @required = "required", @name = "Bank" })
+                                            </div>
+                                        </div>
+
+                                        @*<div class="col-md-6 mr0">
+                                            <span>Bank Code</span>
+                                            <div class="single-get-touch">
+                                                @Html.DropDownListFor(model => model.BankCode, (SelectList)ViewData["nBanks"], "Bank*", new { @id = "Bank", @required = "required", @name = "Bank", onchange = "VerifyAccountNumber()" })
+                                            </div>
+                                        </div>*@
+
+
+                                       
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="payerAccount" placeholder="Payer Account" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="startDate" placeholder="Start Date" required>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="endDate" placeholder="End Date" />
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6" style="display:none;">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="mandateType"  placeholder="Mandate Type">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="maxNoOfDebits" placeholder="Max No Of Debits" />
+                                            </div>
+                                        </div>
+
+                                    
+
+                                        <div class="col-md-12">
+                                            <div class="single-get-touch">
+                                                <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Generate Remita</button></a>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+@*<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SetupRemita</title>
+</head>
+<body>
+    <div> 
+
+       @using (Html.BeginForm("SetupRemita", "Admin", FormMethod.Post))
+       {
+
+
+        <input  type="text" name="amount" />
+
+        
+        <input type="text" name="refNumber" />
+       
+        <input type="text" name="payerName" />
+
+        <input type="text" name="payerPhone" />
+
+
+        <input type="text" name="payerEmail" />
+
+        <input type="text" name="payerBankCode" />
+
+        <input type="text" name="payerAccount" />
+
+        <input type="text" name="startDate" />
+
+        <input type="text" name="endDate" />
+
+        <input type="text" name="mandateType" />
+
+        <input type="text" name="maxNoOfDebits" />
+
+
+
+        <input type="submit"  name="sun" value="submit"/>
+       }
+
+
+
+
+
+
+    </div>
+</body>
+</html>*@
+
+
+

@@ -1,0 +1,103 @@
+﻿@{
+    ViewBag.Title = "Check Mandate Status";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+<html>
+<body>
+    <div class="charts">
+        <div class="mid-content-top charts-grids">
+            <div class="middle-content">
+                
+
+                <section class="section-padding contact-us-padding form-padding">
+
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-lg-10">
+                                @using (Html.BeginForm("CheckMandateStatus", "Admin", FormMethod.Post, new { id = "signup" }))
+                                {
+                                    <form action="#" method="post">
+
+                                        @if (TempData["ErrMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                                @TempData["ErrMsg"]
+                                            </div>
+                                        }
+                                        @if (TempData["SucMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                                @TempData["SucMsg"]
+                                            </div>
+                                        }
+                                        <div class="tables">
+                                            <h2 class="title1">Check Mandate Status</h2>
+                                            <div class="row list-input">
+
+
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">mandate Id<span class="color-red">*</span></label>
+                                                        <input type="text" class="form-control" name="mandateId" required="required" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">request Id<span class="color-red">*</span></label>
+                                                        <input type="text" class="form-control" name="requestId" required="required" value="">
+                                                    </div>
+                                                </div>
+                              <div class="col-sm-12">
+                              <div class="single-get-touch">
+                                  @if (TempData["SucMsg"] != null)
+                                  {
+                                    <span> Start Date : @TempData["value1"]</span>
+                                    <span>
+                                        End Date : @TempData["value2"]
+                                    </span>
+                                    <span>
+                                        Registration Date : @TempData["value3"]
+                                    </span>
+                                    <span>
+                                        Active: @TempData["value4"]
+                                    </span>
+                                    <span>
+                                        Status: @TempData["value5"]
+                                    </span>
+                                  }
+</div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="single-get-touch">
+
+                                                            <a href="#"><button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Submit</button></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <td></td>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+    
+
+</body>
+
+</html>
+
+
+
+
+
+

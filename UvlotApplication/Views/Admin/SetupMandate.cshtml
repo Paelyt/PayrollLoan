@@ -1,0 +1,172 @@
+﻿
+@{
+    ViewBag.Title = "Mandate Setup";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+<html>
+
+<body>
+    
+ <div class="charts">
+        <div class="mid-content-top charts-grids">
+            <div class="middle-content">
+                @*<h4 class="title">AllApprovedLoans</h4>*@
+                <!-- Mega Form Starts -->
+
+                <section class="section-padding contact-us-padding form-padding">
+
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-12 col-lg-10">
+                                @using (Html.BeginForm("SetupMandate", "Admin", FormMethod.Post, new { id = "signup" }))
+                                {
+                                    <form action="#" method="post">
+
+                                        @if (TempData["ErrMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                                @TempData["ErrMsg"]
+                                            </div>
+                                        }
+                                        @if (TempData["SucMsg"] != "")
+                                        {
+                                            <div id="Msgs" class="alert alert-success">
+                                                @TempData["SucMsg"]
+                                            </div>
+                                        }
+                                        <div class="tables">
+                                            <h2 class="title1">Mandate SetUp</h2>
+                                            <div class="row list-input">
+
+
+                                                <div class="col-md-12 mr0">
+                                                    <div class="single-get-touch">
+                                                        <select id="Titles" name="payerBankCode" data-live-search="true" required="required">
+                                                            <option value="" default selected data-tokens="Select Bank">SELECT BANK</option>
+                                                            @foreach (var nBank in ViewBag.BankList)
+                                                            {
+                                                                <option id="Title" value="@nBank.Code" data-tokens="@nBank.Name">@nBank.Name</option>
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Payers Name<span class="color-red">*</span></label>
+                                                        <input class="form-control" type="text" name="payerName" required="required" value="">
+
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Payers Email<span class="color-red">*</span></label>
+
+                                                        <input class="form-control" type="text" name="PayerEmail" required="required" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Payers Phone<span class="color-red">*</span></label>
+
+                                                        <input class="form-control" type="text" name="payerPhone" required="required" value="" onkeypress = "return isNumber(event);" ondrop = "return isNumber(event);" onpaste = "return isNumber(event);">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Payers Account<span class="color-red">*</span></label>
+
+                                                        <input class="form-control" type="text" name="payerAccount" required="required" value="" onkeypress = "return isNumber(event);" ondrop = "return isNumber(event);" onpaste = "return isNumber(event);">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Amount<span class="color-red">*</span></label>
+
+                              <input class="form-control" type="text" name="amount" required="required" value=""  onkeypress = "return isNumber(event);" ondrop = "return isNumber(event);" onpaste = "return isNumber(event);">
+
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Start Date<span class="color-red">*</span></label>
+
+           <input class="form-control" placeholder="DD/MM/YY" type="text" name="startDate" id="SD" required="required" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">End Date<span class="color-red">*</span></label>
+
+                                                        <input class="form-control" type="text" placeholder="DD/MM/YY" name="endDate" required="required" value="">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Mandate Type<span class="color-red">*</span></label>
+   <select id="" name="mandateType" class="form-control" required>
+       <option value="" default selected>MANDATE TYPE</option>
+    <option value="DD">Daily</option>
+    <option value="MM">Monthly</option>
+</select>
+                                                        @*<input class="form-control" type="text" name="mandateType" required="required" value="">*@
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="single-get-touch">
+                                                        <label class="control-label">Number Of Debit<span class="color-red">*</span></label>
+
+                                                        <input class="form-control" type="text" name="maxNoOfDebits" required="required" value=""  onkeypress = "return isNumber(event);" ondrop = "return isNumber(event);" onpaste = "return isNumber(event);">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12">
+                                                    <div class="single-get-touch">
+
+                                                        <a href="#"><button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Submit</button></a>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <td></td>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+    <script type="text/javascript">
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+</body>
+
+
+</html>
+
+

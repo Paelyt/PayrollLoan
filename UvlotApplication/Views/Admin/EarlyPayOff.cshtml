@@ -1,0 +1,267 @@
+﻿@{
+    ViewBag.Title = "Acknowledgement";
+    // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+@*<script src="https://code.jquery.com/jquery-1.10.1.js" crossorigin="anonymous"></script>*@
+<script src="https://code.jquery.com/jquery-2.1.3.js"
+        integrity="sha256-goy7ystDD5xbXSf+kwL4eV6zOPJCEBD1FBiCElIm+U8="
+        crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+$('table td:nth-child(4)').each(function() {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+</script>
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title1">Pay Off</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("EarlyPayOff", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-success">
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+                                    <div class="tables">
+
+                                        <div class="row list-input">
+
+
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+              @*<input type="number" name="RefNumber" placeholder="Reference Number" />*@
+                                                                                                      @Html.TextBoxFor(model => model.IdentficationNumber, new { placeholder = "REFERENCE NUMBER" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+                                                    
+                                                    <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Proceed</button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="tables">
+                    <h2 class="title1">Early Pay Off</h2>
+                    <div class="">
+                        <div class="table-responsive bs-example widget-shadow">
+                            @*<h4>Users:</h4>*@
+                            @{int i = 0;}
+                            <table id="myTable" class="table table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Applicant ID</th>
+                                        <th>transaction Date</th>
+                                        <th>&#8358;Debit</th>
+                                        <th>&#8358;Credit</th>
+                                        <th>Reference Number</th>
+                                        
+                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @if (ViewBag.LoansLedger == null)
+                                    {
+                                        <h2>No Record Found</h2>
+                                    }
+                                    else
+                                    {
+
+                                    foreach (var LoansLedger in ViewBag.LoansLedger)
+                                        {
+                                          <tr>
+                                          <td scope="row">@(++i)</td>
+                                          <td>@LoansLedger.ApplicantID</td>
+                                          <td>@LoansLedger.TransactionDate</td>
+                                          <td>&#8358;@LoansLedger.Debit</td>
+                                          <td>&#8358;@LoansLedger.Credit</td>
+                                          <td>@LoansLedger.ReferenceNumber</td>
+                                          </tr>
+                                        }
+                                    }
+                                    @*<tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total Debit  : @ViewBag.DebitSum</td>
+                                        <td>Total Credit : @ViewBag.CreditSum</td>
+                                        <td></td>
+                                    </tr>*@
+@if(TempData["flag"] == "1" && TempData["code"] != "2")
+{
+                                    <tr class="parent" id="2800">
+                                      <td>@*<span class="btn btn-default">text</span>*@</td>
+                                      <td></td>
+                                      <td>Balance : &#8358;@ViewBag.Balance</td>
+                                      <td>Balance Due : &#8358;@ViewBag.BalanceDue</td>
+                                       
+                                        
+                                            <td>
+@using (Html.BeginForm("RepayLoan", "Admin", FormMethod.Post, new { id = "signup" }))
+{
+    @Html.TextBoxFor(model => model.IdentficationNumber, new { placeholder = "IDENTIFICATION NUMBER", @class = "hidden" })
+    <input type="text" name="RefNum" value="@Model.IdentficationNumber" style="display:none" />
+                                        <button type="submit" class="btn btn-default">Payment Confirmed</button>
+}
+                                            </td>
+                                         
+                                       
+
+                                      <td></td>
+                                    </tr>
+}
+                                    @*<tr class="child-2479">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+      <td><input type="text" name="BalanceTxt" value="Yes" placeholder="Enter Balance" /></td>
+      <td><input type="text" name="TenureTxt" placeholder="Enter Tenure" /></td>
+      <td><input type="button" name="Pay"/></td>
+                                        
+                                    </tr>*@
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+@*@if (ViewBag.LoansLedger != null)
+{
+    <div class="col-md-2">
+        <a href=@Url.Action("Exportoexcel", "Admin")>
+            <button type="submit" class="btn btn-default" onchange="CallChangefunc()">Export To Excel</button>
+        </a>
+    </div>
+}*@
+            @*<h2 class="title1">LoanTransactionbyDate</h2>*@
+
+        </div>
+        <!-- // Mega Form Ends-->
+
+    </div>
+    @*<table class="table">
+        <tbody>
+            <tr class="parent" id="2479">
+                <td><span class="btn btn-default">text</span></td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+            </tr>
+            <tr class="child-2479 ">
+                <td>dddd</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+            </tr>
+            <tr>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+            </tr>
+            <tr class="parent" id="2800">
+                <td><span class="btn btn-default">text</span></td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+            </tr>
+            <tr>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+            </tr>
+            <tr>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+                <td>text</td>
+            </tr>
+        </tbody>
+    </table>*@
+
+</div>
+
+<script>
+    $('#btnAdd').on('click', function (e) {
+        e.preventDefault();
+        var elem = $(this).next('.td1')
+        elem.toggle('slow');
+    });
+    $(function () {
+        $('tr.parent td span.btn')
+          .on("click", function () {
+              var idOfParent = $(this).parents('tr').attr('id');
+              $('tr.child-' + idOfParent).toggle('slow');
+          });
+        $('tr[class^=child-]').hide().children('td');
+    });
+</script>
+

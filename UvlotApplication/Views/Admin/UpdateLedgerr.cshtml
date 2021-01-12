@@ -1,0 +1,203 @@
+﻿@model IEnumerable<DataAccessLayerT.DataManager.LoanLedger>
+
+@{
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+    WebGrid webGrid = new WebGrid(source: Model, canPage: true, canSort: false);
+}
+
+
+@*<!DOCTYPE html>
+
+        <html>
+        <head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>*@
+<style type="text/css">
+    body {
+        font-family: Arial;
+        font-size: 10pt;
+      
+    }
+
+    .Grid {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+          background-color: darkgray;
+    }
+
+        .Grid th {
+            background-color: #F7F7F7;
+            font-weight: bolder;
+        }
+
+        .Grid th, .Grid td {
+            padding: 5px;
+            width: 350px;
+            border: 1px solid #ccc;
+        }
+
+        .Grid, .Grid table td {
+            border: 0px solid #ccc;
+        }
+
+            .Grid th a, .Grid th a:visited {
+                color: #333;
+            }
+</style>
+@*</head>
+    <body>*@
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title1">Pay Off</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("UpdateLedgerr", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-success">
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+                                    <div class="tables">
+
+                                        <div class="row list-input">
+
+
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    <input type="text" name="RefNumber" placeholder="Reference Number" />
+                                                    @*@Html.TextBoxFor(model => model.RefNumber, new { placeholder = "REFERENCE NUMBER" })*@
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+
+                                                    <a href="#"> <button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Proceed</button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+                <h2 class="title1">Update Ledger</h2>
+                <div class="">
+
+                    <div class="table-responsive bs-example widget-shadow">
+                        @webGrid.GetHtml(
+        htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+        columns: webGrid.Columns(
+                 webGrid.Column(header: "ID", format: @<span class="label">@item.ID</span>, style: "ID"),
+                 webGrid.Column(header: "Tranx Date", format: @<span>
+                <span class="label">@item.TranxDate</span>
+                <input class="text" type="text" value="@item.TranxDate" style="display:none" />
+            </span>, style: "TranxDate"),
+                 webGrid.Column(header: "Amount", format: @<span>
+                <span class="label">@item.Debit</span>
+                <input class="text" type="text" value="@item.Debit" style="display:none" />
+            </span>, style: "Debit"), webGrid.Column(format:@<span class="link">
+                            <a class="Edit" href="javascript:;">Edit</a>
+                            <a class="Update" href="javascript:;" style="display:none">Update</a>
+                            <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                        </span> )))
+
+                        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+                        <script type="text/javascript" src="https://ajax.cdnjs.com/ajax/libs/json2/20110223/json2.js"></script>
+                        <script type="text/javascript">
+                            //Edit event handler.
+                            $("body").on("click", "#WebGrid TBODY .Edit", function () {
+                                var row = $(this).closest("tr");
+                                $("td", row).each(function () {
+                                    if ($(this).find(".text").length > 0) {
+                                        $(this).find(".text").show();
+                                        $(this).find(".label").hide();
+                                    }
+                                });
+                                row.find(".Update").show();
+                                row.find(".Cancel").show();
+                                $(this).hide();
+                            });
+
+                            //Update event handler.
+                            $("body").on("click", "#WebGrid TBODY .Update", function () {
+                                var row = $(this).closest("tr");
+                                $("td", row).each(function () {
+                                    if ($(this).find(".text").length > 0) {
+                                        var span = $(this).find(".label");
+                                        var input = $(this).find(".text");
+                                        span.html(input.val());
+                                        span.show();
+                                        input.hide();
+                                    }
+                                });
+                                row.find(".Edit").show();
+                                row.find(".Cancel").hide();
+                                $(this).hide();
+
+                                var LoanLedger = {};
+                                LoanLedger.ID = row.find(".ID").find(".label").html();
+                                LoanLedger.TranxDate = row.find(".TranxDate").find(".label").html();
+                                LoanLedger.Debit = row.find(".Debit").find(".label").html();
+                                $.ajax({
+                                    type: "POST",
+                                    url: "/Admin/UpdateLedg",
+                                    data: '{customer:' + JSON.stringify(LoanLedger) + '}',
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json"
+                                });
+                            });
+
+                            //Cancel event handler.
+                            $("body").on("click", "#WebGrid TBODY .Cancel", function () {
+                                var row = $(this).closest("tr");
+                                $("td", row).each(function () {
+                                    if ($(this).find(".text").length > 0) {
+                                        var span = $(this).find(".label");
+                                        var input = $(this).find(".text");
+                                        input.val(span.html());
+                                        span.show();
+                                        input.hide();
+                                    }
+                                });
+                                row.find(".Edit").show();
+                                row.find(".Update").hide();
+                                $(this).hide();
+                            });
+                        </script>
+
+                    </div>
+                </div>
+            </section>
+
+
+        </div>
+        <!-- // Mega Form Ends-->
+
+    </div>
+
+
+</div>
+@*</body>
+    </html>*@

@@ -1,0 +1,139 @@
+﻿@{
+    ViewBag.Title = "UsernRoles";
+   // Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+@model DataAccessLayerT.DataManager.LoanViewModel
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">User Role</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            <div class="col-md-12 col-lg-10">
+                                @using (Html.BeginForm("UsernRoles", "Admin", FormMethod.Post, new { id = "signup" }))
+                                {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                        {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                        }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-success">
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+
+                                    <div class="row list-input">
+                                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">Create UsernRole</h3>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @Html.DropDownList("id", new SelectList(ViewBag.listUser, "id", "EmailAddress"), new { @onchange = "CallChangefunc(this.value)" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mr0">
+                                            <div class="">
+                                                @foreach (var Assigned in Model.GetAssignRoless)
+                                            {
+
+
+                                                    <input id="@Assigned.userid" type="checkbox" name="userid" value="@Assigned.userid" checked="checked" disabled="disabled" />
+                                                    <label for="@Assigned.userid">
+                                                        @Assigned.Rolename
+                                                    </label>
+                                                    }
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mr0">
+                                            <div class="">
+                                                @foreach (var unAssigned in Model.UnGetAssignRoless)
+                                                    {
+                                                    <input id="@unAssigned.Roleid" type="checkbox" name="roleid" value="@unAssigned.Roleid" />
+                                                    <label for="@unAssigned.Roleid">
+                                                        @unAssigned.Rolename
+                                                    </label>
+                                                    }
+                                            </div>
+                                        </div>
+                                 <div class="col-md-12">
+                  <div class="single-get-touch">
+     <a href="#"><button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Create UsernRole</button></a></div>
+                                  </div></div>
+                                </form>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tables">
+                    <h2 class="title1">All Users n Role</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Roles:</h4>*@
+                        @{int i = 0;}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Role Name</th>
+                                    <th>Email</th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Data == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var UserRole in ViewBag.Data)
+                                    {
+
+
+                                        <tr>
+                                            <td scope="row">@(++i)</td>
+                                            <td>@UserRole.rolename</td>
+                                            <td>@UserRole.email</td>
+                                  @* <td>
+                                                <a onclick="return confirm('Are You Sure ?')" href="@Url.Action("Delete","Loan", new { id = UserRole.userid  })">Delete</a>
+
+                                                                            <a onclick="return confirm('Are You Want To Edit ?')" href="@Url.Action("Edit","Loan", new { id = UserRole.userid  })"> Edit</a>
+                                                                        </td>*@
+
+
+                                        </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+<script>
+    function CallChangefunc(val)
+    {
+        window.location.href = "/Admin/UsernRoles?value=" + val;
+    }
+</script>
+
+

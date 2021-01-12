@@ -1,0 +1,429 @@
+﻿@{
+    Layout = null;
+}
+@model DataAccessLayerT.DataManager.AppLoan
+<!DOCTYPE html>
+<div class="canvas_div_pdf">
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href=@Url.Content("/UserStyles/OfferStyle/bootstrap.min.css")>
+        <link rel="stylesheet" href=@Url.Content("/UserStyles/OfferStyle/offer-style.css")>
+        <title>Offer Letter</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('table td:nth-child(6)').each(function () {
+                    //alert('test');
+                    let $this = $(this);
+
+                    // make sure it's a number
+                    if (!isNaN($this.text())) {
+                        // alert('test');
+                        // convert to number and check value
+                        if (+$this.text() > 20) {
+
+                            var pieces = parseFloat($this.text()).toFixed(2).split('')
+                            let ii = pieces.length - 3
+                            while ((ii -= 3) > 0) {
+                                pieces.splice(ii, 0, ',')
+                            }
+                            $this.text(pieces.join(''));
+
+                        }
+                        else {
+                            $this.css('color', 'red');
+                        }
+                    }
+
+                });
+            });
+        </script>
+
+
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+        <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    </head>
+
+
+    <body id="dd">
+
+
+        <div class="container">
+            <div class="row">
+                <div style="height:30px;"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                     <p class="text-left">
+                        @*<strong><span>Friday,</span> <span>30</span> <span>August</span> <span>2019</span></strong>*@
+                        <strong><span>@Model.ApplicationDatevalue</span></strong>
+                    </p>
+                    <p class="text-right">@Html.ActionLink("Print PDF", "PrintOfferPDF", "Loans", new { @Refid = @Model.LoanRefNumber }, null) </p>
+                    <p class="text-left">@Model.Surname @Model.Firstname</p>
+                    <p class="text-left">@Model.ContactAddress,</p>
+                    @*<p class="text-left">Popoola, Oshodi,</p>
+                        <p class="text-left">Lagos State, Nigeria.</p>*@
+                    <p class="text-left">@Model.PhoneNumber</p>
+                    <br>
+                    @*<p class="text-left">  Dear Mr. Venatius, </p>*@
+                    <p class="text-left">  Dear @Model.Title @Model.Firstname, </p>
+
+                </div>
+                <div class="col-md-3">
+                    @*<img src=@Url.Content("/UserStyles/asset/img/logo.png") height="100" width="100" />*@
+
+                </div>
+                <div class="col-md-5">
+
+                    <img src=@Url.Content("/UserStyles/asset/img/Paelyt.png") height="150" width="150" />
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                @*<div class="col-md-2"></div>*@
+                <div class="col-md-7"> <div class="h4 text-center under-bar">APPLICATION FOR LOAN FACILITY – <span>@Model.Title</span> <span>@Model.Firstname  @Model.Surname</span></div> </div>
+                <div class="col-md-2"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+            <div class="col-md-10">
+                    <p class="text-left">We are very glad to inform you that in response to your request for a Payroll loan has been received and is currently being processed.  </p>
+                    <p class="text-left">We are pleased to offer <span>@Model.Title.</span> <span>@Model.Firstname  @Model.Surname</span> a loan facility subject to the following terms and conditions: </p>
+                    <p class="text-left">You requested a loan facility of <span>N @Model.ConvertedLoanAmt</span> <span>@Model.AmountInWords. </span></p>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <p class="text-left"><strong>Loan Amount:</strong>  <span>@Model.ConvertedLoanAmt</span> (@Model.AmountInWords)</p>
+                    <p class="text-left"><strong>Tenure:</strong> @Model.LoanTenure</p>
+                    <p class="text-left"><strong>Interest:</strong>&nbsp;@Model.interestRate</p>
+                    <p class="text-left"><strong>Monthly payment: </strong> Please refer to repayment schedule below</p>
+                    <p class="text-left"><strong>Repayment: </strong> All outstanding sums of the Facility (whether principal, interest or any other monies owed) shall be repayable on/before the expiration of the end of the Tenure.</p>
+
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <p class="text-left">Yours faithfully,</p>
+                    <br>
+                    <p class="text-left">For: Paelyt Solutions Limited</p>
+                    <p class="text-left">If this offer is acceptable to you, kindly acknowledge receipt by signing below.</p>
+                    <br>
+                    <p class="text-left"><strong>Repayment schedule</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="col-md-12">
+                <div class="row">
+                    @{int i = 0;}
+                    <table class="table table-hove  rtable">
+                        <thead>
+                            <tr>
+                                <th style="font-size:9px;">Months</th>
+                                <th style="font-size:9px;">Disbursement Date</th>
+                                <th style="font-size:9px;">Repayment Date</td>
+                                <th style="font-size:9px;">Principal</th>
+                                <th style="font-size:9px;">Interest Rate / Month</th>
+                                <th style="font-size:9px;">Interest + Principal Due / Month</th>
+                                @*<th>Interest + Principal Paid / Month</th>*@
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-center"></td>
+                                <td>@Model.ApplicationDatevalue</td>
+                                <td></td>
+                                <td>@Model.ConvertedLoanAmt</td>
+                                <td>@Model.interestRate</td>
+                                <td>@Model.OutstandingBalance</td>
+                                @*<td></td>*@
+                            </tr>
+                            @foreach (var LR in ViewBag.LoanRepayment)
+                                {
+                                <tr>
+                                    <td class="text-center">@(++i)</td>
+                                    <td></td>
+                                    <td>@LR.DisburseDate.ToLongDateString()</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>@LR.OutstandingBalance</td>
+                                    @*<td></td>*@
+                                </tr>
+                                }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4"><strong>Name:</strong><span>&nbsp;@Model.Firstname  @Model.Surname</span></div>
+@if (@Model.signature == "none")  
+{
+    <div class="col-md-4"><strong>Signature:</strong><span> : ...................... &nbsp;<input type="checkbox" name="Accept" onclick="SaveSignature();" />&nbsp; Accept</span> </div>
+}
+else if (@Model.signature != "none")
+{
+    <div class="col-md-4"><strong>Signature:</strong><span style="font-size:large;">Signed</span></div>
+}
+                @*<div class="col-md-4"><strong>Signature:</strong><span>&nbsp;<input type="checkbox" name="Accept" />&nbsp; Accept</span></div>*@
+                <div class="col-md-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4"><strong>Phone Number:</strong><span>&nbsp;@Model.PhoneNumber</span></div>
+                <div class="col-md-4"><strong>Date:</strong><span>&nbsp;@Model.ApplicationDatevalue</span></div>
+                <div class="col-md-4"></div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <hr>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="h4 text-left"><strong>RIGHT OF SET OFF AGREEMENT</strong></div>
+                    <p class="text-left">
+                        This Agreement is made and entered into and effective this @*<strong>30th</strong> day of <strong>August, 2019</strong>*@
+                        <strong>@Model.ApplicationDatevalue &nbsp;</strong>  between
+                        <strong> @Model.Title @Model.Firstname  @Model.Surname, </strong> a male citizen of the Federal Republic of Nigeria whose primary place of residence is,
+                        <strong>@Model.ContactAddress, </strong> Nigeria (hereinafter referred to as "BORROWER")
+                        and <strong>Paelyt Solutions Limited, </strong> having its principal place of business at 10B Kingsley Emu Street, Lekki Phase 1, Lagos,
+                        (hereinafter referred to as the "the COMPANY").
+                    </p>
+
+                    <p class="text-left italo">And where the context so permits, “the BORROWER” and “the COMPANY” are individually referred to as “Party” and jointly referred to hereafter as “The Parties”.</p>
+
+                    <div class="h4 text-left"><strong>A.	BACKGROUND:</strong></div>
+                    <p class="text-left"><strong>WHEREAS</strong> in connection with the facility issued in favour of the BORROWER by the COMPANY, PARTIES hereby agree as follows:</p>
+                    <p class="text-left">
+                        <span class="h4"><strong>B.	IN CONSIDERATION</strong></span> of the Company granting the facility in the sum of @*<strong>One Hundred and Twelve Thousand, Five Hundred Naira Only </strong>*@
+                        <span>@Model.AmountInWords</span>
+                        as detailed
+                        in the facility offer letter, the Borrower HEREBY indemnifies and holds the Company harmless against any and all losses or liabilities from deductions,
+                        fees, costs, claims, or similar liabilities wholly, exclusively and necessarily arising in connection with, or as a direct result of, actions that may be taken by the Company to recover any part of the said facility and associated accrued interest, fees, and penalties. The Borrower hereby agrees as follows:
+                    </p>
+                    <p class="text-left">
+                        1.	That the Company may set off any amount due and payable against any right the Borrower has to receive money from the Company or from any other financial institution in Nigeria. (‘The right to receive money from the Company’ means: - any deposit account balance the borrower has with the
+                        Company or any financial institution in Nigeria; any money owed to the borrower on an item presented to the Company or in the Company’s possession for collection or exchange; and, any repurchase agreement or other nondeposit obligation).
+                    </p>
+                    <p class="text-left">
+                        2.	Any amount due and payable under this facility means the total amount of which the Company is entitled to demand payment under the terms of the facility at the time the Company sets off. This total includes any balance (Principal, interest and default fee), the due date for which the
+                        Company properly accelerates, under this agreement.
+                    </p>
+                    <p class="text-left">
+                        3.	If the Borrower’s right to receive money from the Company or any financial institution is also owned by someone who has not agreed to pay this note, the Company’s right of setoff will apply to the borrower’s interest in the obligation and to any other amounts which the Borrower could
+                        withdraw without the consent or permission of other owners.
+                    </p>
+                    <p class="text-left">4.	The Company may execute a set-off either by its own internal arrangement or by recourse to third party direct debit mandate systems and core banking applications. </p>
+                    <p class="text-left">
+                        5.	The Borrower agrees to hold the Company harmless from any such claims arising as a result of the exercise of the right of setoff.
+                    </p>
+                    <p class="text-left">
+                        6.	The funds in a joint account may be used to repay the debts for which any one of the account owners is liable, whether jointly with another or individually. Notwithstanding anything to the contrary by law, the Company is authorized at any such time to charge any such debt against the account,
+                        without regard to the origin of deposits to the account or beneficial ownership of the funds.
+                    </p>
+                    <p class="text-left">
+                        7.	The Company may, pursuant to this Agreement, charge, attach and debit the balances standing to the credit of the Borrower in any account linked to, or associated with, the Borrower by way of a Bank Verification Number (BVN) in any commercial bank, microfinance bank, mortgage bank, finance house,
+                        payment service bank, mobile payment service operators or any other financial service operatorship for which the Central Bank of Nigeria may issue any licences in the future whether such accounts be opened or in existence before, during or after the execution of this Agreement.
+                    </p>
+                    <p class="text-left">8.	The Company may exercise its prerogative pursuant to Clause 7 above hereof without notice, warning, advice, caution, announcement, or other recourse whatsoever to the Borrower.</p>
+                    <br>
+                    <p class="text-left">The Parties have caused this Agreement to be executed as a Deed, by the Borrower setting his hand and the Company acting through its authorized representatives and affixing its Common Seal hereto the day and year first above written.</p>
+                    <br>
+                    <p class="text-left">SIGNED, SEALED AND DELIVERED by the within named BORROWER</p>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-left under-bar p-width">Signature</p>
+                            <input id="refNum" name="refNum" value="@Model.LoanRefNumber" style="display:none;" />
+                            <p class="text-left pad-up"><strong>@Model.Firstname  @Model.Surname</strong></p>
+                            <p class="text-left">In the Presence of:</p>
+                            <p class="text-left">Name of Witness:</p>
+                            <p class="text-left">Address:</p>
+                            <p class="text-left">Email:</p>
+                            <p class="text-left">Phone:</p>
+                            <p class="text-left">Signature:</p>
+                            <br>
+                            <p class="text-left">The Common Seal of the within-named COMPANY,</p>
+                            <p class="text-left">PAELYT SOLUTIONS LIMITED</p>
+                            <p class="text-left">was hereunto affixed in the presence of:</p>
+                        </div>
+
+
+                        @*<div class="col-md-6">
+                            <p class="text-left under-bar p-width">Guarantor</p>
+                            <p class="text-left pad-up"><strong>@Model.GuarSurname    @Model.GuarOthernames</strong></p>
+                               @*<p class="text-left">In the Presence of:</p>
+                               <p class="text-left">Name of Witness:</p>
+                               <p class="text-left">Address:</p>*@
+                        @*<p class="text-left">Email: @Model.GuarEmail</p>
+                            <p class="text-left">Phone: @Model.GuarPhone</p>
+                            <p class="text-left">Relationship: @Model.GuarRelationship</p>
+                            <p class="text-left">Signature: ......................</p>
+                            <br>*@
+                        @*</div>*@
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-4">
+                    <p class="text-left under-bar p-width">Signature</p>
+                    <p class="text-left pad-up"><strong>DIRECTOR</strong></p>
+                </div>
+                <div class="col-md-4">
+                    <p class="text-left under-bar p-width">Signature</p>
+                    <p class="text-left pad-up"><strong>DIRECTOR/SECRETARY</strong></p>
+                </div>
+                <div class="col-md-4"></div>
+            </div>
+           
+           
+            <br>
+
+
+        </div>
+
+        @*<div>
+            <input type="button" onclick="getPDF()" value="submit" name="submit" />
+        </div>*@
+
+        <script src="js/jquery-3.1.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/script.js"></script>
+
+
+
+
+    </body>
+
+    <script>
+        function getPDF() {
+
+            var HTML_Width = $(".canvas_div_pdf").width();
+            var HTML_Height = $(".canvas_div_pdf").height();
+            var top_left_margin = 15;
+            var PDF_Width = HTML_Width + (top_left_margin * 2);
+            var PDF_Height = (PDF_Width * 1.5) + (top_left_margin * 2);
+            var canvas_image_width = HTML_Width;
+            var canvas_image_height = HTML_Height;
+
+            var totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+
+            html2canvas($(".canvas_div_pdf")[0], { allowTaint: true }).then(function (canvas) {
+                canvas.getContext('2d');
+
+                console.log(canvas.height + "  " + canvas.width);
+
+
+                var imgData = canvas.toDataURL("image/jpeg", 1.0);
+                var pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+                pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+
+
+                for (var i = 1; i <= totalPDFPages; i++)
+                {
+                    pdf.addPage(PDF_Width, PDF_Height);
+                    pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+                }
+
+                pdf.save("HTML-Document.pdf");
+            });
+        };
+    </script>
+</html>
+    <script>
+
+        //function SaveSignature(data) {
+        //    alert('Test');
+        //    var RefNumber = $("#reNum").val();
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Loans/SaveSignature",
+        //        data: "{signature:'" + data + '&' + RefNumber + "'}",
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            if (response.Success === "true") {
+        //            }
+        //            if (response == "true") {
+        //                //document.getElementById("btnSubmit").disabled = true;
+        //            }
+        //            else {
+
+        //            }
+        //        }
+        //    });
+        //}
+
+        function SaveSignature() {
+            alert('data');
+            var data = "Offer Letter";
+            alert(data);
+            var RefNumber = $("#refNum").val();
+            alert(RefNumber);
+            var answer = window.confirm("Are You Sure?")
+            if (answer)
+            {
+
+           // alert('Test');
+              $.ajax({
+                type: "POST",
+                url: "/Loans/SaveSignature",
+                data: "{signature:'" + data + '&' + RefNumber + "'}",
+                //data: "{signature:'" + ad + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response)
+                {
+                    //alert(JSON.stringify(response));
+                    if (JSON.stringify(response.data === "true")) {
+
+                        var impotantStuff = window.open("http://localhost:9087/Admin/Message");
+                        impotantStuff.document.write('Loading Offer Letter ......')
+                        impotantStuff.location.href = "http://localhost:9087/Loans/OfferLetter?Refid=" + RefNumber;
+
+                     //   alert(response);
+
+
+                     //   var impotantStuff = window.open("https://cashnownow.net/Admin/Message");
+                     //   impotantStuff.document.write('Loading Offer Letter ......')
+                     //   impotantStuff.location.href = "https://cashnownow.net/Loans/OfferLetter?Refid=" + RefNumber;
+
+                    }
+                  /*  if (response == "true")
+                    {
+                        var impotantStuff = window.open("http://localhost:9087/Admin/Message");
+                        impotantStuff.document.write('Loading Offer Letter ......')
+                        impotantStuff.location.href = "http://localhost:9087/Loans/GuarantorLetter?Refid=" + RefNumber;
+                    }
+                    else {
+
+                    }
+                    */
+                }
+            });
+
+            }
+        }
+    </script>
+</div>

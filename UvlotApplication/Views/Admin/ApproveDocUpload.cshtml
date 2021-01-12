@@ -1,0 +1,324 @@
+﻿
+@{
+    ViewBag.Title = "CreateUser";
+    //Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+    Layout = "~/Views/Shared/_LayoutDashboardinnerpage.cshtml";
+}
+<link href=@Url.Content("/DashboardStyles/css/MyTable.css") rel="stylesheet">
+<script type="text/javascript">
+$(document).ready(function() {
+    $('table td:nth-child(7),table td:nth-child(8)').each(function () {
+    //alert('test');
+  let $this = $(this);
+
+  // make sure it's a number
+  if (!isNaN($this.text())) {
+
+    if (+$this.text() > 20)
+	{
+
+	    var pieces = parseFloat($this.text()).toFixed(2).split('')
+        let ii = pieces.length - 3
+        while ((ii -= 3) > 0) {
+            pieces.splice(ii, 0, ',')
+        }
+        $this.text(pieces.join(''));
+
+    }
+	else
+	{
+      $this.css('color', 'red');
+    }
+  }
+
+});
+});
+</script>
+<style>
+    #dialog img {
+        height: 950px;
+        width: 975px;
+        cursor: pointer;
+    }
+     #toast-container > div {
+        opacity: 1;
+    }
+</style>
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <!--<h4 class="title">Create User</h4>-->
+            <!-- Mega Form Starts -->
+            @*@if (TempData["Error"] != "")
+            {
+                <div id="Msgs" class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+            @if (TempData["SucMsg"] != "")
+            {
+                <div id="Msgs" class="alert alert-success">
+                    @TempData["SucMsg"]
+                </div>
+            }*@
+
+            @if (TempData["ErrMsg"] != "")
+            {
+                <div id="Msgs" class="" style="color:red;">
+                    @*@TempData["ErrMsg"]*@
+                    <script>
+                        var msg = "@(TempData["ErrMsg"] as string)";
+                        toastr.error(msg);
+                    </script>
+                </div>
+            }
+
+            @if (TempData["Error"] != "")
+            {
+                <div id="Msgs" class="" style="color:red;">
+                    @*@TempData["Error"]*@
+                    <script>
+                        var msg = "@(TempData["Error"] as string)";
+                        toastr.error(msg);
+                    </script>
+                </div>
+            }
+
+            @if (TempData["SucMsg"] != "")
+            {
+                <div id="Msgs" class="" style="color:blue;">
+                    @*@TempData["SucMsg"]*@
+                    <script>
+                        var msg = "@(TempData["SucMsg"] as string)";
+                        toastr.success(msg);
+                    </script>
+                </div>
+            }
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="tables">
+                    <h2 class="title1">Approve Documents</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Users:</h4>*@
+                        @*{int i = 0;}*@
+                        @*<table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Firstname</th>
+                                    <th>Organization</th>
+                                    <th>DocumentPath</th>
+                                    <th>DocumentName</th>
+                                    <th>View</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Data == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var Loan in ViewBag.Data)
+                                    {
+                                        <tr>
+                                            <td scope="row">@(++i)</td>
+                                            <td>@Loan.Firstname</td>
+                                            <td>@Loan.Organization</td>
+                                            <td id="imgv"><img src="@Url.Content(@Loan.DocumentPath)" height="50" width="50" /></td>
+                                            <td>@Loan.DocumentName</td>
+                                          <td>
+                                             <a onclick="return confirm('Are You Sure?')" href="@Url.Action("ApproveDocUpload", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a>
+                                          </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>*@
+                       
+                        @{int i = 0;}
+                        <!-- it Statrs Here-->
+                        @*<table id="myTable" class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Firstname</th>
+                                  
+                                    <th>Document 1</th>
+                                    <th>Document 2</th>
+                                    <th>Document 3</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    string groupName = "";
+                                }
+                                @if (ViewBag.Docs == null)
+                                {
+                                    <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    
+                                        foreach (var Res in ViewBag.Docs)
+                                          {
+                                          <tr>
+                                             
+                                            <td scope="row">@(++i)</td>
+                                            <td>@Res.Key</td>
+                                        
+@foreach (var subItem in Res.Value)
+{
+
+    if (groupName != @subItem.DocumentName)
+    {
+     <td style="display:none"><input type="text" id="LR" name="LR" value="@subItem.LoanRefNumber"/>
+     <input type="text" id="ID" name="ID" value="@subItem.ID" /></td>  
+     <td id="imgv"><img src="@Url.Content(@subItem.DocumentPath)" height="50" width="50" />
+     </td>
+                                            
+    }
+
+}
+                                              
+         
+                                              
+               <td> <a onclick="return GetRefNumber('7');">Approve</a>|<a onclick="return GetRefNumber('10');">Reject</a>
+                                              </td>
+                                              <td>
+   <a onclick="return confirm('Are You Sure?')" href="@Url.Action("ViewDocument", "Admin", new { Refid = @Loan.LoanRefNumber })">View</a>
+                                              </td>
+                                       </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>*@
+
+
+
+       <table id="myTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Firstname</th>
+                    <th>Surname</th>
+                    <th>Orginazation</th>
+                    <th>Reference Number</th>
+                    <th>View Document</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.LastRecord == null)
+                {
+                    @*<h2>No Record Found</h2>*@
+                }
+                else
+                {
+                    foreach (var Loan in ViewBag.LastRecord)
+                    {
+                        <tr>
+                            <td scope="row">@(++i)</td>
+                            <td>@Loan.Firstname</td>
+                            <td>@Loan.Surname</td>
+                            <td>@Loan.Organization</td>
+                            <td>@Loan.LoanRefNumber</td>
+                          <td>
+                             <a class="fa fa-eye fa-lg text-success" title="View Document" href="@Url.Action("ViewDocuments", "Admin", new { Refid = @Loan.LoanRefNumber })"></a>
+                          </td>
+                        </tr>
+                    }
+                }
+
+                @if (ViewBag.LastRecords == null)
+                {
+                    <h2>No Record Found</h2>
+                }
+                else
+                {
+                    foreach (var Loan in ViewBag.LastRecords)
+                    {
+                        <tr>
+                            <td scope="row">@(++i)</td>
+                            <td>@Loan.Firstname</td>
+                            <td>@Loan.Surname</td>
+                            <td>@Loan.Organization</td>
+                            <td>@Loan.LoanRefNumber</td>
+                            <td>
+                                <a class="fa fa-eye fa-lg text-success" title="View Document" href="@Url.Action("ViewDocuments", "Admin", new { Refid = @Loan.LoanRefNumber })"></a>
+                            </td>
+                        </tr>
+                    }
+                }
+                
+            </tbody>
+        </table>
+
+
+                        <div id="dialog" style="display: none"></div>
+                        <!-- it Ends Here-->
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+        </div>
+
+    </div>
+</div>
+<script type="text/javascript" src="@Url.Content("/DashboardStyles/jQueryv1.8.3.js")"></script>
+<link rel="stylesheet" href="@Url.Content("/DashboardStyles/jqueryui.1.8.24.css")" />
+<script type="text/javascript" src="@Url.Content("/DashboardStyles/jqueryui-1.8.24-jquery-ui.min.js")">
+</script>
+<script type="text/javascript">
+        $(function () {
+            $("#dialog").dialog({
+                autoOpen: false,
+                modal: true,
+                height: 1000,
+                width: 1000,
+                title: "Zoomed Image"
+            });
+            $("#imgv img").click(function () {
+                $('#dialog').html('');
+                $('#dialog').append($(this).clone());
+                $('#dialog').dialog('open');
+            });
+        });
+</script>
+<script>
+
+
+    function GetRefNumber(AppStat)    {
+        alert('Test');
+        //window.location.href = "/Dashboard/UserRoles?value=" + val;
+        var AppStatus = AppStat;
+        var LoanRef = document.getElementById("LR").value;
+        var LoanFk = document.getElementById("ID").value;
+        alert(LoanFk);
+        alert('Test1');
+        alert(AppStatus);
+        alert(LoanRef);
+
+        $.ajax({
+            type: "POST",
+            url: "/Admin/ApproveDocUpload",
+            data: "{code:'" + LoanRef + '&' + LoanFk + '?' + AppStatus + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (response)
+            {
+
+             if (response.Success === "true") 
+                {
+
+                }
+
+            }
+            }
+            );
+       
+    }
+
+</script>

@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Sigin";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+@model DataAccessLayerT.DataManager.AppLoan
+
+    <div class="page-header01">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center ">
+                    <h2>Acknowledgement</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Acknowledgement</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end of page header -->
+    <section class="section-padding contact-us-padding form-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                @using (Html.BeginForm("CompanyProfile", "Admin", FormMethod.Get))
+                {
+                    <form action="#" method="post">
+
+
+                        <div class="row list-input">
+                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Acknowledgement</h3>
+                            </div>
+
+
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    <input type="text" name="institutionName" value="Firstname : @Model.Firstname" readonly="true">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 right">
+                                <div class="single-get-touch">
+                                    <input type="text" name="other" value="Surname : @Model.Surname" readonly="true">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    <input type="text" name="institutionName" value="Refrence Number : @Model.LoanRefNumber" readonly="true">
+
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 right">
+                                <div class="single-get-touch">
+                                    <input type="text" name="other" value="LoanTenure : @Model.LoanTenure" readonly="true">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    <input type="text" name="institutionName" value="Loan Amount : @Model.LoanAmount" readonly="true">
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 right">
+                                <div class="single-get-touch">
+                                    <input type="text" name="other" value="Application Status : @Model.ApplicationStatus" readonly="true">
+                                </div>
+                            </div>
+
+
+                            @*<div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        <input type="submit" name="submit" class="btn btn-default btn-sm2 btnAction" value="Continue" />
+                                    </div>
+                                </div>*@
+
+                           
+
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- start footer area -->
+    
+    
+    <!-- end of footer area -->
+    <script src=@Url.Content("/asset/js/jquery-3.3.1.min.js")></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+    <script src=@Url.Content("/asset/js/jquery-ui.js")></script>
+    <script src=@Url.Content("/asset/js/popper.min.js")></script>
+    <script src=@Url.Content("/asset/js/bootstrap.min.js")></script>
+    <script src=@Url.Content("/asset/js/jquery.nice-select.js")></script>
+    <script src=@Url.Content("/asset/js/menumaker.js")></script>
+    <script src=@Url.Content("/asset/js/owl.carousel.min.js")></script>
+    <script src=@Url.Content("/asset/js/slider.js")></script>
+    <script src=@Url.Content("/asset/js/active.js")></script>
+

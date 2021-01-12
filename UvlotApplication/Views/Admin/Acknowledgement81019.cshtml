@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewBag.Title = "Acknowledgement";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@model DataAccessLayerT.DataManager.AppLoan
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title">Company Profile</h4>*@
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("CompanyProfile", "Admin", FormMethod.Get))
+                            {
+                                <form action="#" method="post">
+
+
+                                    <div class="row list-input">
+                                        <div class="col-md-12 col-lg-12 formHeaderBg">
+                                            <h3 class="formHeader">Acknowledgement</h3>
+                                        </div>
+
+
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="institutionName" value="Firstname : @Model.Surname"  readonly="true">
+                                                
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 right">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="other" value="Surname : @Model.Firstname" readonly="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="institutionName" value="Refrence Number : @Model.PhoneNumber" readonly="true">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 right">
+                                            <div class="single-get-touch">
+                                                <input type="text" name="other" value="LoanTenure : @Model.EmailAddress" readonly="true">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                @*@Model.LoanAmount*@
+                                                <input type="text" name="institutionName" value="Loan Amount : @Model.LoanRefNumber " readonly="true">
+                                                </div>
+                                            </div>
+
+                                                <div class="col-md-6 right">
+                                                    <div class="single-get-touch">
+                                                        <input type="text" name="other" value="Application Status : @Model.LoanTenure" readonly="true">
+                                                    </div>
+                                                </div>
+
+                                            
+                                        @*<div class="col-md-6 mr0">
+                                            <div class="single-get-touch">
+                                                <input type="submit" name="submit" class="btn btn-default btn-sm2 btnAction" value="Continue" />
+                                            </div>
+                                        </div>*@
+                                        @{                  __o = Model.ConvertedAmount;}
+                                        @if (TempData["Offer"] == "0")
+                                        {
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+   <a href="@Url.Action("OfferLetter", "Loans",  new { Refid = @Model.LoanRefNumber,target = "_blank" })" class="btn btn-success" target="_blank">View Offer Letter</a></div>
+                                            </div>
+                                            }
+
+
+
+
+
+#line default
+#line hidden
+
+#line 15 "C:\Users\Reliance Limited\Documents\Visual Studio 2015\Projects\UvlotApplication\UvlotApplication\Views\Admin\Acknowledgement.cshtml"}
+
+
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+        </div>
+
+    </div>
+</div>
+

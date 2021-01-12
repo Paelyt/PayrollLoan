@@ -1,0 +1,2118 @@
+﻿
+@{
+    ViewBag.Title = "Sigin";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+@model UvlotApplication.Classes.TableObjects.LoanApplication
+<style type="text/css">
+    #loading 
+    {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.8);
+        z-index: 1000;
+    }
+
+    #loadingcontent 
+    {
+        display: table;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    #loadingspinner 
+    {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+        text-align: center;
+        font-size: larger;
+        padding-top: 80px;
+    }
+</style>
+
+
+
+
+<style type="text/css">
+    body 
+    {
+        font-family: Arial;
+        font-size: 10pt;
+    }
+    .textalign{
+          text-align:center;
+    }
+</style>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+ @*for disable form box*@
+<script src=@Url.Content("/DashboardStyles/jquery-3.3.0-jquery.min.js")></script>
+@*for disable form box*@
+<script>
+    $(document).ready(function () {
+        $("#DOB").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            yearRange: "-80:+0",
+            onSelect: function () {
+                console.log('s');
+            },
+            onChangeMonthYear: function () {
+                console.log('o');
+            }
+        });
+    });
+  //$(document).ready(function() {
+  //    $("#DOB").datepicker();
+  //    changeMonth: true,
+  //    //dateFormat: "dd-mm-yy"
+
+  //});
+</script>
+<div id="loading">
+    <div id="loadingcontent">
+        <p id="loadingspinner">
+            Please Wait While Your Application is Submitted...
+        </p>
+    </div>
+</div>
+<div class="page-header01">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center ">
+                <h2>Apply Now</h2>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Apply Now</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end of page header -->
+
+<section class="section-padding contact-us-padding form-padding">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12 col-lg-10">
+                @using (Html.BeginForm("CreatePayrollLoan", "Loans", FormMethod.Post,
+                new { enctype = "multipart/form-data"}))
+                {
+                    @*<form action="#" method="post">*@
+
+                        if (TempData["Error"] != null)
+                        {
+                            <div id="Msgs" class="alert alert-danger">
+                                @TempData["Error"]
+                            </div>
+                }
+                if (TempData["SucMsg"] != null)
+                {
+                    <div id="Msgs" class="">
+                        <p style="color:blue;">@TempData["SucMsg"]</p>
+                    </div>
+                    }
+
+                        <div class="row list-input">
+                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                <h3 class="formHeader">Personal Information </h3>
+                            </div>
+
+
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                   
+                                    @Html.DropDownListFor(model => model.Title_FK, (SelectList)ViewData["nTitles"], "TITLE", new { @id = "Titles", @required = "required", name = "Titles" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 right">
+                                <div class="single-get-touch">
+                                    
+                                    @Html.DropDownListFor(model => model.MaritalStatus_FK, (SelectList)ViewData["nMarital"], "MARITAL STATUS", new { @id = "Marital", @required = "required", @name = "Marital" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.Surname, new { @id = "Surname", placeholder = "LAST NAME*", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.Firstname, new { @id = "Firstname", placeholder = "FIRST NAME*", required = "required" })
+                                </div>
+                            </div>
+
+                            <div class="col-md-6 mr0">
+                                <div class="single-get-touch">
+                                 @Html.TextBoxFor(model => model.DateOfBirth, new { placeholder = "DATE OF BIRTH*", id = "DOB", required = "required", @readonly = "true" })
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-6">
+                                <div class="single-get-touch">
+                                   
+                                    @Html.DropDownListFor(model => model.Gender_FK, (SelectList)ViewData["nGender"], "GENDER", new { @id = "selectGender", @name = "selectGender" })
+                                </div>
+                            </div>
+
+
+                            @*<fieldset>
+                                <legend>identification Number & Image:</legend>*@
+
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.DropDownListFor(model => model.MeansOfID_FK, (SelectList)ViewData["nMeansOfIDs"], "MEAN OF ID", new { @id = "meansOfID", @required = "required", @name = "meansOfID" })
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+
+                                        @Html.TextBoxFor(model => model.IdentficationNumber, new { @id = "IdentficationNumber", placeholder = "IDENTIFICATION NUMBER" })
+                                    </div>
+                                </div>
+
+
+                            <div class="col-md-3 mr0">
+
+                                <div class="single-get-touch">
+
+                                   <label>Upload Means Of Identification Image</label>
+                                </div>
+
+                            </div>
+
+
+                                <div class="col-md-3 mr0">
+
+                                    <div class="single-get-touch">
+
+                                        @*@Html.TextBoxFor(model => model.IdentficationNumberImage, new { placeholder = "upload image", type = "file" , @name="PostedFile" })*@
+                                        <input type="file" id="PostedFile" name="PostedFile" required />
+                                    </div>
+
+                                </div>
+                            @*</fieldset>*@
+                                <div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Contact Information </h3>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.TextBoxFor(model => model.EmailAddress, new { placeholder = "PERSONAL EMAIL*", id = "EmailADD", required = "required", @type = "email", onkeyup = "CheckEmail();" })
+                                    </div>
+                                    <span id="messge"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.PhoneNumber, new { @id = "PhoneNumber", placeholder = "PHONE NUMBER*", required = "required", minlength = 11, maxlength = 11, onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.ContactAddress, new { @id = "ContactAddress", placeholder = "HOME ADDRESS*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.Landmark, new { @id = "Landmark", placeholder = "LANDMARK*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.DropDownListFor(model => model.StateofResidence_FK, (SelectList)ViewData["nStates"], "RESIDENCE STATE*", new { @id = "States", @name = "States" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+
+                                        <select id="lgaList" name="lgaList" class="sikSelect" data-live-search="true" required="required" onchange="getText();">
+                                            <option data-tokens="SELECT LGA"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.TextBoxFor(model => model.ClosestBusStop, new { @id = "ClosestBusStop", placeholder = "CLOSEST BUS STOP*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+
+                                        @Html.DropDownListFor(model => model.AccomodationType_FK, (SelectList)ViewData["nAccomodationTypes"], "ACCOMODATION TYPE*", new { @id = "AccomodationTypes", @required = "required", @name = "AccomodationTypes" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Employment Information </h3>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @*@Html.TextBoxFor(model => model.Organization, new { placeholder = "EMPLOYER*", onkeyup = "ValidateEmpCode()", onblur= "GetTenureByInstCode()", @id = "txtEmpCode" })*@
+                                        @Html.TextBoxFor(model => model.Organization, new { placeholder = "EMPLOYER*", onkeyup = "ValidateEmpCode()", onblur = "GetTenureByInstCode()", @id = "txtEmpCode" })
+                                    </div>
+                                    <span id="message"></span>
+                                </div>
+                                @*<input id="btnCheck" type="button" value="Show Availability" onclick="CheckAvailability()" />*@
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.ApplicantID, new { @id = "ApplicantID",  placeholder = "EMPLOYEE ID*" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @*<input type="text" name="occupation" placeholder="OCCUPATION" required>*@
+                                        @Html.TextBoxFor(model => model.Occupation, new { @id = "Occupation", placeholder = "OCCUPATION*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @*<input type="text" name="designation" placeholder="DESIGNATION" required>*@
+                                        @Html.TextBoxFor(model => model.Designation, new { @id = "Designation", placeholder = "DESIGNATION*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @*<input type="text" name="department" placeholder="DEPARTMENT" required>*@
+                                        @Html.TextBoxFor(model => model.Department, new { @id = "Department", placeholder = "DEPARTMENT*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.DropDownListFor(model => model.Contract, (SelectList)ViewData["nemploymentStatus"], "EMPLOYMENT TYPE", new { @id = "employment_status", @name = "employment_status" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.TextBoxFor(model => model.SalaryAmount, new { placeholder = "NET MONTHLY INCOME*", id = "MonthlyIcome", required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off", onfocusout = "convertAmount()", onkeyup = "CheckIfQualifyForLoan()" })
+                                    </div>
+                                    <span id="Qualifys"></span>
+                                </div>
+                                <div class="row col-md-6 mr0">
+                                    <div class="col-md-4 mr0">
+                                        <div class="single-get-touch">
+
+                                          <label>LENGTH OF SERVICE</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mr0">
+                                        <div class="single-get-touch">
+                                            <select name="LOSYEARS" id="LOSYEARS" required>
+                                                <option value="" default selected>YEARS</option>
+                                                <option value="1">1 Year</option>
+                                                <option value="2">2 Years</option>
+                                                <option value="3">3 Years</option>
+                                                <option value="4">4 Years</option>
+                                                <option value="5">5 Years</option>
+                                                <option value="6">6 Years</option>
+                                                <option value="7">7 Years</option>
+                                                <option value="8">8 Years</option>
+                                                <option value="9">9 Years</option>
+                                                <option value="10">10 Years</option>
+                                                <option value="11">11 Years</option>
+                                                <option value="12">12 Years</option>
+                                            </select>
+                                            @*@Html.TextBoxFor(model => model.LOS, new { placeholder = "LENGTH OF SERVICE (X YEARS)*", required = "required" })*@
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mr0">
+                                        <div class="single-get-touch">
+                                           
+                                            @*@Html.TextBoxFor(model => model.LOS, new { placeholder = "MONTH OF SERVICE (X MONTHS)*", required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })*@
+                                            <div class="single-get-touch">
+                                                <select name="LOSMONTHS" id="LOSMONTHS" required>
+                                                    <option value="" default selected>MONTHS</option>
+                                                    <option value="1">1 Month</option>
+                                                    <option value="2">2 Months</option>
+                                                    <option value="3">3 Months</option>
+                                                    <option value="4">4 Months</option>
+                                                    <option value="5">5 Months</option>
+                                                    <option value="6">6 Months</option>
+                                                    <option value="7">7 Months</option>
+                                                    <option value="8">8 Months</option>
+                                                    <option value="9">9 Months</option>
+                                                    <option value="10">10 Months</option>
+                                                    <option value="11">11 Months</option>
+                                                 
+                                                </select>
+                                                @*@Html.TextBoxFor(model => model.LOS, new { placeholder = "LENGTH OF SERVICE (X YEARS)*", required = "required" })*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @*<input type="text" name="officeEmail" placeholder="OFFICIAL EMAIL" required>*@
+                                        @Html.TextBoxFor(model => model.OfficialEmail, new { @id = "OfficialEmail", placeholder = "OFFICIAL EMAIL*" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Emergency Contact</h3>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.NOK_FullName, new { @id = "NOK_FullName", placeholder = "FULL NAME*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.NOK_Relationship, new { @id = "NOK_Relationship", placeholder = "RELATIONSHIP*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.NOK_HomeAddress, new { @id = "NOK_HomeAddress", placeholder = "HOME ADDRESS*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.NOK_EmailAddress, new { @id = "NOK_EmailAddress", placeholder = "EMAIL ADDRESS*", required = "required", @type = "email" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.NOK_PhoneNumber, new { @id = "NOK_PhoneNumber", placeholder = "PHONE NUMBER*", required = "required", minlength = 11, maxlength = 11, onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @*<input type="text" name="nokHomeAddress" placeholder="HOME ADDRESS" required>*@
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Loan Details</h3>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.LoanAmount, new { placeholder = "LOAN AMOUNT*", id = "LoansAmount", required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off", onfocusout = "ConvertLoanAmount()", onkeyup = "CheckIfQualifyForLoan()" })
+
+                              </div>
+                                    <span id="Qualify"></span>
+                                </div>
+                                <div class="col-md-6" style="display:none">
+                                    <div class="single-get-touch">
+                                        @*<input type="text" name="loanTenure" placeholder="LOAN TENURE (1-12Months)" required>*@
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                        @*@Html.DropDownListFor(model => model.LoanTenure, (SelectList)ViewData["nLoanTenure"], "LOAN TENURE*", new { @id = "LoanTenure", @required = "required", @name = "LoanTenure", onchange = "CheckIfQualifyForLoan()" })*@
+                                        <select id="LoanTenure" name="LoanTenure" required="required" onchange = "CheckIfQualifyForLoan()">
+                                            <option data-tokens="Select Operator"></option></select></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch" >
+                               @*@Html.DropDownListFor(model => model.RepaymentMethod_FK, (SelectList)ViewData["nRepmtMethods"], "REPAYMENT METHOD*", new { @id = "RepmtMethod", @required = "required", @name = "RepmtMethod" })*@
+                                        @*@Html.TextBoxFor(model => model.RepaymentMethod_FK, new { placeholder = "LOAN AMOUNT*", id = "LoansAmount", required = "required", autocomplete = "off" })*@
+                                        <input type="text" value="" id="RepmtMethod" name="RepmtMethod" style="display:none" />
+                                    </div>
+                                </div>
+                                @*<div id="TBS" style="display:none">*@
+                                <table id="TB" style="display:none" class="table table-bordered table-condensed table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Loan Amount</th>
+                                            <th>Loan Tenure</th>
+                                            <th>Loan Repayment</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                                @*</div>*@
+                                <div class="col-md-12">
+                                    <div class="single-get-check">
+                                        Any Existing Loan
+                                        <label class="radiobox">
+                                            Yes
+                                            <input type="radio" id="ExtLoan1" name="ExtLoan" value="Yes" required>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radiobox">
+                                            No
+                                            <input type="radio" id="ExtLoan" name="ExtLoan" value="No" required>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mr0" id="ExistingLoan0">
+
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.ExistingLoan_OutstandingAmount, new {  placeholder = "OUTSTANDING AMOUNT*", id = "ExistLA", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", onkeyup = "CheckIfQualifyForLoanAfterExistingLoan();", autocomplete = "off" })
+                                    </div>
+                                    <span id="QualifyAfterExist"></span>
+                               
+                                </div>
+                                <div class="col-md-6" id="ExistingLoan1">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.ExistingLoan_NoOfMonthsLeft, new { id = "ExistingLoan_NoOfMonthsLeft", placeholder = "HOW MANY MONTH(S) LEFT*", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Bank Information(Salary Account) </h3>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.DropDownListFor(model => model.BankCode, (SelectList)ViewData["nBanks"], "BANK*", new { @id = "Bank", @required = "required", @name = "Bank", onchange = "VerifyAccountNumber()" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.AccountNumber, new { @id = "AccountNumber", placeholder = "ACCOUNT NUMBER*", minlength = 10, maxlength = 10, required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off", onblur = "VerifyAccountNumber();" })
+                                    </div>
+                                    <span id="Qualifys"></span>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.AccountName, new { placeholder = "ACCOUNT NAME*", required = "required", @id = "account_nam", @readonly = "true" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.BVN, new { @id = "BVN", placeholder = "BANK VERIFICATION NUMBER (BVN)*", minlength = 11, maxlength = 11, required = "required", onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-md-12 col-lg-12 formHeaderBg">
+                                    <h3 class="formHeader">Guarantor Information </h3>
+                                </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.TextBoxFor(model => model.GuarSurname, new { @id = "GuarSurname", placeholder = "Surname*", required = "required", @type = "text" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.GuarOthernames, new { @id = "GuarOthernames", placeholder = "Other names*", required = "required", @type = "text" })
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+
+                                        @Html.TextBoxFor(model => model.GuarContact, new { @id = "GuarContact", placeholder = "Address*", required = "required", @type = "text" })
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.GuarPhone, new { @id = "GuarPhone", placeholder = "PHONE NUMBER*", required = "required", minlength = 11, maxlength = 11, onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                    </div>
+                                </div>
+                            <div class="col-md-3">
+                                <div class="single-get-touch">
+                                    @Html.TextBoxFor(model => model.GuarBvn, new { @id = "GuarBvn", placeholder = "BVN", minlength = 11, maxlength = 11, onkeypress = "return isNumber(event);", ondrop = "return isNumber(event);", onpaste = "return isNumber(event);", autocomplete = "off" })
+                                </div>
+                            </div>
+                                <div class="col-md-6 mr0">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.GuarEmail, new { @id = "GuarEmail", placeholder = "Email*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                        @Html.TextBoxFor(model => model.GuarRelationship, new { @id = "GuarRelationship", placeholder = "Relationship*", required = "required" })
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="single-get-check">
+                                    @*<label class="checkbox">
+             <input type="checkbox" required ="required" name="Terms" disabled readonly required>
+             <a href="/Home/term-condition">Accept Terms & Condition</a>
+                                        </label>*@
+                                        <label class="checkbox">
+                                            <input type="checkbox" id="Terms" required="required" name="Terms">
+                                            <a href="@Url.Action("termcondition","User")" target="_blank">Accept Terms & Condition</a>
+                                        </label>
+                                </div>
+                                    <span id="Errors"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="single-get-touch">
+                                    <a href="#"> 
+                             <button type="submit" name="submit" id="btnSubmit" disabled class="btn btn-default btn-sm2 btnAction">Apply Now</button>
+                                     </a>
+
+                                    </div>
+                                </div>
+                            <div class="col-md-6">
+                                <div class="single-get-touch" style="margin-left:54%;">
+                                    <a href="#">
+                                        <button type="button" style="display:;" value="save" name="Save" id="btnSave" class="btn btn-default btn-sm2 btnAction">Save</button>
+                                    </a>
+
+                                </div>
+                            </div>
+
+
+
+</div>
+                    @*</form>*@
+
+
+                    
+                }
+            </div>
+        </div>
+    </div>
+</section>
+<!-- start footer area -->
+<!-- end of footer area -->
+<script src=@Url.Content("/asset/js/jquery-3.3.1.min.js")></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
+<script src=@Url.Content("/asset/js/jquery-ui.js")></script>
+<script src=@Url.Content("/asset/js/popper.min.js")></script>
+<script src=@Url.Content("/asset/js/bootstrap.min.js")></script>
+<script src=@Url.Content("/asset/js/jquery.nice-select.js")></script>
+<script src=@Url.Content("/asset/js/menumaker.js")></script>
+<script src=@Url.Content("/asset/js/owl.carousel.min.js")></script>
+<script src=@Url.Content("/asset/js/slider.js")></script>
+<script src=@Url.Content("/asset/js/active.js")></script>
+<script src=@Url.Content("/asset/js/jquery-2.2.3.min.js")></script>
+<script type='text/javascript' src=@Url.Content("/asset/js/jquery-2.2.3.min.js")></script>
+<script src=@Url.Content("/Scripts/jquery-1.10.2.min.js")></script>
+
+
+<script type="text/javascript">
+
+
+
+    $(document).ready(function () {
+
+        $("#States").change(function () {
+            $("#lgaList").empty();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("getLGAsByStateID","Loans")',
+                dataType: 'json',
+                data: { id: $("#States").val() },
+                success: function (lga) {
+
+                    $.each(lga, function (i, lga) {
+                        $("#lgaList").append('<option value="'
+                                                   + lga.Value + '">'
+                                             + lga.Text + '</option>');
+                    });
+                },
+                error: function (ex) {
+                    alert('Failed.' + ex);
+                }
+            });
+            return false;
+        })
+    });
+</script>
+
+<script>
+    $("#ExistingLoan0").hide();
+    $("#ExistingLoan1").hide();
+    $("input[name='ExtLoan']").on("change", function () {
+        if ($(this).val() == "Yes")
+      {
+          $("#ExistingLoan0").show();
+          $("#ExistingLoan1").show();
+
+      }
+      else if ($(this).val() == "No")
+      {
+          $("#ExistingLoan0").hide();
+          $("#ExistingLoan1").hide();
+      }
+  });
+</script>
+
+
+
+
+
+<script type="text/javascript">
+       /* function isNumber(ev) {
+          //  alert('test');
+        if (ev.type === "paste" || ev.type === "drop") {
+            var textContent = (ev.type === "paste" ? ev.clipboardData : ev.dataTransfer).getData('text');
+            return !isNaN(textContent) && textContent.indexOf(".") === -1;
+        } else if (ev.type === "keydown") {
+            if (ev.ctrlKey || ev.metaKey) {
+                return true
+            };
+            var keysToAllow = [8, 46, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57];
+            return keysToAllow.indexOf(ev.keyCode) > -1;
+        } else {
+            return true
+        }
+    }*/
+     function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+</script>
+
+<script type="text/javascript">
+
+    function convertAmount()
+    {
+            //alert(num);
+            var x = document.getElementById("MonthlyIcome").value;
+           
+             x = parseFloat(x).toFixed(2).split('')
+            //alert(x);
+            let ii = x.length - 3
+            while ((ii -= 3) > 0) {
+                x.splice(ii, 0, ',')
+            }
+
+            x.value = x.join('');
+
+            document.getElementById("MonthlyIcome").value = x.value;
+
+      }
+
+        function ConvertLoanAmount() {
+
+            var x = document.getElementById("LoansAmount").value;
+            
+            x = parseFloat(x).toFixed(2).split('')
+
+            let ii = x.length - 3
+            while ((ii -= 3) > 0)
+            {
+                x.splice(ii, 0, ',')
+            }
+
+            x.value = x.join('');
+
+            document.getElementById("LoansAmount").value = x.value;
+
+        }
+
+
+        function ConvertLoanAmountx(values) {
+
+            var x = values;
+
+            x = parseFloat(x).toFixed(2).split('')
+
+            let ii = x.length - 3
+            while ((ii -= 3) > 0) {
+                x.splice(ii, 0, ',')
+            }
+
+            x.value = x.join('');
+
+            return x.value;
+
+        //    document.getElementById("LoansAmount").value = x.value;
+
+        }
+
+</script>
+
+
+<script type="text/javascript">
+    function CheckAvailability()
+    {
+        //alert('Test');
+        var EmpCOde = $("#txtEmpCode").val()
+        var RepmtMethod = document.getElementById("RepmtMethod");
+        //alert(EmpCOde);
+        $.ajax({
+            type: "POST",
+            url: "/Loans/CheckEmpCode",
+            data: "{code:'" + EmpCOde + "'}",
+            contentType: "application/json; charset=utf-8",
+            // dataType: "html",
+            dataType: "json",
+            //success: function (data) {
+            //    alert("here" + data.d.toString());
+            //}
+            success: function (response)
+            {
+                var message = $("#message");
+               // alert(JSON.stringify(response.respMSg));
+              // alert(JSON.stringify(response.RepayMethod));
+               if (JSON.stringify(response.respMSg) == "true")
+                {
+                    //Email available.
+                   // alert('Entered');
+                    //alert(JSON.stringify(response.RepayMethod));
+                    RepmtMethod.value = JSON.stringify(response.RepayMethod);
+                    message.css("color", "green");
+                    message.html("Organisation is available");
+                    document.getElementById("btnSubmit").disabled = false;
+                    return;
+                }
+                if (JSON.stringify(response.respMSg) == "false")
+                {
+                    //Email not available.
+                 //   alert("Error");
+                    message.css("color", "red");
+                    message.html("Organisation is NOT available");
+                    document.getElementById("btnSubmit").disabled = true;
+                    return;
+                }
+            }
+        });
+
+
+        function ClearMessage()
+        {
+            $("#message").html("");
+        };
+           
+        };
+
+
+    function CheckIfQualifyForLoan()
+       {
+        var LoanAmount = $("#LoansAmount").val();
+       
+        var InstCode = $("#txtEmpCode").val();
+        var Tenure = $("#LoanTenure").val();
+        var SalaryAmt = $("#MonthlyIcome").val();
+       // alert('SalaryAmt' + SalaryAmt);
+        var message = $("#Qualify");
+        var QualifyAfterExist = $("#QualifyAfterExist");
+        // Am Here
+        var ExistingLoanAmount = $("#ExistLA").val();
+       // alert('ExistingLoanAmount'+ExistingLoanAmount);
+      //  var foo = $("#TB");
+        foo = document.getElementById('TB');
+        message.html("");
+       // foo.html("");
+        foo.innerHTML = "";
+
+        if (ExistingLoanAmount == null || ExistingLoanAmount == "NaN" || ExistingLoanAmount == "")
+        {
+            ExistingLoanAmount = 0;
+            //LoanAmount = parseFloat(LoanAmount) + parseFloat(ExistingLoanAmount);
+            //alert('LoanAmount' + LoanAmount);
+            //  alert('NewAmount' + LoanAmount);
+           // var str = LoanAmount;
+            //alert('str'+str);
+           // var regex = "/[.,\]/g";
+           // LoanAmount = str.replace(regex, '')
+          //  LoanAmount = LoanAmount + ExistingLoanAmount;
+           // alert('regex' + LoanAmount);
+        }
+
+        if (ExistingLoanAmount != null || ExistingLoanAmount != "NaN" || ExistingLoanAmount != "")
+        {
+           // LoanAmount = parseFloat(LoanAmount) + parseFloat(ExistingLoanAmount);
+           // alert('LoanAmount' + LoanAmount);
+            //  alert('NewAmount' + LoanAmount);
+           // var str = LoanAmount;
+            //var regex = "/[.,\]/g";
+            //LoanAmount = str.replace(regex, '')
+            //LoanAmount = LoanAmount + ExistingLoanAmount;
+           
+        }
+      if (LoanAmount == null || LoanAmount == "NaN" || LoanAmount == "")
+        {
+            //alert("resr");
+            document.getElementById("LoansAmount").focus = true;
+            message.html("Please Enter Loan Amount");
+            message.css("color", "red");
+            return;
+        }
+        if (InstCode == "" || InstCode == "NaN" || InstCode == "NaN")
+        {
+           // alert("resr1");
+            document.getElementById("txtEmpCode").focus = true;
+            message.html("Please Enter Institution Code");
+            message.css("color", "red");
+            return;
+        }
+        if (Tenure == "NaN" || Tenure == "")
+        {
+            //alert("resr2");
+            document.getElementById("LoanTenure").focus = true;
+            message.html("Please Enter LoanTenure");
+            message.css("color", "red");
+            return;
+        }
+        if (SalaryAmt == null || SalaryAmt == "NaN" || SalaryAmt == "")
+        {
+           // alert("resr3");
+            document.getElementById("MonthlyIcome").focus = true;
+            message.html("Please Enter Monthly Income");
+            message.css("color", "red");
+            return;
+        }
+        foo = document.getElementById('TB');
+        foo.innerHTML = "";
+        $.ajax({
+            type: "POST",
+            url: "/Loans/CheckIfQualifyForLoan",
+            data: "{LoanAmount:'" + LoanAmount + '&' + InstCode + '?' + Tenure + '^' + SalaryAmt + 'vb' + ExistingLoanAmount + "'}",
+            contentType: "application/json; charset=utf-8",
+            //dataType: "html",
+            dataType: 'json',
+            //contentType: false,
+            
+           
+            success: function (resp)
+            {
+                //var message = $("#Qualify");
+                foo.innerHTML = "";
+                if (JSON.stringify(resp.response) == "true")
+                {
+                  //alert(JSON.stringify(resp.Loanrec));
+                    message.css("color", "green");
+                    //message.html(JSON.stringify(resp.Data));
+                    var tr; var th
+                    //foo = document.getElementById('TB');
+                    tr = $('<tr/>');
+                    tr.append("<th>&#8358;" + "Loan Amount" + "</th>");
+                    tr.append("<th>" + "Loan Tenure" + "</th>");
+                    tr.append("<th>&#8358;" + "Loan Repayment" + "</th>");
+                    $('table').append(tr);
+                    //Append each row to html table  
+                   for (var i = 0; i < JSON.stringify(resp.Loanrec.length) ; i++)
+                   {
+                     //  alert('Entered');
+                     //  alert("Loan Records " + JSON.stringify(resp.Loanrec));
+                     //  alert("Loan AMount " + JSON.stringify(resp.Loanrec[i].LoanAmount));
+                       
+                       tr = $('<tr/>');
+                       tr.append("<td class='textalign'>" + JSON.stringify(resp.Loanrec[i].LoanAmount).substring(1).slice(0, -1) + "</td>");
+                       tr.append("<td class='textalign'>" + JSON.stringify(resp.Loanrec[i].LoanTenure) +  ' Months' + "</td>");
+                       tr.append("<td class='textalign'>" + JSON.stringify(resp.Loanrec[i].LoanRepayment).substring(1).slice(0, -1) + "</td>");
+                       $('table').append(tr);
+                   }
+                   foo.style.display = 'block';
+                   foo.setAttribute("class", "table table-bordered table-condensed table-hover table-striped");
+                   message.html();
+                   QualifyAfterExist.html("");
+                   document.getElementById("btnSubmit").disabled = false;
+                   return;
+
+                }
+                if (JSON.stringify(resp.response) == "false")
+                {
+                   
+                    message.css("color", "red");
+                  
+                    message.html(JSON.stringify(resp.Data));
+                    document.getElementById("btnSubmit").disabled = true;
+                    return false;
+                }
+               
+
+            }
+        });
+
+    };
+
+    function ClearMessage() {
+            $("#message").html("");
+        };
+
+
+    function styleMsg() {
+        message.css("color", "red");
+    }
+    function ValidateEmpCode() {
+          
+        CheckAvailability();
+        var LoanAmount = $("#LoansAmount").val();
+        var InstCode = $("#txtEmpCode").val();
+        var Tenure = $("#LoanTenure").val();
+        var SalaryAmt = $("#MonthlyIcome").val();
+        var message = $("#Qualify");
+        
+        if (LoanAmount == null || LoanAmount == "NaN" || LoanAmount == "") {
+            //alert("resr");
+            document.getElementById("LoansAmount").focus = true;
+            message.html("Please Enter Loan Amount");
+            message.css("color", "red");
+            return;
+        }
+        if (InstCode == "" || InstCode == "NaN" || InstCode == "") {
+            // alert("resr1");
+            document.getElementById("txtEmpCode").focus = true;
+            message.html("Please Enter Institution Code");
+            message.css("color", "red");
+            return;
+        }
+        if (Tenure == "NaN" || Tenure == "") {
+            //alert("resr2");
+            document.getElementById("LoanTenure").focus = true;
+            message.html("Please Enter LoanTenure");
+            message.css("color", "red");
+            return;
+        }
+        if (SalaryAmt == null || SalaryAmt == "NaN" || SalaryAmt == "") {
+            // alert("resr3");
+            document.getElementById("MonthlyIcome").focus = true;
+            message.html("Please Enter Monthly Income");
+            message.css("color", "red");
+            return;
+        }
+
+        CheckIfQualifyForLoan();
+    };
+
+
+
+    function CheckIfQualifyForLoanAfterExistingLoan() {
+       // alert('Test');
+        var LoanAmount = $("#LoansAmount").val();
+        var InstCode = $("#txtEmpCode").val();
+        var Tenure = $("#LoanTenure").val();
+        var SalaryAmt = $("#MonthlyIcome").val();
+        var message = $("#QualifyAfterExist");
+        var ExistAmount = $("#ExistLA").val();
+        var messages = $("#Qualify");
+        //alert(ExistAmount);
+        //alert('Test2');
+        //added
+      /*  foo = document.getElementById('TB');
+
+        foo.innerHTML = "";
+        // added
+        message.html("");*/
+        //alert('Test3');
+       
+        //
+        if (ExistAmount == null || ExistAmount == "NaN" || ExistAmount == "")
+        {
+            ExistingLoanAmount = 0;
+
+        }
+
+        if (ExistAmount != null || ExistAmount != "NaN" || ExistAmount != "")
+        {
+           
+
+        }
+
+        //aded
+
+        if (LoanAmount == null || LoanAmount == "NaN" || LoanAmount == "") {
+            //alert("resr");
+            document.getElementById("LoansAmount").focus = true;
+            message.html("Please Enter Loan Amount");
+            message.css("color", "red");
+            return;
+        }
+        if (InstCode == "" || InstCode == "NaN" || InstCode == null) {
+            // alert("resr1");
+            document.getElementById("txtEmpCode").focus = true;
+            message.html("Please Enter Institution Code");
+            message.css("color", "red");
+            return;
+        }
+        if (Tenure == "NaN" || Tenure == "") {
+            //alert("resr2");
+            document.getElementById("LoanTenure").focus = true;
+            message.html("Please Enter LoanTenure");
+            message.css("color", "red");
+            return;
+        }
+        if (SalaryAmt == null || SalaryAmt == "NaN" || SalaryAmt == "") {
+            // alert("resr3");
+            document.getElementById("MonthlyIcome").focus = true;
+            message.html("Please Enter Monthly Income");
+            message.css("color", "red");
+            return;
+        }
+        //alert('last');
+        $.ajax({
+            type: "POST",
+            url: "/Loans/CheckIfExistingLoan",
+           // data: "{LoanAmount:'" + LoanAmount + '&' + InstCode + '?' + Tenure + '^' + SalaryAmt + "'}",
+            data: "{LoanAmount:'" + LoanAmount + '&' + InstCode + '?' + Tenure + '^' + SalaryAmt + '!' + ExistAmount + "'}",
+            contentType: "application/json; charset=utf-8",
+           // dataType: "html",
+            dataType: 'json',
+            
+            success: function (resp) {
+                  if(resp == "0")
+              //  if(JSON.stringify(resp.Data == "0"))
+                  {
+                   // alert(JSON.stringify(resp.Data));
+                    // message.html((resp));
+
+                  /*  var tr; var th
+                    //foo = document.getElementById('TB');
+                    tr = $('<tr/>');
+                    tr.append("<th>&#8358;" + "Loan Amount" + "</th>");
+                    tr.append("<th>" + "Loan Tenure" + "</th>");
+                    tr.append("<th>&#8358;" + "Loan Repayment" + "</th>");
+                    $('table').append(tr);
+                    //Append each row to html table  
+                    for (var i = 0; i < JSON.stringify(resp.Loanrec.length) ; i++) {
+                        
+                        tr = $('<tr/>');
+                        tr.append("<td class='textalign'>" + JSON.stringify(resp.Loanrec[i].LoanAmount).substring(1).slice(0, -1) + "</td>");
+                        tr.append("<td class='textalign'>" + JSON.stringify(resp.Loanrec[i].LoanTenure) + ' Months' + "</td>");
+                        tr.append("<td class='textalign'>" + JSON.stringify(resp.Loanrec[i].LoanRepayment).substring(1).slice(0, -1) + "</td>");
+                        $('table').append(tr);
+                    }
+                    foo.style.display = 'block';
+                    foo.setAttribute("class", "table table-bordered table-condensed table-hover table-striped");
+                    */
+                    
+                     document.getElementById("btnSubmit").disabled = false;
+                     message.html("");
+                     messages.html("");
+                   
+                    return;
+                 }
+               
+                if (resp != "0")
+               // if (JSON.stringify(resp.Data != "0"))
+                {
+                    //alert(JSON.stringify(resp.Data));
+                    //alert(resp);
+                  /*  foo = document.getElementById('TB');
+                    foo.innerHTML = "";*/
+                    message.css("color", "red");
+                    //message.html(JSON.stringify(resp.Data));
+                 
+                    message.html((resp));
+                    document.getElementById("btnSubmit").disabled = true;
+                   return;
+                }
+
+
+            }
+        });
+
+    };
+
+
+    function CheckEmail() {
+        var EmpCOde = $("#EmailADD").val()
+       // alert(EmpCOde);
+        $.ajax({
+            type: "POST",
+            url: "/Loans/CheckEmail",
+            data: "{code:'" + EmpCOde + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "html",
+            
+            success: function (response) {
+                var message = $("#messge");
+                //alert(response);
+                if (response == "true")
+                {
+                    //Email available.
+                   // message.css("color", "Red");
+                   // message.html("Email Already Exist");
+                    document.getElementById("btnSubmit").disabled = true;
+                }
+                else
+                {
+                    //Email not available.
+                   // message.css("color", "green");
+                  //  message.html("Email is Valid");
+                   // document.getElementById("btnSubmit").disabled = true;
+                }
+            }
+        });
+    }
+</script>
+@*<script>
+    function VerifyAccountNumber()
+       {
+        var BankCode = $("#Bank").val();
+        var AccountNumber = $("#AccountNumber").val();
+     
+        var account_name = document.getElementById("account_nam");
+        //alert(BankCode);
+        //alert(AccountNumber);
+        if (BankCode == null || BankCode == "NaN" || BankCode == "")
+        {
+            alert("Invalid Bank Code ! Please Select Bank");
+            //document.getElementById("BankCode").focus = true;
+            //message.html("Please Enter Bank Code");
+            //message.css("color", "red");
+            return;
+        }
+        if (AccountNumber == "" || AccountNumber == "NaN" || AccountNumber == "NaN")
+        {
+            alert("Invalid Account Number ! Please Check Account Number ");
+            //document.getElementById("AccountNumber").focus = true;
+            //message.html("Please Enter Account Number");
+            //message.css("color", "red");
+            return;
+        }
+      
+
+        $.ajax({
+            type: "POST",
+            url: "/Loans/VerifyAccountNumber",
+            data: "{Account:'" + BankCode + '&' + AccountNumber + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+           
+            success: function (resp)
+            {
+                account_name.value = "";
+                //alert(JSON.stringify(resp.dt.responseMsg));
+                //alert(JSON.stringify(resp.dt));
+                
+                if(JSON.stringify(resp.dt.responseMsg == "success"))
+                {
+                    var sup = JSON.stringify(resp.dt.account_name);
+                    //alert("sup"+sup);
+                    
+                    var acctname = sup.substring(1).slice(0, -1)
+                   // alert("acctName"+ acctname);
+                    account_name.style.color = "Green";
+                    account_name.value = acctname; 
+                    document.getElementById("btnSubmit").disabled = false;
+                    return;
+                }
+               if(JSON.stringify(resp.dt.responseMsg == "error"))
+               {
+                    account_name.style.color = "Red";
+                    account_name.value = "Invalid Account Details";
+                    document.getElementById("btnSubmit").disabled = true;
+                    return;
+               }
+           }
+        });
+
+    };
+</script>*@
+
+
+<script>
+    function VerifyAccountNumber()
+       {
+        //alert("Enter");
+        var BankCode = $("#Bank").val();
+        var AccountNumber = $("#AccountNumber").val();
+        var message = $("#Qualifys");
+        message.html("");
+        var account_name = document.getElementById("account_nam");
+        //alert(BankCode);
+        //alert(AccountNumber);
+        if (BankCode == null || BankCode == "NaN" || BankCode == "")
+        {
+            account_name.value = "Invalid Account Details";
+            document.getElementById("btnSubmit").disabled = true;
+            message.html("Please Select Bank");
+            message.css("color", "red");
+            //alert("resr");
+
+            return;
+        }
+        if (AccountNumber == "" || AccountNumber == "NaN" || AccountNumber == "NaN")
+        {
+            account_name.value = "Invalid Account Details";
+            document.getElementById("btnSubmit").disabled = true;
+             message.html("Please Enter Valid Account Number");
+             message.css("color", "red");
+            return;
+        }
+        if (AccountNumber.length < 10) {
+
+            message.html("Account Number must be 10 Digits.");
+            message.css("color", "red");
+            account_name.value = "Invalid Account Details";
+            document.getElementById("btnSubmit").disabled = true;
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/Loans/VerifyAccountNumber",
+            data: "{Account:'" + BankCode + '&' + AccountNumber + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+
+            success: function (resp)
+            {
+               // account_name.value = "";
+
+                if(JSON.stringify(resp.dt.responseMsg == "success"))
+                {
+                    var sup = JSON.stringify(resp.dt.account_name);
+
+                    var acctname = sup.substring(1).slice(0, -1)
+                    //alert("acctName"+ acctname);
+
+                    account_name.value = acctname;
+                    document.getElementById("btnSubmit").disabled = false;
+                    return;
+                }
+               if(JSON.stringify(resp.dt.responseMsg == "error"))
+               {
+                    account_name.style.color = "Red";
+                    account_name.value = "Invalid Account Details";
+                    document.getElementById("btnSubmit").disabled = true;
+                    return;
+               }
+           }
+        });
+
+    };
+</script>
+
+<script>
+    function GetTenureByInstCode() {
+        var txtEmpCode = $("#txtEmpCode").val()
+       
+        $.ajax({
+            type: "POST",
+            url: "/Loans/GetTenureByInstCode",
+            data: "{code:'" + txtEmpCode + "'}",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+
+            success: function (response) 
+            {
+
+                if (response.Success === "true") {
+
+                    $("#LoanTenure").empty();
+                    $("#LoanTenure").prepend("<option value='' selected='selected'>Select One</option>");
+
+                    for (var i = 0; i < response.Data.length; i++) {
+                        $("#LoanTenure").append('<option value="' + response.Data[i].LoanTenure + '">' + response.Data[i].LoanTenure + '</option>');
+
+                    }
+
+                }
+              
+              //  alert(JSON.stringify(response));
+                if (response == "true")
+                {
+                   
+                    document.getElementById("btnSubmit").disabled = true;
+                }
+                else
+                {
+                  
+                }
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+   /* $(function () {
+        $("#submitbtn").click(function () {
+            
+            var BankCode = $("#Bank").val();
+            var AccountNumber = $("#AccountNumber").val();
+            var message = $("#Errors");
+            message.html("");
+           
+            if (BankCode == null || BankCode == "NaN" || BankCode == "") {
+                account_name.value = "Invalid Account Details";
+                document.getElementById("btnSubmit").disabled = true;
+                message.html("Please Select Bank");
+                message.css("color", "red");
+                //alert("resr");
+
+                return;
+            }
+            if (AccountNumber == "" || AccountNumber == "NaN" || AccountNumber == "NaN") {
+                account_name.value = "Invalid Account Details";
+                document.getElementById("btnSubmit").disabled = true;
+                message.html("Please Enter Valid Account Number");
+                message.css("color", "red");
+                return;
+            }
+            if (AccountNumber.length < 10) {
+
+                message.html("Account Number must be 10 Digits.");
+                message.css("color", "red");
+                account_name.value = "Invalid Account Details";
+                document.getElementById("btnSubmit").disabled = true;
+                return;
+            }
+
+            if (document.getElementById('Terms').checked === false)
+            {
+                alert('false')
+                message.html("Please The Check The Terms & Condition");
+                message.css("color", "red");
+                document.getElementById("btnSubmit").disabled = true;
+                return;
+            }
+           
+
+            $("#loading").fadeIn();
+        });
+    });*/
+</script>
+@*<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script>*@
+<script type="text/javascript"  src="@Url.Content("/asset/js/spin.js-2.3.2-spin.min.js")"></script>
+  <script>
+
+      function disableControls() {
+         // alert('Testb');
+         // $("button[value='save']").click(function ()
+          // {
+             $("#Titles").prop('disabled', true);
+            //  $("dropdown[id='Titles']").prop('disabled', true);
+          //   $("input[id='Bank']").prop('disabled', true);
+             $("#Bank").prop('disabled', true);
+              $("input[id='AccountNumber']").prop('disabled', true);
+
+              $("input[id='Titles']").prop('disabled', true);
+
+             // $("input[id='Marital']").prop('disabled', true);
+              $("#Marital").prop('disabled', true);
+              $("input[id='Surname']").prop('disabled', true);
+
+              
+              $("#lgaList").prop('disabled', true);
+
+              $("input[id='Firstname']").prop('disabled', true);
+              $("input[id='DOB']").prop('disabled', true);
+          //$("input[id='selectGender']").prop('disabled', true);
+              $("#selectGender").prop('disabled', true);
+
+              
+              
+              $("input[id='ClosestBusStop']").prop('disabled', true);
+              
+              $("#LoanTenure").prop('disabled', true);
+
+              $("#meansOfID").prop('disabled', true);
+
+              $("input[id='meansOfID']").prop('disabled', true);
+              $("input[id='IdentficationNumber']").prop('disabled', true);
+              $("input[id='PostedFile']").prop('disabled', true);
+
+              $("input[id='EmailADD']").prop('disabled', true);
+              $("input[id='PhoneNumber']").prop('disabled', true);
+              $("input[id='ContactAddress']").prop('disabled', true);
+
+              $("input[id='Landmark']").prop('disabled', true);
+          //$("input[id='States']").prop('disabled', true);
+              $("#States").prop('disabled', true);
+          //$("input[id='AccomodationTypes']").prop('disabled', true);
+              $("#AccomodationTypes").prop('disabled', true);
+
+              $("#ExtLoan").prop('disabled', true);
+              $("#ExtLoan1").prop('disabled', true);
+              
+
+              $("input[id='txtEmpCode']").prop('disabled', true);
+              $("input[id='ApplicantID']").prop('disabled', true);
+              $("input[id='Occupation']").prop('disabled', true);
+
+              $("input[id='Designation']").prop('disabled', true);
+              $("input[id='Department']").prop('disabled', true);
+              //$("input[id='employment_status']").prop('disabled', true);
+              $("#employment_status").prop('disabled', true);
+
+              $("input[id='MonthlyIcome']").prop('disabled', true);
+              //$("input[id='LOSYEARS']").prop('disabled', true);
+              //$("input[id='LOSMONTHS']").prop('disabled', true);
+              $("#LOSYEARS").prop('disabled', true);
+              $("#LOSMONTHS").prop('disabled', true);
+
+              $("#Terms").prop('disabled', true);
+              
+
+              $("input[id='OfficialEmail']").prop('disabled', true);
+              $("input[id='NOK_FullName']").prop('disabled', true);
+              $("input[id='NOK_Relationship']").prop('disabled', true);
+
+
+              $("input[id='NOK_HomeAddress']").prop('disabled', true);
+              $("input[id='NOK_EmailAddress']").prop('disabled', true);
+              $("input[id='NOK_PhoneNumber']").prop('disabled', true);
+
+              $("input[id='LoansAmount']").prop('disabled', true);
+              $("input[id='LoanTenure']").prop('disabled', true);
+              $("input[id='RepmtMethod']").prop('disabled', true);
+            
+              $("input[id='Bank']").prop('disabled', true);
+              $("input[id='AccountNumber']").prop('disabled', true);
+              $("input[id='account_nam']").prop('disabled', true);
+
+              $("input[id='BVN']").prop('disabled', true);
+              $("input[id='GuarSurname']").prop('disabled', true);
+              $("input[id='GuarOthernames']").prop('disabled', true);
+
+              $("input[id='GuarPhone']").prop('disabled', true);
+              $("input[id='GuarContact']").prop('disabled', true);
+
+              $("input[id='GuarBvn']").prop('disabled', true);
+              $("input[id='GuarEmail']").prop('disabled', true);
+              $("input[id='GuarRelationship']").prop('disabled', true);
+
+
+          
+         // });
+      }
+      //SaveApplication
+      $(function () {
+          $("#btnSave").click(function () {
+              alert('Testing');
+              disableControls();
+              var BankCode = $("#Bank").val();
+              var AccountNumber = $("#AccountNumber").val();
+              var Titles = $("#Titles").val();
+              var Marital = $("#Marital").val();
+              var Surname = $("#Surname").val();
+              alert(Surname);
+              var Firstname = $("#Firstname").val();
+              var DOB = $("#DOB").val();
+              var selectGender = $("#selectGender").val();
+              var meansOfID = $("#meansOfID").val();
+              var IdentficationNumber = $("#IdentficationNumber").val();
+              var PostedFile = $("#PostedFile").val();
+              var EmailADD = $("#EmailADD").val();
+
+             
+              var PhoneNumber = $("#PhoneNumber").val();
+              var ContactAddress = $("#ContactAddress").val();
+              var Landmark = $("#Landmark").val();
+              var States = $("#States").val();
+              var ClosestBusStop = $("#States").val();
+              var AccomodationTypes = $("#AccomodationTypes").val();
+              var txtEmpCode = $("#txtEmpCode").val();
+              var ApplicantID = $("#ApplicantID").val();
+              var Occupation = $("#Occupation").val();
+              var Designation = $("#Designation").val();
+              var Department = $("#Department").val();
+              var employment_status = $("#employment_status").val();
+
+
+              var MonthlyIcome = $("#MonthlyIcome").val();
+              var LOSYEARS = $("#LOSYEARS").val();
+              var LOSMONTHS = $("#LOSMONTHS").val();
+              var OfficialEmail = $("#OfficialEmail").val();
+              var NOK_FullName = $("#NOK_FullName").val();
+              var NOK_Relationship = $("#NOK_Relationship").val();
+
+
+              var NOK_HomeAddress = $("#NOK_HomeAddress").val();
+              var NOK_EmailAddress = $("#NOK_EmailAddress").val();
+              var NOK_PhoneNumber = $("#NOK_PhoneNumber").val();
+              var LoansAmount = $("#LoansAmount").val();
+              var LoanTenure = $("#LoanTenure").val();
+              var RepmtMethod = $("#RepmtMethod").val();
+
+              var Bank = $("#Bank").val();
+              var AccountNumber = $("#AccountNumber").val();
+              var account_nam = $("#account_nam").val();
+              var BVN = $("#BVN").val();
+              var GuarSurname = $("#GuarSurname").val();
+              var GuarOthernames = $("#GuarOthernames").val();
+
+
+              var GuarPhone = $("#GuarPhone").val();
+              var GuarContact = $("#GuarContact").val();
+              var GuarBvn = $("#GuarBvn").val();
+              var GuarEmail = $("#GuarEmail").val();
+              var GuarRelationship = $("#GuarRelationship").val();
+
+              var lApObjs = 
+               {
+                   Surname: Surname,
+                   Firstname: Firstname,
+                   Gender: selectGender,
+                   Title_FK : Titles,
+                   MaritalStatus_FK :Marital,
+                   DateOfBirth :DOB,
+                   IdentficationNumber:IdentficationNumber,
+                   MeansOfID_FK: meansOfID,
+                   PhoneNumber: PhoneNumber,
+                   EmailAddress: EmailADD,
+                   ContactAddress: ContactAddress,
+                   Landmark: Landmark,
+                   ClosestBusStop: ClosestBusStop,
+                   StateofResidence_FK:States,
+                   LGA_FK: States,
+                   AccomodationType_FK: AccomodationTypes,
+                   Organization: txtEmpCode,
+                   ApplicantID: ApplicantID,
+                   Department:Department,
+                   Occupation:Occupation,
+                   Designation: Designation,
+                   SalaryAmount:MonthlyIcome,
+                   OfficialEmail:OfficialEmail,
+                   LOS : LOSYEARS,
+
+               };
+              alert('test2');
+              alert(JSON.stringify(lApObjs));
+              $.ajax({
+                  type: "POST",
+                  url: "/Loans/SaveApplication",
+                  data: JSON.stringify(lApObjs),
+                  contentType: "application/json; charset=utf-8",
+                  //data: JSON.stringify({ lApObjs: lApObjs }),
+                  ////data: JSON.stringify({ lApObj: LoanApp }),
+                  //contentType: "application/json",
+                  dataType: "json",
+
+                  success: function (response)
+                  {
+                      alert('Testint 2');
+                      if (response.Success === "true")
+                      {
+
+                      }
+                     if (response == "true") {
+
+                          document.getElementById("btnSubmit").disabled = true;
+                      }
+                      else {
+
+                      }
+                  }
+              });
+
+              var message = $("#Errors");
+              message.html("");
+
+
+          
+          });
+      });
+
+    $(function () {
+        $("#btnSubmit").click(function () {
+            
+            var BankCode = $("#Bank").val();
+            var AccountNumber = $("#AccountNumber").val();
+            var Titles = $("#Titles").val();
+            var Marital = $("#Marital").val();
+            var Surname = $("#Surname").val();
+            var Firstname = $("#Firstname").val();
+            var DOB = $("#DOB").val();
+            var selectGender = $("#selectGender").val();
+            var meansOfID = $("#meansOfID").val();
+            var IdentficationNumber = $("#IdentficationNumber").val();
+            var PostedFile = $("#PostedFile").val();
+            var EmailADD = $("#EmailADD").val();
+
+
+            var PhoneNumber = $("#PhoneNumber").val();
+            var ContactAddress = $("#ContactAddress").val();
+            var Landmark = $("#Landmark").val();
+            var States = $("#States").val();
+            var ClosestBusStop = $("#ClosestBusStop").val();
+            var AccomodationTypes = $("#AccomodationTypes").val();
+            var txtEmpCode = $("#txtEmpCode").val();
+            var ApplicantID = $("#ApplicantID").val();
+            var Occupation = $("#Occupation").val();
+            var Designation = $("#Designation").val();
+            var Department = $("#Department").val();
+            var employment_status = $("#employment_status").val();
+
+
+            var MonthlyIcome = $("#MonthlyIcome").val();
+            var LOSYEARS = $("#LOSYEARS").val();
+            var LOSMONTHS = $("#LOSMONTHS").val();
+            var OfficialEmail = $("#OfficialEmail").val();
+            var NOK_FullName = $("#NOK_FullName").val();
+            var NOK_Relationship = $("#NOK_Relationship").val();
+
+
+            var NOK_HomeAddress = $("#NOK_HomeAddress").val();
+            var NOK_EmailAddress = $("#NOK_EmailAddress").val();
+            var NOK_PhoneNumber = $("#NOK_PhoneNumber").val();
+            var LoansAmount = $("#LoansAmount").val();
+            var LoanTenure = $("#LoanTenure").val();
+            var RepmtMethod = $("#RepmtMethod").val();
+
+            var Bank = $("#Bank").val();
+            var AccountNumber = $("#AccountNumber").val();
+            var account_nam = $("#account_nam").val();
+            var BVN = $("#BVN").val();
+            var GuarSurname = $("#GuarSurname").val();
+            var GuarOthernames = $("#GuarOthernames").val();
+
+
+            var GuarPhone = $("#GuarPhone").val();
+            var GuarContact = $("#GuarContact").val();
+            var GuarBvn = $("#GuarBvn").val();
+            var GuarEmail = $("#GuarEmail").val();
+            var GuarRelationship = $("#GuarRelationship").val();
+
+
+           
+            var message = $("#Errors");
+            message.html("");
+
+
+            if (BankCode == null || BankCode == "NaN" || BankCode == "")
+            {
+                
+              //  message.html("Please Select Bank");
+              //  message.css("color", "red");
+               
+                return;
+            }
+            if (AccountNumber == "" || AccountNumber == "NaN" || AccountNumber == "NaN" )
+            {
+               // message.html("Please Enter Valid Account Number");
+               // message.css("color", "red");
+                return;
+            }
+            if (AccountNumber.length < "10")
+            {
+
+              //  message.html("Account Number must be 10 Digits.");
+               // message.css("color", "red");
+               
+                return;
+            }
+            if (document.getElementById('Terms').checked === false)
+            {
+              
+              //  message.html("Please The Check The Terms & Condition");
+              //  message.css("color", "red");
+              
+                return;
+            }
+            if (Titles == null || Titles == "NaN" || Titles == "") {
+                
+               // message.html("Please Select Title");
+              //  message.css("color", "red");
+               
+                return;
+            }
+            if (Marital == null || Marital == "NaN" || Marital == "")
+            {
+
+               // message.html("Please Select Marital Status");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (Surname == null || Surname == "NaN" || Surname == "") {
+
+               // message.html("Please Enter Surname");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (Firstname == null || Firstname == "NaN" || Firstname == "") {
+
+               // message.html("Please Enter Firstname");
+                //message.css("color", "red");
+
+                return;
+            }
+            if (DOB == null || DOB == "NaN" || DOB == "") {
+
+                //message.html("Please Select Date Of Birth");
+                //message.css("color", "red");
+
+                return;
+            }
+            if (selectGender == null || selectGender == "NaN" || selectGender == "") {
+
+               // message.html("Please Select Gender");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (meansOfID == null || meansOfID == "NaN" || meansOfID == "") {
+
+               // message.html("Please Select Means Of Identification");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (IdentficationNumber == null || IdentficationNumber == "NaN" || IdentficationNumber == "") {
+
+               // message.html("Please Identification Number");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (PostedFile == null || PostedFile == "NaN" || PostedFile == "") {
+
+               // message.html("Please Upload Your Means Of Identification ");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (EmailADD == null || EmailADD == "NaN" || EmailADD == "") {
+
+               // message.html("Please Enter Your Email Address");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (PhoneNumber == null || PhoneNumber == "NaN" || PhoneNumber == "") {
+
+               // message.html("Please Enter Your Phone Number");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (PhoneNumber.length < "11") {
+
+                //  message.html("Account Number must be 10 Digits.");
+                // message.css("color", "red");
+
+                return;
+            }
+            if (ContactAddress == null || ContactAddress == "NaN" || ContactAddress == "") {
+
+               // message.html("Please Enter Your Contact Address");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (Landmark == null || Landmark == "NaN" || Landmark == "") {
+
+              //  message.html("Please Enter Landmark");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (States == null || States == "NaN" || States == "") {
+
+              //  message.html("Please Enter Your State");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (ClosestBusStop == null || ClosestBusStop == "NaN" || ClosestBusStop == "") {
+
+               // message.html("Please Enter Your ClosestBusStop");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (AccomodationTypes == null || AccomodationTypes == "NaN" || AccomodationTypes == "") {
+
+               // message.html("Please Enter Your Accomodation Types");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (txtEmpCode == null || txtEmpCode == "NaN" || txtEmpCode == "") {
+
+             //   message.html("Please Enter Your Employer Code");
+             //   message.css("color", "red");
+
+                return;
+            }
+            if (ApplicantID == null || ApplicantID == "NaN" || ApplicantID == "") {
+
+              //  message.html("Please Enter Your Application ID");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (Occupation == null || Occupation == "NaN" || Occupation == "") {
+
+               // message.html("Please Enter Your Occupation");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (Designation == null || Designation == "NaN" || Designation == "") {
+
+              //  message.html("Please Enter Your Designation");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (Department == null || Department == "NaN" || Department == "") {
+
+              //  message.html("Please Enter Your Department");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (employment_status == null || employment_status == "NaN" || employment_status == "") {
+
+               // message.html("Please Select Your Employment Status");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (LOSYEARS == null || LOSYEARS == "NaN" || LOSYEARS == "") {
+
+              //  message.html("Please Select Your Years Of Service");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (LOSMONTHS == null || LOSMONTHS == "NaN" || LOSMONTHS == "") {
+
+               // message.html("Please Select Your Months Of Service ");
+               // message.css("color", "red");
+
+                return;
+            }
+            if (MonthlyIcome == null || MonthlyIcome == "NaN" || MonthlyIcome == "") {
+
+              //  message.html("Please Enter Your Monthly Income");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (OfficialEmail == null || OfficialEmail == "NaN" || OfficialEmail == "") {
+
+             //   message.html("Please Enter Your Official Email");
+             //   message.css("color", "red");
+
+                return;
+            }
+            if (NOK_FullName == null || NOK_FullName == "NaN" || NOK_FullName == "") {
+
+              //  message.html("Please Enter Your Next Of Kin Name");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (NOK_Relationship == null || NOK_Relationship == "NaN" || NOK_Relationship == "") {
+
+              //  message.html("Please Enter Your Next Of Kin Relationship");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+
+            if (NOK_HomeAddress == null || NOK_HomeAddress == "NaN" || NOK_HomeAddress == "") {
+
+              //  message.html("Please Enter Your Next Of Kin Home Address");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (NOK_EmailAddress == null || NOK_EmailAddress == "NaN" || NOK_EmailAddress == "") {
+
+              //  message.html("Please Enter Your Next Of Kin Email Address");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (NOK_PhoneNumber == null || NOK_PhoneNumber == "NaN" || NOK_PhoneNumber == "") {
+
+             //   message.html("Please Enter Your Next Of Kin Phonenumber");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (NOK_PhoneNumber.length < "11") {
+
+                //   message.html("Please Enter Your Next Of Kin Phonenumber");
+                //  message.css("color", "red");
+
+                return;
+            }
+
+            if (LoansAmount == null || LoansAmount == "NaN" || LoansAmount == "") {
+
+               // message.html("Please Enter Loan Amount");
+               // message.css("color", "red");
+
+                return;
+            }
+
+            if (LoanTenure == null || LoanTenure == "NaN" || LoanTenure == "") {
+
+              //  message.html("Please Select Loan Tenure");
+              //  message.css("color", "red");
+
+                return;
+            }
+            if (RepmtMethod == null || RepmtMethod == "NaN" || RepmtMethod == "") {
+
+             //   message.html("Please Select Loan Repayment Method");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+
+            if (Bank == null || Bank == "NaN" || Bank == "") {
+
+             //    message.html("Please Enter Your Bank");
+             //   message.css("color", "red");
+
+                return;
+            }
+
+            if (AccountNumber == null || AccountNumber == "NaN" || AccountNumber == "") {
+
+             //   message.html("Please Enter Account Number");
+             //   message.css("color", "red");
+
+                return;
+            }
+
+            if (AccountNumber.length < "10") {
+
+                //   message.html("Please Enter Account Number");
+                //   message.css("color", "red");
+
+                return;
+            }
+
+
+            if (account_nam == null || account_nam == "NaN" || account_nam == "") {
+
+              //  message.html("Please Enter Account Name");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (BVN == null || BVN == "NaN" || BVN == "") {
+
+              //  message.html("Please Enter BVN");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (BVN.length < "11")
+            {
+
+                //   message.html("Please Enter Account Number");
+                //   message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarSurname == null || GuarSurname == "NaN" || GuarSurname == "") {
+
+            //    message.html("Please Enter Guarantor Surname");
+             //   message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarOthernames == null || GuarOthernames == "NaN" || GuarOthernames == "") {
+
+              //  message.html("Please Enter Guarantor Other Names");
+              //  message.css("color", "red");
+
+                return;
+            }
+            
+
+            if (GuarPhone == null || GuarPhone == "NaN" || GuarPhone == "") {
+
+              //  message.html("Please Enter Guarantor's Phone Number");
+               // message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarPhone.length < "11") {
+
+                //   message.html("Please Enter Account Number");
+                //   message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarContact == null || GuarContact == "NaN" || GuarContact == "") {
+
+              //  message.html("Please Enter Guarantor's Contact");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarBvn == null || GuarBvn == "NaN" || GuarBvn == "") {
+
+              //  message.html("Please Enter Guarantor's BVN");
+             //   message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarBvn.length < "11") {
+
+                //   message.html("Please Enter Account Number");
+                //   message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarEmail == null || GuarEmail == "NaN" || GuarEmail == "") {
+
+              //  message.html("Please Enter Guarantor's Email");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            if (GuarRelationship == null || GuarRelationship == "NaN" || GuarRelationship == "") {
+
+              //  message.html("Please Enter Guarantor Relationship");
+              //  message.css("color", "red");
+
+                return;
+            }
+
+            spinlib();
+        });
+    });
+
+    function spinlib()
+    {
+        $("#loading").fadeIn();
+        var opts =
+        {
+            lines: 12, // The number of lines to draw
+            length: 7, // The length of each line
+            width: 4, // The line thickness
+            radius: 10, // The radius of the inner circle
+            color: '#000', // #rgb or #rrggbb
+            speed: 1, // Rounds per second
+            trail: 60, // Afterglow percentage
+            // shadow: false, // Whether to render a shadow
+            hwaccel: false, // Whether to use hardware acceleration
+
+            top: '51%', // Top position relative to parent
+            left: '51%', // Left position relative to parent
+            shadow: '0 0 1px transparent',
+
+
+        };
+        var target = document.getElementById('loading');
+        var spinner = new Spinner(opts).spin(target);
+    }
+</script>

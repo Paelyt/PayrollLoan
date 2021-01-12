@@ -1,0 +1,111 @@
+﻿@{
+    ViewBag.Title = "BVNValidation";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+@*@model DataAccessLayerT.Classes.LoanViewModel*@
+@model DataAccessLayerT.Helper.BVNC
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            @*<h4 class="title">AllApprovedLoans</h4>*@
+            <!-- Mega Form Starts -->
+
+            <section class="section-padding contact-us-padding form-padding">
+
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            @using (Html.BeginForm("BVNValidation", "Admin", FormMethod.Post, new { id = "signup" }))
+                            {
+                                <form action="#" method="post">
+
+                                    @if (TempData["ErrMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["ErrMsg"]
+                                        </div>
+                                    }
+                                    @if (TempData["SucMsg"] != "")
+                                    {
+                                        <div id="Msgs" class="alert alert-danger">
+                                            @TempData["SucMsg"]
+                                        </div>
+                                    }
+                                    <div class="col-sm-6">
+                                                <div class="single-get-touch">
+                                                    <label class="control-label">BVN Number<span class="color-red">*</span></label>
+                                                    @Html.TextBoxFor(model => model.BVN, new { placeholder = "", type = "text", required = "required", @class = "form-control margin-bottom-20" })
+                                                </div>
+                                            </div>
+
+                                           
+
+                                            <div class="col-md-12">
+                                                <div class="single-get-touch">
+
+                                                    <a href="#"><button type="submit" name="submit" class="btn btn-default btn-sm2 btnAction">Check</button></a>
+                                                </div>
+                                            </div>
+
+                                           
+                                </form>
+                            }
+                        </div>
+
+                      
+                             @if (Model != null && Model.respCode != null)
+                              {
+                                <div class="col-sm-12">
+                                    <label class="control-label">Lastname<span class="color-red">*</span></label>
+                                    <span>@Model.LastName</span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label class="control-label">Firstname<span class="color-red">*</span></label>
+                                    <span>@Model.FirstNAme</span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label class="control-label">MiddleName<span class="color-red">*</span></label>
+                                    <span>@Model.MiddleName</span>
+                                </div>
+    
+
+        <div class="col-sm-12">
+            <label class="control-label">Gender<span class="color-red">*</span></label>
+            <span>@Model.gender</span>
+        </div>
+                                <div class="col-sm-12">
+                                    <label class="control-label">Phone<span class="color-red">*</span></label>
+                                    <span>@Model.Phone</span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label class="control-label">Enrollment Bank<span class="color-red">*</span></label>
+                                    <span>@Model.EnrollmentBank</span>
+                                </div>
+
+                                <div class="col-sm-12">
+                                    <label class="control-label">Enrollment Branch<span class="color-red">*</span></label>
+                                    <span>@Model.EnrollmentBranch</span>
+
+                                </div>
+
+                        <div class="col-sm-12">
+                            <label class="control-label">Nationality<span class="color-red">*</span></label>
+                            <span>@Model.Nationality</span>
+
+                        </div>
+
+ 
+                        }
+                        
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </div>
+
+</div>
+

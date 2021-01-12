@@ -1,0 +1,140 @@
+﻿@{
+    ViewBag.Title = "Report";
+    Layout = "~/Views/Shared/_LayoutDashboard.cshtml";
+}
+
+@model DataAccessLayer.DataManager.LoanViewModel
+@*<h2>Report</h2>*@
+
+<div class="charts">
+    <div class="mid-content-top charts-grids">
+        <div class="middle-content">
+            <h4 class="title">Page Role</h4>
+            <!-- Mega Form Starts -->
+            <section class="section-padding contact-us-padding form-padding">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-12 col-lg-10">
+                            <div class="col-md-12 col-lg-10">
+
+                                @using (Html.BeginForm("Report", "Admin"))
+
+                                {
+                                    <form action="#" method="post">
+
+                                        @if (TempData["ErrMsg"] != null)
+                                        {
+                                            <div id="Msgs" class="alert alert-danger">
+                                                @TempData["ErrMsg"]
+                                            </div>
+                                        }
+                                        <div class="row list-input">
+                                            <div class="col-md-12 col-lg-12 formHeaderBg">
+                                                <h3 class="formHeader">Create PagenRole</h3>
+                                            </div>
+                                            <input type="text" id="txt" name="txt" readonly="readonly" />
+
+                                            @*@Html.TextBoxFor(model => model.PageModel.EmailAddress, new { placeholder = "Page Name *", @class = "form-control1", id = "txt", name = "txt", type = "text", })*@
+                                            <div class="col-md-6 mr0">
+                                                <div class="single-get-touch">
+                                                    @Html.DropDownList("PageID", new SelectList(ViewBag.Page, "PageID", "PageName"), new { @onchange = "selectedtext(this); this.form.submit();"})
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="">
+                                                    @foreach (var Assigned in Model.GetAssignPagess)
+                                                    {
+
+
+                                                        <input id="@Assigned.pageid" type="checkbox" name="skill" value="@Assigned.pageid" checked="checked" disabled="disabled" />
+                                                        <label for="@Assigned.pageid">
+                                                            @Assigned.Rolename
+                                                        </label>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 mr0">
+                                                <div class="">
+                                                    @foreach (var unAssigned in Model.UnGetAssignRoless)
+                                                    {
+                                                        <input id="@unAssigned.Roleid" type="checkbox" name="RoleId" value="@unAssigned.Roleid" />
+                                                            <label for="@unAssigned.Roleid">
+                                                                @unAssigned.Rolename
+                                                            </label>
+
+                                                    }
+                                                </div>
+                                            </div>
+                                            <input type="submit" name="AssignBtn" value="AssignRoles" />
+
+
+                                        </div>
+
+</form>
+                                }
+                            </div>
+
+
+
+</div>
+                    </div>
+                </div>
+
+                <div class="tables">
+                    <h2 class="title1">All Pages n Role</h2>
+                    <div class="table-responsive bs-example widget-shadow">
+                        @*<h4>Roles:</h4>*@
+                        @{int i = 0;}
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Page Name</th>
+                                    <th>Role Name</th>
+                                    @*<th> Role ID</th>
+                                    <th>Edit</th>*@
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (ViewBag.Data == null)
+                                {
+                                <h2>No Record Found</h2>
+                                }
+                                else
+                                {
+                                    foreach (var UserRole in ViewBag.Data)
+                                    {
+
+
+                                <tr>
+                                    <td scope="row">@(++i)</td>
+                                    <td>@UserRole.pageName</td>
+                                    <td>@UserRole.rolename</td>
+
+
+
+                                </tr>
+
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- // Mega Form Ends-->
+
+</div>
+</div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+    function selectedtext(ddlitem) {
+        var selvalue = ddlitem.value;
+        var seltext = ddlitem.options[ddlitem.selectedIndex].innerHTML;
+        $('#txt').val(seltext)
+    }
+</script>
+
